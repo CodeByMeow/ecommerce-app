@@ -3,17 +3,18 @@ const router = express.Router();
 
 const UserController = require("../controllers/userController");
 const { hashPassword } = require("../utils/pwdUtil");
+const { checkMissing } = require("../utils/validate");
 
 router.post("/", async (req, res) => {
     const { fullname, email, password } = req.body;
 
-    if (!fullname || !email || !password) {
+    if (checkMissing(fullname, email, password)) {
         return res.json({ msg: "Missing required keys" });
     }
 
     try {
-        const user = await UserController.findOne({ email });
-        if (user) {
+        const emailExist = await UserController.isEmailExisted(email);
+        if (emailExist) {
             return res.status(400).json({
                 msg: "Email already exist, please try another one!",
             });

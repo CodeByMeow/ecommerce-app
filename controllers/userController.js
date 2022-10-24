@@ -13,9 +13,14 @@ const create = (user) => {
     return newUser.save();
 };
 
+const isEmailExisted = (email) => {
+    return findOne({ email });
+};
+
 const UserController = {
     getById,
     findOne,
+    isEmailExisted,
     create,
 };
 

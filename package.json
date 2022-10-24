@@ -28,5 +28,13 @@
         "moment": "^2.29.4",
         "mongoose": "^6.6.5",
         "nodemon": "^2.0.20"
+    },
+    "devDependencies": {
+        "cz-conventional-changelog": "^3.3.0"
+    },
+    "config": {
+        "commitizen": {
+            "path": "./node_modules/cz-conventional-changelog"
+        }
     }
 }
