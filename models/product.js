@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const slugify = require("slugify");
 
 const productSchema = new mongoose.Schema({
     category: {
@@ -26,6 +27,16 @@ const productSchema = new mongoose.Schema({
             require: true,
         },
     ],
+    slug: {
+        type: String,
+        value: function () {
+            return slugify(this.title);
+        },
+    },
+    total_selling: {
+        type: Number,
+        default: 0,
+    },
 });
 
 module.exports = mongoose.model("product", productSchema);

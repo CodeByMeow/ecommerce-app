@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const slugify = require("slugify");
 
 const categorySchema = new mongoose.Schema({
     title: {
@@ -15,6 +16,12 @@ const categorySchema = new mongoose.Schema({
     isDeteled: {
         type: Boolean,
         default: false,
+    },
+    slug: {
+        type: String,
+        value: function () {
+            return slugify(this.title);
+        },
     },
 });
 
