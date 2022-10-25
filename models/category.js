@@ -19,9 +19,12 @@ const categorySchema = new mongoose.Schema({
     },
     slug: {
         type: String,
-        value: function () {
+        default: function () {
             return slugify(this.title);
         },
+    },
+    image_url: {
+        type: String,
     },
 });
 

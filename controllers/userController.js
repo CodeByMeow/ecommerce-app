@@ -17,10 +17,15 @@ const isEmailExisted = (email) => {
     return findOne({ email });
 };
 
+const isUsernameExisted = (username) => {
+    return findOne({ username });
+};
+
 const UserController = {
     getById,
     findOne,
     isEmailExisted,
+    isUsernameExisted,
     create,
 };
 

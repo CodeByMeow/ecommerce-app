@@ -6,9 +6,9 @@ const { hashPassword } = require("../utils/pwdUtil");
 const { checkMissing } = require("../utils/validate");
 
 router.post("/", async (req, res) => {
-    const { fullname, email, password } = req.body;
+    const { fullname, username, email, password } = req.body;
 
-    if (checkMissing(fullname, email, password)) {
+    if (checkMissing(fullname, email, password, username)) {
         return res.json({ msg: "Missing required keys" });
     }
 
@@ -20,8 +20,16 @@ router.post("/", async (req, res) => {
             });
         }
 
+        const usernameExist = await UserController.isUsernameExisted(username);
+        if (usernameExist) {
+            return res.status(400).json({
+                msg: "Username already exist, please try another one!",
+            });
+        }
+
         const newUser = {
             fullname,
+            username,
             email,
             password: await hashPassword(password),
         };

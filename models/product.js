@@ -29,13 +29,24 @@ const productSchema = new mongoose.Schema({
     ],
     slug: {
         type: String,
-        value: function () {
+        default: function () {
             return slugify(this.title);
         },
+    },
+    price: {
+        type: Number,
+        default: 0,
+    },
+    sale_price: {
+        type: Number,
     },
     total_selling: {
         type: Number,
         default: 0,
+    },
+    image_url: {
+        type: String,
+        require: true,
     },
 });
 

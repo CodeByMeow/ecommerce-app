@@ -5,6 +5,11 @@ const userSchema = new mongoose.Schema({
         require: true,
         type: String,
     },
+    username: {
+        type: String,
+        unique: true,
+        require: true,
+    },
     email: {
         requrie: true,
         unique: true,
@@ -17,12 +22,10 @@ const userSchema = new mongoose.Schema({
     role: {
         type: String,
         enum: ["admin", "customer", "user"],
+        default: "customer",
     },
     address: {
         require: true,
-        type: String,
-    },
-    display_name: {
         type: String,
     },
     orders: [
