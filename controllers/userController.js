@@ -1,9 +1,5 @@
 const UserModel = require("../models/user");
 
-const getById = (id) => {
-    return UserModel.findById(id);
-};
-
 const findOne = (param) => {
     return UserModel.findOne(param);
 };
@@ -13,20 +9,29 @@ const create = (user) => {
     return newUser.save();
 };
 
-const isEmailExisted = (email) => {
-    return findOne({ email });
+const isEmailExisted = async (email) => {
+    const user = await findOne({ email });
+    if (user) return true;
+    return false;
 };
 
-const isUsernameExisted = (username) => {
-    return findOne({ username });
+const isUsernameExisted = async (username) => {
+    const user = await findOne({ username });
+    if (user) return true;
+    return false;
+};
+
+const findUser = (userId) => {
+    return UserModel.findById(userId).select(
+        " username email role orders fullname address isActive isDeleted "
+    );
 };
 
 const UserController = {
-    getById,
-    findOne,
+    create,
     isEmailExisted,
     isUsernameExisted,
-    create,
+    findUser,
 };
 
 module.exports = UserController;

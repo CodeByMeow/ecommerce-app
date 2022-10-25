@@ -4,6 +4,8 @@ const router = express.Router();
 const UserController = require("../controllers/userController");
 const { hashPassword } = require("../utils/pwdUtil");
 const { checkMissing } = require("../utils/validate");
+const jwt = require("../utils/jwt");
+const verifyTokenMdw = require("../middlewares/verify-token");
 
 router.post("/", async (req, res) => {
     const { fullname, username, email, password } = req.body;
@@ -34,11 +36,12 @@ router.post("/", async (req, res) => {
             password: await hashPassword(password),
         };
 
-        await UserController.create(newUser);
+        const userCreated = await UserController.create(newUser);
 
         const token = jwt.sign({
             username,
             email,
+            user_id: userCreated._id,
         });
 
         return res.status(201).json({
@@ -50,4 +53,15 @@ router.post("/", async (req, res) => {
     }
 });
 
+router.get("/:username", verifyTokenMdw, async (req, res) => {
+    const { user_id } = req.user;
+    const user = await UserController.findUser(user_id);
+
+    return res.json({
+        msg: "Get user successfully",
+        data: user,
+    });
+
+    //get user
+});
 module.exports = router;
