@@ -36,8 +36,14 @@ router.post("/", async (req, res) => {
 
         await UserController.create(newUser);
 
+        const token = jwt.sign({
+            username,
+            email,
+        });
+
         return res.status(201).json({
             msg: "User create successfully",
+            token,
         });
     } catch (error) {
         throw Error(error.message);
