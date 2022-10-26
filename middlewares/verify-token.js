@@ -1,8 +1,9 @@
 const jwt = require("../utils/jwt");
 
 const ACCESS_TOKEN_KEY = process.env.ACCESS_TOKEN_KEY || "x-token";
+const UserController = require("../controllers/userController");
 
-module.exports = (req, res, next) => {
+module.exports = async (req, res, next) => {
     const token = req.headers[ACCESS_TOKEN_KEY];
 
     if (!token) {
@@ -16,6 +17,8 @@ module.exports = (req, res, next) => {
         throw new Error("Token is not valid, no authorization information");
     }
 
-    req.user = decoded;
+    const { user_id } = decoded;
+    const user = await UserController.findUserById(user_id);
+    req.user = user;
     next();
 };

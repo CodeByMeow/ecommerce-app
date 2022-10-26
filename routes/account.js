@@ -54,9 +54,7 @@ router.post("/", async (req, res) => {
 });
 
 router.get("/profile", verifyTokenMdw, async (req, res) => {
-    const { user_id } = req.user;
-    const user = await UserController.findUser(user_id);
-
+    const user = req.user;
     return res.json({
         msg: "Get user successfully",
         data: user,

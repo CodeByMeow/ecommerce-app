@@ -21,7 +21,7 @@ const isUsernameExisted = async (username) => {
     return false;
 };
 
-const findUser = (userId) => {
+const findUserById = (userId) => {
     return UserModel.findById(userId).select(
         " username email role orders fullname address isActive isDeleted "
     );
@@ -31,7 +31,7 @@ const UserController = {
     create,
     isEmailExisted,
     isUsernameExisted,
-    findUser,
+    findUserById,
 };
 
 module.exports = UserController;
