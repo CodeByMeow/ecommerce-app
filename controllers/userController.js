@@ -22,13 +22,21 @@ const isUsernameExisted = async (username) => {
 };
 
 const findUserById = (userId) => {
-    return UserModel.findById(userId).select(
-        " username email role orders fullname address isActive isDeleted "
-    );
+    return UserModel.findById(userId).select("-password");
+};
+
+const updateById = async (id, fields) => {
+    const updated = await UserModel.findOneAndUpdate({ _id: id }, fields, {
+        new: true,
+        fields: "-password",
+    });
+
+    return updated;
 };
 
 const UserController = {
     create,
+    updateById,
     isEmailExisted,
     isUsernameExisted,
     findUserById,
