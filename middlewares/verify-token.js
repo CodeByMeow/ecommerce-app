@@ -23,6 +23,6 @@ module.exports = async (req, res, next) => {
         req.user = user;
         next();
     } catch (error) {
-        throw Error(error.message);
+        throw new Error(error.message);
     }
 };
