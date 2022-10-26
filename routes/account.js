@@ -55,9 +55,11 @@ router.post("/", async (req, res) => {
 
 router.get("/profile", verifyTokenMdw, async (req, res) => {
     const user = req.user;
+
     return res.json({
         msg: "Get user successfully",
         data: user,
     });
 });
+
 module.exports = router;

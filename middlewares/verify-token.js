@@ -18,7 +18,11 @@ module.exports = async (req, res, next) => {
     }
 
     const { user_id } = decoded;
-    const user = await UserController.findUserById(user_id);
-    req.user = user;
-    next();
+    try {
+        const user = await UserController.findUserById(user_id);
+        req.user = user;
+        next();
+    } catch (error) {
+        throw Error(error.message);
+    }
 };
