@@ -53,7 +53,7 @@ router.post("/", async (req, res) => {
     }
 });
 
-router.get("/:username", verifyTokenMdw, async (req, res) => {
+router.get("/profile", verifyTokenMdw, async (req, res) => {
     const { user_id } = req.user;
     const user = await UserController.findUser(user_id);
 
@@ -61,7 +61,5 @@ router.get("/:username", verifyTokenMdw, async (req, res) => {
         msg: "Get user successfully",
         data: user,
     });
-
-    //get user
 });
 module.exports = router;
