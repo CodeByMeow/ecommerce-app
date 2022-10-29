@@ -7,7 +7,7 @@ const { MulterError } = require("multer");
 const MAXIMUM_FILE_SIZE = 2 * 1024 * 1024; // 2MB
 const VALID_FILE_TYPE = ["image/png", "image/jpg", "image/jpeg"];
 
-const imageUploadService = multer({
+const localUpload = multer({
     storage: storage(),
     fileFilter: filterFileType,
     limits: {
@@ -40,7 +40,6 @@ function generalFileName(_req, file, cb) {
 }
 
 function filterFileType(_req, file, cb) {
-    console.log(file.mimetype);
     const fileType = file.mimetype;
     const isValidFileType = VALID_FILE_TYPE.includes(fileType);
 
@@ -58,5 +57,5 @@ function filterFileType(_req, file, cb) {
 }
 
 module.exports = {
-    imageUploadService,
+    localUpload: localUpload,
 };

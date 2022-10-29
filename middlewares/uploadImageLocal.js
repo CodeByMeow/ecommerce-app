@@ -1,8 +1,8 @@
 const { MulterError } = require("multer");
-const { imageUploadService } = require("../services/imageUploadLocalService");
+const { localUpload } = require("../services/localUploadService");
 
 const uploadImageToLocal = (req, res, next) => {
-    const uploader = imageUploadService.single("image");
+    const uploader = localUpload.single("image");
     uploader(req, res, (error) => {
         if (error instanceof MulterError) {
             return res.status(400).json({
