@@ -1,18 +1,16 @@
 const express = require("express");
 const router = express.Router();
+const userShema = require("../validateSchema/userSchema.json");
 
 const UserController = require("../controllers/userController");
 const { hashPassword } = require("../utils/pwdUtil");
 const { checkMissing } = require("../utils/validate");
 const jwt = require("../utils/jwt");
 const verifyTokenMdw = require("../middlewares/verify-token");
+const validateInputMdw = require("../middlewares/validate-input");
 
-router.post("/", async (req, res) => {
+router.post("/", validateInputMdw(userShema), async (req, res) => {
     const { fullname, username, email, password } = req.body;
-
-    if (checkMissing(fullname, email, password, username)) {
-        return res.json({ msg: "Missing required keys" });
-    }
 
     try {
         const emailExist = await UserController.isEmailExisted(email);
