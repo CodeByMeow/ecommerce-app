@@ -1,10 +1,24 @@
-import "./App.css";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-function App() {
+import HomePage from "./pages/HomePage/HomePage";
+import Signin from "./pages/Signin/Signin";
+import Signup from "./pages/Signup/Signup";
+import SearchPage from "./pages/SearchPage/SearchPage";
+import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
+
+import "./App.css";
+const App= ()=> {
   return (
-    <div className="App">
-      <div className="flex"></div>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/signin" element={<Signin />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/search" element={<SearchPage />} />
+        <Route path="/products:/id" ></Route>
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </Router>
   );
 }
 
