@@ -4,7 +4,6 @@ const userShema = require("../validateSchema/userSchema.json");
 
 const UserController = require("../controllers/userController");
 const { hashPassword } = require("../utils/pwdUtil");
-const { checkMissing } = require("../utils/validate");
 const jwt = require("../utils/jwt");
 const verifyTokenMdw = require("../middlewares/verify-token");
 const validateInputMdw = require("../middlewares/validate-input");
