@@ -6,8 +6,8 @@ import { Bars3Icon, MagnifyingGlassIcon, ShoppingBagIcon, XMarkIcon } from '@her
 const navigation = {
   categories: [
     {
-      id: 'women',
-      name: 'Women',
+      id: 'shopping',
+      name: 'Shopping',
       featured: [
         {
           name: 'New Arrivals',
@@ -16,7 +16,7 @@ const navigation = {
           imageAlt: 'Models sitting back to back, wearing Basic Tee in black and bone.',
         },
         {
-          name: 'Basic Tees',
+          name: 'New Arrivals',
           href: '#',
           imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-category-02.jpg',
           imageAlt: 'Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.',
@@ -24,23 +24,19 @@ const navigation = {
       ],
       sections: [
         {
-          id: 'clothing',
-          name: 'Clothing',
+          id: 'iphone',
+          name: 'Iphone',
           items: [
-            { name: 'Tops', href: '#' },
-            { name: 'Dresses', href: '#' },
-            { name: 'Pants', href: '#' },
-            { name: 'Denim', href: '#' },
-            { name: 'Sweaters', href: '#' },
-            { name: 'T-Shirts', href: '#' },
-            { name: 'Jackets', href: '#' },
-            { name: 'Activewear', href: '#' },
-            { name: 'Browse All', href: '#' },
+            { name: 'Iphone11', href: '#' },
+            { name: 'Iphone12', href: '#' },
+            { name: 'Iphone13', href: '#' },
+            { name: 'Iphone13 ProMax', href: '#' },
+            { name: 'Iphone14', href: '#' },
           ],
         },
         {
-          id: 'accessories',
-          name: 'Accessories',
+          id: 'samsung',
+          name: 'Samsung',
           items: [
             { name: 'Watches', href: '#' },
             { name: 'Wallets', href: '#' },
@@ -51,8 +47,8 @@ const navigation = {
           ],
         },
         {
-          id: 'brands',
-          name: 'Brands',
+          id: 'oppo',
+          name: 'Oppo',
           items: [
             { name: 'Full Nelson', href: '#' },
             { name: 'My Way', href: '#' },
@@ -63,7 +59,7 @@ const navigation = {
         },
       ],
     },
-    {
+    /* {
       id: 'men',
       name: 'Men',
       featured: [
@@ -118,11 +114,11 @@ const navigation = {
           ],
         },
       ],
-    },
+    }, */
   ],
   pages: [
-    { name: 'Company', href: '#' },
-    { name: 'Stores', href: '#' },
+    { name: 'About Us', href: '#' },
+    { name: 'Policy', href: '#' },
   ],
 }
 
@@ -418,11 +414,11 @@ const Header = () => {
                 <div className="hidden lg:ml-8 lg:flex">
                   <a href="#" className="flex items-center text-gray-700 hover:text-gray-800">
                     <img
-                      src="https://tailwindui.com/img/flags/flag-canada.svg"
+                      src="/assets/vietnam-flag-icon.png"
                       alt=""
                       className="block h-auto w-5 flex-shrink-0"
                     />
-                    <span className="ml-3 block text-sm font-medium">CAD</span>
+                    <span className="ml-3 block text-sm font-medium">VND</span>
                     <span className="sr-only">, change currency</span>
                   </a>
                 </div>
