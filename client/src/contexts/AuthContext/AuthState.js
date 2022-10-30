@@ -18,7 +18,9 @@ const AuthState = (props) => {
         state,
         dispatch,
       }}
-    ></AuthContext.Provider>
+    >
+      {props.children}
+    </AuthContext.Provider>
   );
 };
 
