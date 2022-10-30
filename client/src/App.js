@@ -7,7 +7,8 @@ import SearchPage from "./pages/SearchPage/SearchPage";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 
 import "./App.css";
-const App= ()=> {
+import AboutContainer from "./Page/AboutContainer/AboutContainer";
+const App = () => {
   return (
     <Router>
       <Routes>
@@ -15,11 +16,12 @@ const App= ()=> {
         <Route path="/signin" element={<Signin />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/search" element={<SearchPage />} />
-        <Route path="/products:/id" ></Route>
+        <Route path="/products:/id"></Route>
+        <Route path="/about" element={<AboutContainer />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Router>
   );
-}
+};
 
 export default App;
