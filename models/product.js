@@ -17,9 +17,15 @@ const productSchema = new mongoose.Schema({
     fullDesc: {
         type: String,
     },
-    quantity: {
-        type: Number,
-        default: 1,
+    stock: {
+        quantity: {
+            type: Number,
+            default: 0,
+        },
+        remain: {
+            type: Number,
+            default: 0,
+        },
     },
     color: [
         {
@@ -48,6 +54,7 @@ const productSchema = new mongoose.Schema({
         type: String,
         require: true,
     },
+    gallery_image: [{ type: String }],
 });
 
 module.exports = mongoose.model("product", productSchema);

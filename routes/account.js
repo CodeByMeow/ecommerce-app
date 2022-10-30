@@ -49,7 +49,7 @@ router.post("/", async (req, res) => {
             token,
         });
     } catch (error) {
-        throw Error(error.message);
+        throw new Error(error.message);
     }
 });
 
