@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const slugify = require("slugify");
+const paginate = require("mongoose-paginate-v2");
 
 const categorySchema = new mongoose.Schema({
     title: {
@@ -27,5 +28,7 @@ const categorySchema = new mongoose.Schema({
         type: String,
     },
 });
+
+categorySchema.plugin(paginate);
 
 module.exports = mongoose.model("category", categorySchema);

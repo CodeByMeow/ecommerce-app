@@ -1,15 +1,15 @@
 const CategoryModel = require("../models/category");
 
 const getById = (id) => {
-    return CategoryController.findById(id);
+    return CategoryModel.findById(id);
 };
 
 const getAll = () => {
-    return CategoryController.find();
+    return CategoryModel.find();
 };
 
 const findOne = (param) => {
-    return CategoryController.findOne(param);
+    return CategoryModel.findOne(param);
 };
 
 const create = (category) => {
