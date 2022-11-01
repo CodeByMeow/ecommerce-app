@@ -9,7 +9,6 @@ const categorySchema = new mongoose.Schema({
     },
     shortDesc: {
         type: String,
-        require: true,
     },
     longDesc: {
         type: String,
