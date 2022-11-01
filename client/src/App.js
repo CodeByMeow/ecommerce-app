@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 
@@ -10,7 +11,9 @@ import CategoryPage from "./pages/CategoryPage/CategoryPage";
 
 import AuthState from "./contexts/AuthContext/AuthState";
 
+//
 import "./App.css";
+
 const App = () => {
   return (
     <HelmetProvider>

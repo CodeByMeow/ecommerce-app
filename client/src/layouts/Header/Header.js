@@ -146,8 +146,8 @@ const Header = () => {
                                   className="object-cover object-center"
                                 />
                               </div>
-                              <a
-                                href={item.path}
+                              <Link
+                                to={`/products${item.path}`}
                                 className="mt-6 block font-medium text-gray-900"
                               >
                                 <span
@@ -155,7 +155,7 @@ const Header = () => {
                                   aria-hidden="true"
                                 />
                                 {item.name}
-                              </a>
+                              </Link>
                               <p aria-hidden="true" className="mt-1">
                                 Shop now
                               </p>
@@ -196,32 +196,32 @@ const Header = () => {
                 <div className="space-y-6 border-t border-gray-200 py-6 px-4">
                   {navigation.pages.map((page) => (
                     <div key={page.name} className="flow-root">
-                      <a
-                        href={page.href}
+                      <Link
+                        to={page.path}
                         className="-m-2 block p-2 font-medium text-gray-900"
                       >
                         {page.name}
-                      </a>
+                      </Link>
                     </div>
                   ))}
                 </div>
 
                 <div className="space-y-6 border-t border-gray-200 py-6 px-4">
                   <div className="flow-root">
-                    <a
-                      href="#"
+                    <Link
+                      to="/signin"
                       className="-m-2 block p-2 font-medium text-gray-900"
                     >
                       Sign in
-                    </a>
+                    </Link>
                   </div>
                   <div className="flow-root">
-                    <a
-                      href="#"
+                    <Link
+                      to="/signup"
                       className="-m-2 block p-2 font-medium text-gray-900"
                     >
                       Create account
-                    </a>
+                    </Link>
                   </div>
                 </div>
 
@@ -355,8 +355,8 @@ const Header = () => {
                                             className="object-cover object-center"
                                           />
                                         </div>
-                                        <a
-                                          href={item.path}
+                                        <Link
+                                          to={`/products${item.path}`}
                                           className="mt-6 block font-medium text-gray-900"
                                         >
                                           <span
@@ -364,7 +364,7 @@ const Header = () => {
                                             aria-hidden="true"
                                           />
                                           {item.name}
-                                        </a>
+                                        </Link>
                                         <p aria-hidden="true" className="mt-1">
                                           Shop now
                                         </p>
@@ -381,32 +381,32 @@ const Header = () => {
                   ))}
 
                   {navigation.pages.map((page) => (
-                    <a
+                    <Link
                       key={page.name}
-                      href={page.path}
+                      to={page.path}
                       className="flex items-center text-sm font-medium text-gray-800 hover:text-indigo-700"
                     >
                       {page.name}
-                    </a>
+                    </Link>
                   ))}
                 </div>
               </Popover.Group>
 
               <div className="ml-auto flex items-center">
                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                  <a
-                    href="#"
+                  <Link
+                    to="/signin"
                     className="text-sm font-medium text-gray-800 hover:text-indigo-700"
                   >
                     Sign in
-                  </a>
+                  </Link>
                   <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
-                  <a
-                    href="#"
+                  <Link
+                    to="/signup"
                     className="text-sm font-medium text-gray-800 hover:text-indigo-700"
                   >
                     Create account
-                  </a>
+                  </Link>
                 </div>
 
                 <div className="hidden lg:ml-8 lg:flex">
