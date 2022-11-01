@@ -62,12 +62,15 @@ router.get("/profile", verifyTokenMdw, async (req, res) => {
 router.patch("/profile", verifyTokenMdw, async (req, res) => {
     const { _id } = req.user;
     const fieldNeedUpdate = req.body;
-    const updated = await UserController.updateById(_id, fieldNeedUpdate);
-
-    return res.json({
-        msg: "User updated successfully",
-        data: updated,
-    });
+    try {
+        const updated = await UserController.updateById(_id, fieldNeedUpdate);
+        return res.json({
+            msg: "User updated successfully",
+            data: updated,
+        });
+    } catch (error) {
+        throw new Error(error.message);
+    }
 });
 
 module.exports = router;
