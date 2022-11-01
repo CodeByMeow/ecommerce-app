@@ -1,10 +1,11 @@
 import React from "react";
 import PageContainer from "../../layouts/PageContainer/PageContainer";
+import Slider from "../../components/Slider/Slider";
 
 const HomePage = () => {
   return (
     <PageContainer title="Mobile Shopping Store">
-      <div className="h-full mx-auto py-8 px-4">This is HomePage</div>
+      <Slider />
     </PageContainer>
   );
 };

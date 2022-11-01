@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --swiper-navigation-size: 30px;
+  --swiper-theme-color: #4f46e5;
+}
+
+html {
+  font-size: 18px;
+  font-family: "Garet Regular", "Segoe UI", Roboto, "Helvetica Neue", Arial,
+    "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol", "Noto Color Emoji";
+}

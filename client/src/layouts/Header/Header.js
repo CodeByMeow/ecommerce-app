@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Fragment, useState } from "react";
+import { Link } from "react-router-dom";
 import { Dialog, Popover, Tab, Transition } from "@headlessui/react";
 import {
   Bars3Icon,
@@ -8,126 +9,54 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 
+// style
+import "./Header.css";
+
 const navigation = {
   categories: [
     {
-      id: "shopping",
-      name: "Shopping",
+      id: "shop",
+      name: "Shop",
       featured: [
         {
-          name: "New Arrivals",
-          href: "#",
-          imageSrc:
-            "https://tailwindui.com/img/ecommerce-images/mega-menu-category-01.jpg",
+          name: "iPhone 14 Series",
+          path: "#",
+          imageSrc: "./assets/apple/iPhone-14-plus-midnight-650x650.png",
           imageAlt:
             "Models sitting back to back, wearing Basic Tee in black and bone.",
         },
         {
-          name: "New Arrivals",
-          href: "#",
-          imageSrc:
-            "https://tailwindui.com/img/ecommerce-images/mega-menu-category-02.jpg",
+          name: "iPhone 13 Series",
+          path: "#",
+          imageSrc: "./assets/apple/iphone-14-pro-trang2-650x650.png",
+          imageAlt:
+            "Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.",
+        },
+        {
+          name: "Galaxy Z Flip4",
+          path: "#",
+          imageSrc: "./assets/samsung/samsung-galaxy-z-flip-4.jpeg",
           imageAlt:
             "Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.",
         },
       ],
       sections: [
         {
-          id: "iphone",
-          name: "Iphone",
+          id: "mobile",
+          name: "mobile",
           items: [
-            { name: "Iphone11", href: "#" },
-            { name: "Iphone12", href: "#" },
-            { name: "Iphone13", href: "#" },
-            { name: "Iphone13 ProMax", href: "#" },
-            { name: "Iphone14", href: "#" },
-          ],
-        },
-        {
-          id: "samsung",
-          name: "Samsung",
-          items: [
-            { name: "Watches", href: "#" },
-            { name: "Wallets", href: "#" },
-            { name: "Bags", href: "#" },
-            { name: "Sunglasses", href: "#" },
-            { name: "Hats", href: "#" },
-            { name: "Belts", href: "#" },
-          ],
-        },
-        {
-          id: "oppo",
-          name: "Oppo",
-          items: [
-            { name: "Full Nelson", href: "#" },
-            { name: "My Way", href: "#" },
-            { name: "Re-Arranged", href: "#" },
-            { name: "Counterfeit", href: "#" },
-            { name: "Significant Other", href: "#" },
+            { name: "Apple", path: "/apple" },
+            { name: "Samsung", path: "/samsung" },
+            { name: "Oppo", path: "/oppo" },
+            { name: "Pixel", path: "/pixel" },
           ],
         },
       ],
     },
-    /* {
-      id: 'men',
-      name: 'Men',
-      featured: [
-        {
-          name: 'New Arrivals',
-          href: '#',
-          imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-04-detail-product-shot-01.jpg',
-          imageAlt: 'Drawstring top with elastic loop closure and textured interior padding.',
-        },
-        {
-          name: 'Artwork Tees',
-          href: '#',
-          imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-02-image-card-06.jpg',
-          imageAlt:
-            'Three shirts in gray, white, and blue arranged on table with same line drawing of hands and shapes overlapping on front of shirt.',
-        },
-      ],
-      sections: [
-        {
-          id: 'clothing',
-          name: 'Clothing',
-          items: [
-            { name: 'Tops', href: '#' },
-            { name: 'Pants', href: '#' },
-            { name: 'Sweaters', href: '#' },
-            { name: 'T-Shirts', href: '#' },
-            { name: 'Jackets', href: '#' },
-            { name: 'Activewear', href: '#' },
-            { name: 'Browse All', href: '#' },
-          ],
-        },
-        {
-          id: 'accessories',
-          name: 'Accessories',
-          items: [
-            { name: 'Watches', href: '#' },
-            { name: 'Wallets', href: '#' },
-            { name: 'Bags', href: '#' },
-            { name: 'Sunglasses', href: '#' },
-            { name: 'Hats', href: '#' },
-            { name: 'Belts', href: '#' },
-          ],
-        },
-        {
-          id: 'brands',
-          name: 'Brands',
-          items: [
-            { name: 'Re-Arranged', href: '#' },
-            { name: 'Counterfeit', href: '#' },
-            { name: 'Full Nelson', href: '#' },
-            { name: 'My Way', href: '#' },
-          ],
-        },
-      ],
-    }, */
   ],
   pages: [
-    { name: "About Us", href: "#" },
-    { name: "Policy", href: "#" },
+    { name: "About Us", path: "/about-us" },
+    { name: "Policy", path: "/policy" },
   ],
 };
 
@@ -210,7 +139,7 @@ const Header = () => {
                               key={item.name}
                               className="group relative text-sm"
                             >
-                              <div className="aspect-w-1 aspect-h-1 overflow-hidden rounded-lg bg-gray-100 group-hover:opacity-75">
+                              <div className="aspect-w-1 aspect-h-1 overflow-hidden rounded-lg bg-gray-100 group-hover:scale-110 transition-all">
                                 <img
                                   src={item.imageSrc}
                                   alt={item.imageAlt}
@@ -218,7 +147,7 @@ const Header = () => {
                                 />
                               </div>
                               <a
-                                href={item.href}
+                                href={item.path}
                                 className="mt-6 block font-medium text-gray-900"
                               >
                                 <span
@@ -248,12 +177,12 @@ const Header = () => {
                             >
                               {section.items.map((item) => (
                                 <li key={item.name} className="flow-root">
-                                  <a
-                                    href={item.href}
+                                  <Link
+                                    to={`/products${item.path}`}
                                     className="-m-2 block p-2 text-gray-500"
                                   >
                                     {item.name}
-                                  </a>
+                                  </Link>
                                 </li>
                               ))}
                             </ul>
@@ -299,12 +228,12 @@ const Header = () => {
                 <div className="border-t border-gray-200 py-6 px-4">
                   <a href="#" className="-m-2 flex items-center p-2">
                     <img
-                      src="https://tailwindui.com/img/flags/flag-canada.svg"
-                      alt=""
+                      src="/assets/vietnam-flag-icon.png"
+                      alt="VND currency"
                       className="block h-auto w-5 flex-shrink-0"
                     />
                     <span className="ml-3 block text-base font-medium text-gray-900">
-                      CAD
+                      VND
                     </span>
                     <span className="sr-only">, change currency</span>
                   </a>
@@ -316,7 +245,7 @@ const Header = () => {
       </Transition.Root>
 
       <header className="relative bg-white">
-        <p className="flex h-10 items-center justify-center bg-indigo-600 px-4 text-sm font-medium text-white sm:px-6 lg:px-8">
+        <p className="flex h-10 text-center items-center justify-center bg-indigo-600 px-4 text-xs md:text-base font-bold text-white sm:px-6 lg:px-8">
           Get free delivery on orders over $100
         </p>
 
@@ -337,14 +266,13 @@ const Header = () => {
 
               {/* Logo */}
               <div className="ml-4 flex lg:ml-0">
-                <a href="#">
-                  <span className="sr-only">Your Company</span>
+                <Link to="/" className="tooltip" data-text="ECommerce website">
                   <img
                     className="h-8 w-auto"
                     src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
                     alt=""
                   />
-                </a>
+                </Link>
               </div>
 
               {/* Flyout menus */}
@@ -359,7 +287,7 @@ const Header = () => {
                               className={classNames(
                                 open
                                   ? "border-indigo-600 text-indigo-600"
-                                  : "border-transparent text-gray-700 hover:text-gray-800",
+                                  : "border-transparent text-gray-800 hover:text-indigo-700",
                                 "relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out"
                               )}
                             >
@@ -376,7 +304,7 @@ const Header = () => {
                             leaveFrom="opacity-100"
                             leaveTo="opacity-0"
                           >
-                            <Popover.Panel className="absolute inset-x-0 top-full text-sm text-gray-500">
+                            <Popover.Panel className="absolute inset-x-0 top-full text-sm text-gray-500 z-10">
                               {/* Presentational element used to render the bottom shadow, if we put the shadow on the actual panel it pokes out the top, so we use this shorter element to hide the top of the shadow */}
                               <div
                                 className="absolute inset-0 top-1/2 bg-white shadow"
@@ -385,70 +313,63 @@ const Header = () => {
 
                               <div className="relative bg-white">
                                 <div className="mx-auto max-w-7xl px-8">
-                                  <div className="grid grid-cols-2 gap-y-10 gap-x-8 py-16">
-                                    <div className="col-start-2 grid grid-cols-2 gap-x-8">
-                                      {category.featured.map((item) => (
-                                        <div
-                                          key={item.name}
-                                          className="group relative text-base sm:text-sm"
+                                  <div className="flex flex-wrap gap-y-4 gap-x-8 py-4">
+                                    {category.sections.map((section) => (
+                                      <div key={section.name} className="w-1/4">
+                                        {/* <p
+                                          id={`${section.name}-heading`}
+                                          className="font-medium text-gray-900"
                                         >
-                                          <div className="aspect-w-1 aspect-h-1 overflow-hidden rounded-lg bg-gray-100 group-hover:opacity-75">
-                                            <img
-                                              src={item.imageSrc}
-                                              alt={item.imageAlt}
-                                              className="object-cover object-center"
-                                            />
-                                          </div>
-                                          <a
-                                            href={item.href}
-                                            className="mt-6 block font-medium text-gray-900"
-                                          >
-                                            <span
-                                              className="absolute inset-0 z-10"
-                                              aria-hidden="true"
-                                            />
-                                            {item.name}
-                                          </a>
-                                          <p
-                                            aria-hidden="true"
-                                            className="mt-1"
-                                          >
-                                            Shop now
-                                          </p>
-                                        </div>
-                                      ))}
-                                    </div>
-                                    <div className="row-start-1 grid grid-cols-3 gap-y-10 gap-x-8 text-sm">
-                                      {category.sections.map((section) => (
-                                        <div key={section.name}>
-                                          <p
-                                            id={`${section.name}-heading`}
-                                            className="font-medium text-gray-900"
-                                          >
-                                            {section.name}
-                                          </p>
-                                          <ul
-                                            role="list"
-                                            aria-labelledby={`${section.name}-heading`}
-                                            className="mt-6 space-y-6 sm:mt-4 sm:space-y-4"
-                                          >
-                                            {section.items.map((item) => (
-                                              <li
-                                                key={item.name}
-                                                className="flex"
+                                          {section.name}
+                                        </p> */}
+                                        <ul
+                                          role="list"
+                                          aria-labelledby={`${section.name}-heading`}
+                                          className="mt-6 space-y-6 sm:mt-4 sm:space-y-4"
+                                        >
+                                          {section.items.map((item) => (
+                                            <li
+                                              key={item.name}
+                                              className="flex"
+                                            >
+                                              <Link
+                                                to={`/products${item.path}`}
+                                                className="hover:text-indigo-700"
                                               >
-                                                <a
-                                                  href={item.href}
-                                                  className="hover:text-gray-800"
-                                                >
-                                                  {item.name}
-                                                </a>
-                                              </li>
-                                            ))}
-                                          </ul>
+                                                {item.name}
+                                              </Link>
+                                            </li>
+                                          ))}
+                                        </ul>
+                                      </div>
+                                    ))}
+                                    {category.featured.map((item) => (
+                                      <div
+                                        key={item.name}
+                                        className="group relative text-base sm:text-sm"
+                                      >
+                                        <div className="w-32 aspect-w-1 aspect-h-1 overflow-hidden rounded-lg bg-gray-100 group-hover:scale-110 transition-all">
+                                          <img
+                                            src={item.imageSrc}
+                                            alt={item.imageAlt}
+                                            className="object-cover object-center"
+                                          />
                                         </div>
-                                      ))}
-                                    </div>
+                                        <a
+                                          href={item.path}
+                                          className="mt-6 block font-medium text-gray-900"
+                                        >
+                                          <span
+                                            className="absolute inset-0 z-10"
+                                            aria-hidden="true"
+                                          />
+                                          {item.name}
+                                        </a>
+                                        <p aria-hidden="true" className="mt-1">
+                                          Shop now
+                                        </p>
+                                      </div>
+                                    ))}
                                   </div>
                                 </div>
                               </div>
@@ -462,8 +383,8 @@ const Header = () => {
                   {navigation.pages.map((page) => (
                     <a
                       key={page.name}
-                      href={page.href}
-                      className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
+                      href={page.path}
+                      className="flex items-center text-sm font-medium text-gray-800 hover:text-indigo-700"
                     >
                       {page.name}
                     </a>
@@ -475,14 +396,14 @@ const Header = () => {
                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
                   <a
                     href="#"
-                    className="text-sm font-medium text-gray-700 hover:text-gray-800"
+                    className="text-sm font-medium text-gray-800 hover:text-indigo-700"
                   >
                     Sign in
                   </a>
                   <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
                   <a
                     href="#"
-                    className="text-sm font-medium text-gray-700 hover:text-gray-800"
+                    className="text-sm font-medium text-gray-800 hover:text-indigo-700"
                   >
                     Create account
                   </a>
@@ -491,11 +412,11 @@ const Header = () => {
                 <div className="hidden lg:ml-8 lg:flex">
                   <a
                     href="#"
-                    className="flex items-center text-gray-700 hover:text-gray-800"
+                    className="flex items-center text-gray-800 hover:text-indigo-700"
                   >
                     <img
                       src="/assets/vietnam-flag-icon.png"
-                      alt=""
+                      alt="VND currency"
                       className="block h-auto w-5 flex-shrink-0"
                     />
                     <span className="ml-3 block text-sm font-medium">VND</span>
@@ -513,7 +434,7 @@ const Header = () => {
                     />
                   </a>
                 </div>
-                
+
                 {/* Cart */}
                 <div className="ml-4 flow-root lg:ml-6">
                   <a href="#" className="group -m-2 flex items-center p-2">
@@ -521,7 +442,7 @@ const Header = () => {
                       className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
                       aria-hidden="true"
                     />
-                    <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
+                    <span className="ml-2 text-sm font-medium text-gray-800 group-hover:text-indigo-700">
                       0
                     </span>
                     <span className="sr-only">items in cart, view bag</span>

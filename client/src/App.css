@@ -1,0 +1,29 @@
+@font-face {
+  font-family: "Garet Regular";
+  src: url("./fonts/Garet/Garet-Book.woff") format("woff"),
+    url("./fonts/Garet/Garet-Book.otf") format("opentype"),
+    url("./fonts/Garet/Garet-Book.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Garet Heavy";
+  src: url("./fonts/Garet/Garet-Heavy.woff") format("woff"),
+    url("./fonts/Garet/Garet-Heavy.otf") format("opentype"),
+    url("./fonts/Garet/Garet-Heavy.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+button,
+a,
+input,
+select,
+textarea {
+  outline: none;
+}
+
+:is(button, a, input, select, textarea):hover {
+  outline: none;
+}

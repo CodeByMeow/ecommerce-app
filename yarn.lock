@@ -1277,6 +1277,11 @@
     "through" "^2.3.6"
     "wrap-ansi" "^7.0.0"
 
+"install@^0.13.0":
+  "integrity" "sha512-zDml/jzr2PKU9I8J/xyZBQn8rPCAY//UOYNmR01XwNwyfhEWObo2SWfSl1+0tm1u6PhxLwDnfsT/6jB7OUxqFA=="
+  "resolved" "https://registry.npmjs.org/install/-/install-0.13.0.tgz"
+  "version" "0.13.0"
+
 "ip@^1.1.5":
   "integrity" "sha512-PuExPYUiu6qMBQb4l06ecm6T6ujzhmh+MeJcW9wa89PoAz5pvd4zPgN5WJV104mb6S2T1AwNIAaB70JNrLQWhg=="
   "resolved" "https://registry.npmjs.org/ip/-/ip-1.1.8.tgz"

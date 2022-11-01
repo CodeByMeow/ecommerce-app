@@ -1,0 +1,60 @@
+.swiper {
+  width: 100%;
+  height: auto;
+  max-height: 72vh;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: auto;
+  /* aspect-ratio: 16/9; */
+  object-fit: cover;
+  object-position: center;
+}
+
+.swiper-button-next,
+.swiper-button-prev,
+.swiper-rtl .swiper-button-prev,
+.swiper-rtl .swiper-button-prev {
+  color: #ffffff;
+}
+
+.swiper-button-next {
+  right: 8px;
+}
+
+.swiper-button-prev {
+  left: 8px;
+}
+
+.swiper-button-next:after,
+.swiper-button-prev:after {
+  background-color: #4f46e5;
+  opacity: 0.5;
+  padding: 0.45rem;
+}
+
+.img-banner {
+  /* height: auto; */
+  /* aspect-ratio: 16/9; */
+  height: 68vh;
+  /* height: 100%; */
+}
+
+@media screen and (max-width: 920px) {
+  .swiper {
+    max-height: 50vh;
+  }
+  .img-banner {
+    height: auto;
+    aspect-ratio: 16/9;
+  }
+}
+
+@media screen and (max-width: 440px) {
+  .img-banner {
+    height: auto;
+    aspect-ratio: 16/9;
+  }
+}
