@@ -1,4 +1,5 @@
 const { default: slugify } = require("slugify");
+const { updateOne } = require("../models/category");
 const CategoryModel = require("../models/category");
 
 const getById = (id) => {
@@ -29,7 +30,16 @@ const create = async (category) => {
         slug = `${slug}-${tail}`;
     }
     const newCategory = new CategoryModel({ ...category, slug });
+
     return newCategory.save();
+};
+
+const updateById = async (id, fields) => {
+    const updated = await CategoryModel.findOneAndUpdate({ _id: id }, fields, {
+        new: true,
+    });
+
+    return updated;
 };
 
 module.exports = {
@@ -38,4 +48,5 @@ module.exports = {
     findOne,
     create,
     findBySlug,
+    updateById,
 };
