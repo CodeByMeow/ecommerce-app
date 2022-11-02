@@ -1,12 +1,19 @@
 const express = require("express");
+const jwt = require("jsonwebtoken");
 const router = express.Router();
 const userShema = require("../validateSchema/userSchema.json");
 
 const UserController = require("../controllers/userController");
-const { hashPassword } = require("../utils/pwdUtil");
-const jwt = require("../utils/jwt");
+const { hashPassword, comparePassword } = require("../utils/pwdUtil");
 const verifyTokenMdw = require("../middlewares/verify-token");
 const validateInputMdw = require("../middlewares/validate-input");
+const ACCESS_REFRESH_TOKEN_KEY = process.env.ACCESS_REFRESH_TOKEN_KEY;
+const SECRET_KEY = process.env.JWT_SECRET_KEY;
+const EXPIRED_TIME = process.env.JWT_EXPIRY_TIME;
+const REFRESH_SECRET = process.env.JWT_REFRESH_SECRET;
+const REFRESH_TIME = process.env.JWT_REFRESH_TIME;
+
+const refreshTokens = {};
 
 router.post("/", validateInputMdw(userShema), async (req, res) => {
     const { fullname, username, email, password } = req.body;
@@ -35,18 +42,80 @@ router.post("/", validateInputMdw(userShema), async (req, res) => {
 
         const userCreated = await UserController.create(newUser);
 
-        const token = jwt.sign({
+        const tokenContent = {
             username,
-            email,
             user_id: userCreated._id,
+        };
+        const token = jwt.sign(tokenContent, SECRET_KEY, {
+            expiresIn: EXPIRED_TIME,
         });
 
-        return res.status(201).json({
-            msg: "User create successfully",
-            token,
+        const refreshToken = jwt.sign(tokenContent, REFRESH_SECRET, {
+            expiresIn: REFRESH_TIME,
         });
+
+        const response = {
+            msg: "User registered successfully!",
+            token,
+            refreshToken,
+        };
+
+        refreshTokens[refreshToken] = response;
+
+        return res.status(201).json(response);
     } catch (error) {
         throw new Error(error.message);
+    }
+});
+
+router.post("/login", async (req, res) => {
+    const { username, password } = req.body;
+    if (!username || !password) {
+        return res.status(400).json({
+            msg: "missing required fields",
+        });
+    }
+    try {
+        const isUsernameExisted = await UserController.isUsernameExisted(
+            username
+        );
+        if (!isUsernameExisted) {
+            return res.status(403).json({
+                msg: "username not exist",
+            });
+        }
+
+        const user = await UserController.findUserByUsername(username);
+        isPasswordMatch = comparePassword(password, user.password);
+        if (isPasswordMatch) {
+            const tokenContent = {
+                username,
+                user_id: user._id,
+            };
+            const token = jwt.sign(tokenContent, SECRET_KEY, {
+                expiresIn: EXPIRED_TIME,
+            });
+
+            const refreshToken = jwt.sign(tokenContent, REFRESH_SECRET, {
+                expiresIn: REFRESH_TIME,
+            });
+
+            const response = {
+                msg: "Logged In",
+                token,
+                refreshToken,
+            };
+
+            refreshTokens[refreshToken] = response;
+
+            return res.status(201).json(response);
+        } else {
+            return res.status(403).json({
+                msg: "Username or password invalid",
+            });
+        }
+    } catch (err) {
+        throw new Error(err.message);
     }
 });
 
