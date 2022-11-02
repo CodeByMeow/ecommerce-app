@@ -7,14 +7,11 @@ module.exports = async (req, res, next) => {
     const token = req.headers[ACCESS_TOKEN_KEY];
 
     try {
-        jwt.verify(token, JWT_SECRECT_KEY, (err, decoded) => {
-            if (err)
-                res.status(400).json({
-                    msg: "Token expired",
-                });
+        const decoded = jwt.verify(token, JWT_SECRECT_KEY);
+        if (decoded) {
             req.decoded = decoded;
             next();
-        });
+        }
     } catch (err) {
         res.status(401).send("Invalid token");
     }

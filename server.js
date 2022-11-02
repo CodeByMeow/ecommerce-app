@@ -13,7 +13,7 @@ app.use(cors("*"));
 app.use("/api/v1", routes);
 
 app.use((error, _req, res, next) => {
-    // console.log(error.stack);
+    console.log(error.stack);
     return res.status(500).send(error);
 });
 
