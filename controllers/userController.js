@@ -12,12 +12,14 @@ const create = (user) => {
 const isEmailExisted = async (email) => {
     const user = await findOne({ email });
     if (user) return true;
+
     return false;
 };
 
 const isUsernameExisted = async (username) => {
     const user = await findOne({ username });
     if (user) return true;
+
     return false;
 };
 
@@ -34,12 +36,17 @@ const updateById = async (id, fields) => {
     return updated;
 };
 
+const findUserByUsername = (username) => {
+    return findOne({ username });
+};
+
 const UserController = {
     create,
     updateById,
     isEmailExisted,
     isUsernameExisted,
     findUserById,
+    findUserByUsername,
 };
 
 module.exports = UserController;

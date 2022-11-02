@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const slugify = require("slugify");
+const paginate = require("mongoose-paginate-v2");
 
 const productSchema = new mongoose.Schema({
     category: {
@@ -56,5 +57,7 @@ const productSchema = new mongoose.Schema({
     },
     gallery_image: [{ type: String }],
 });
+
+productSchema.plugin(paginate);
 
 module.exports = mongoose.model("product", productSchema);
