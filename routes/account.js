@@ -51,7 +51,8 @@ router.post("/", validateInputMdw(userShema), async (req, res) => {
 });
 
 router.get("/profile", verifyTokenMdw, async (req, res) => {
-    const user = req.user;
+    const { user_id } = req.decoded;
+    const user = await UserController.findUserById(user_id);
 
     return res.json({
         msg: "Get user successfully",
@@ -60,10 +61,13 @@ router.get("/profile", verifyTokenMdw, async (req, res) => {
 });
 
 router.patch("/profile", verifyTokenMdw, async (req, res) => {
-    const { _id } = req.user;
+    const { user_id } = req.decoded;
     const fieldNeedUpdate = req.body;
     try {
-        const updated = await UserController.updateById(_id, fieldNeedUpdate);
+        const updated = await UserController.updateById(
+            user_id,
+            fieldNeedUpdate
+        );
         return res.json({
             msg: "User updated successfully",
             data: updated,
