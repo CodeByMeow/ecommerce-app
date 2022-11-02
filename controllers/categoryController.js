@@ -1,6 +1,6 @@
-const { default: slugify } = require("slugify");
 const { updateOne } = require("../models/category");
 const CategoryModel = require("../models/category");
+const { generalSlug, addTailSlug } = require("../utils/url");
 
 const getById = (id) => {
     return CategoryModel.findById(id);
@@ -14,20 +14,15 @@ const findOne = (param) => {
     return CategoryModel.findOne(param);
 };
 
-const generalSlug = (title) => {
-    return slugify(title);
-};
-
-const findBySlug = (slug) => {
-    return getAll({ slug });
+const countSameSlug = (slug) => {
+    return getAll({ slug: { $regex: slug } }).count();
 };
 
 const create = async (category) => {
     let slug = generalSlug(category.title);
-    const sameSlug = await findBySlug(slug);
-    if (sameSlug.length > 0) {
-        const tail = sameSlug.length + 1;
-        slug = `${slug}-${tail}`;
+    const sameSlug = await countSameSlug(slug);
+    if (sameSlug > 0) {
+        slug = addTailSlug(slug, sameSlug + 1);
     }
     const newCategory = new CategoryModel({ ...category, slug });
 
@@ -47,6 +42,6 @@ module.exports = {
     getAll,
     findOne,
     create,
-    findBySlug,
+    findBySlug: countSameSlug,
     updateById,
 };
