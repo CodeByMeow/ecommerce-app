@@ -1,7 +1,7 @@
 .swiper {
   width: 100%;
   height: auto;
-  max-height: 72vh;
+  /* max-height: 72vh; */
 }
 
 .swiper-slide img {
@@ -21,11 +21,11 @@
 }
 
 .swiper-button-next {
-  right: 8px;
+  right: 32px;
 }
 
 .swiper-button-prev {
-  left: 8px;
+  left: 32px;
 }
 
 .swiper-button-next:after,
@@ -36,25 +36,41 @@
 }
 
 .img-banner {
-  /* height: auto; */
-  /* aspect-ratio: 16/9; */
-  height: 68vh;
-  /* height: 100%; */
+  height: 82vh;
 }
 
-@media screen and (max-width: 920px) {
-  .swiper {
-    max-height: 50vh;
+@media screen and (max-width: 1440px) {
+  .img-banner {
+    height: 68vh;
   }
+}
+
+@media screen and (max-width: 1024px) {
+  .img-banner {
+    height: 56vh;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .img-banner {
+    height: 42vh;
+  }
+}
+
+@media screen and (max-width: 600px) {
   .img-banner {
     height: auto;
     aspect-ratio: 16/9;
   }
-}
+  .swiper-button-next:after,
+  .swiper-button-prev:after {
+    font-size: 1rem;
+  }
+  .swiper-button-next {
+    right: 0px;
+  }
 
-@media screen and (max-width: 440px) {
-  .img-banner {
-    height: auto;
-    aspect-ratio: 16/9;
+  .swiper-button-prev {
+    left: 0px;
   }
 }

@@ -22,15 +22,20 @@ const Slider = () => {
   const slides = contentSlides.map((slide) => {
     return (
       <SwiperSlide>
-        <div
-          className="w-full img-banner"
-          style={{
-            backgroundImage: `url('${slide}')`,
-            backgroundSize: "cover",
-            backgroundPosition: "top center",
-          }}
-        >
-          {/* <img src={slide} alt="hero banner"></img> */}
+        <div className="w-full img-banner">
+          <div
+            className="w-full h-full"
+            style={{
+              backgroundImage: `url('${slide}')`,
+              backgroundSize: "cover",
+              backgroundPosition: "top center",
+              backgroundRepeat: "no-repeat",
+              backgroundColor: "#8481b0",
+              backgroundBlendMode: "fixed",
+            }}
+          >
+            {/* <img src={slide} alt="hero banner"></img> */}
+          </div>
         </div>
       </SwiperSlide>
     );
@@ -44,10 +49,10 @@ const Slider = () => {
         grabCursor={true}
         centeredSlides={true}
         loop={true}
-        autoplay={{
+        /* autoplay={{
           delay: 3000,
           disableOnInteraction: false,
-        }}
+        }} */
         // autoplay={false}
         pagination={{
           clickable: true,

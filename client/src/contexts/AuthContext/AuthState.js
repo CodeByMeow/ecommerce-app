@@ -1,20 +1,50 @@
-import { useContext, useReducer } from "react";
+import { useEffect, useContext, useReducer } from "react";
 import authReducer from "./AuthReducer";
 import AuthContext from "./AuthContext";
 
-// data
-import { products } from "../../utils/data.js";
+import { SIGN_IN, GET_USER_INFO, LOG_OUT } from "../../contexts/types.js";
+import actionCreator from "../../utils/actionCreator.js";
+import authService from "../../services/authService.js";
+import axiosInstance from "../../services/axiosInstance.js";
 
 const initialState = {
-  token: localStorage.getItem("token"),
-  isAuthenticated: null,
+  token: localStorage.getItem("token") || null,
+  isAuthenticated: !!localStorage.getItem("token") || false,
   authLoading: false,
   user: null,
   authError: null,
-  products: products,
 };
+
 const AuthState = (props) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
+
+  // implement token in localStorage to Header in axiosInstance to call API POST method
+  const setAuthToken = async (token) => {
+    if (token) {
+      axiosInstance.defaults.headers.common["token"] = token;
+    }
+  };
+
+  /* check if token was stored in localStorage is expired or not */
+  const verifyToken = async () => {
+    try {
+      const authorizedToken = await authService.verifyToken();
+      console.log(authorizedToken.data.msg);
+
+      // if token does not expired or invalid => dispatch to global state
+      dispatch(actionCreator(GET_USER_INFO, authorizedToken.data));
+    } catch (err) {
+      err.response.data.msg
+        ? console.log(err.response.data.msg)
+        : console.log(err.response.data);
+      dispatch(actionCreator(LOG_OUT));
+    }
+  };
+
+  useEffect(() => {
+    setAuthToken(state.token);
+    verifyToken();
+  }, []);
 
   return (
     <AuthContext.Provider

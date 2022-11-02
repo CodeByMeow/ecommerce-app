@@ -10,13 +10,13 @@ const HomePage = () => {
     <PageContainer title="Mobile Shopping Store">
       <Slider />
       <ProductList />
-      <div className="container mx-auto py-6 px-16 columns-2">
-        <div>
+      <div className="container mx-auto py-6 px-6 md:px-16 columns-1 md:columns-2">
+        <div className="w-full">
           <img src="/assets/cols-2-left-img.jpg"></img>
         </div>
-        <div className="h-full flex flex-col gap-4">
-          <h3 className="text-2xl">About Us</h3>
-          <h2 className="introduction-title text-uppercase text-5xl text-indigo-600">
+        <div className="w-full h-full flex flex-col gap-4">
+          <h3 className="text-xl md:text-2xl">About Us</h3>
+          <h2 className="introduction-title text-uppercase text-3xl md:text-5xl text-indigo-600">
             Mollyjogger Story
           </h2>
           <p>

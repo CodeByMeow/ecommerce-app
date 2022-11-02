@@ -36,6 +36,7 @@
         "slugify": "^1.6.5"
     },
     "devDependencies": {
+        "@tailwindcss/line-clamp": "^0.4.2",
         "cz-conventional-changelog": "^3.3.0"
     },
     "config": {

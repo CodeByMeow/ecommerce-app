@@ -4,8 +4,12 @@ module.exports = {
   theme: {
     extend: {},
   },
+  variants: {
+    lineClamp: ["responsive", "hover"],
+  },
   plugins: [
     // ...
-    require('@tailwindcss/aspect-ratio'),
+    require("@tailwindcss/aspect-ratio"),
+    require("@tailwindcss/line-clamp"),
   ],
 };
