@@ -9,7 +9,7 @@ const verifyTokenMdw = require("../middlewares/verify-token");
 const validateInputMdw = require("../middlewares/validate-input");
 const ACCESS_REFRESH_TOKEN_KEY = process.env.ACCESS_REFRESH_TOKEN_KEY;
 const SECRET_KEY = process.env.JWT_SECRET_KEY;
-const EXPIRED_TIME = process.env.JWT_EXPIRY_TIME;
+const EXPIRY_TIME = process.env.JWT_EXPIRY_TIME;
 const REFRESH_SECRET = process.env.JWT_REFRESH_SECRET;
 const REFRESH_TIME = process.env.JWT_REFRESH_TIME;
 
@@ -47,7 +47,7 @@ router.post("/", validateInputMdw(userShema), async (req, res) => {
             user_id: userCreated._id,
         };
         const token = jwt.sign(tokenContent, SECRET_KEY, {
-            expiresIn: EXPIRED_TIME,
+            expiresIn: EXPIRY_TIME,
         });
 
         const refreshToken = jwt.sign(tokenContent, REFRESH_SECRET, {
@@ -86,14 +86,14 @@ router.post("/login", async (req, res) => {
         }
 
         const user = await UserController.findUserByUsername(username);
-        isPasswordMatch = comparePassword(password, user.password);
+        isPasswordMatch = await comparePassword(password, user.password);
         if (isPasswordMatch) {
             const tokenContent = {
                 username,
                 user_id: user._id,
             };
             const token = jwt.sign(tokenContent, SECRET_KEY, {
-                expiresIn: EXPIRED_TIME,
+                expiresIn: EXPIRY_TIME,
             });
 
             const refreshToken = jwt.sign(tokenContent, REFRESH_SECRET, {
@@ -108,7 +108,7 @@ router.post("/login", async (req, res) => {
 
             refreshTokens[refreshToken] = response;
 
-            return res.status(201).json(response);
+            return res.status(200).json(response);
         } else {
             return res.status(403).json({
                 msg: "Username or password invalid",
@@ -127,6 +127,36 @@ router.get("/profile", verifyTokenMdw, async (req, res) => {
         msg: "Get user successfully",
         data: user,
     });
+});
+
+router.post("/token", async (req, res) => {
+    const refreshToken = req.body[ACCESS_REFRESH_TOKEN_KEY];
+    if ((refreshToken && refreshToken in refreshTokens) || 1) {
+        try {
+            const decoded = jwt.verify(refreshToken, REFRESH_SECRET);
+            if (decoded) {
+                const { username, user_id } = decoded;
+                const token = jwt.sign({ username, user_id }, SECRET_KEY, {
+                    expiresIn: EXPIRY_TIME,
+                });
+
+                const response = {
+                    token,
+                };
+
+                refreshTokens[refreshToken].token = token;
+
+                return res.json(response);
+            }
+        } catch (error) {
+            console.log(error);
+            return res.status(403).json({
+                msg: "Invalid token",
+            });
+        }
+    } else {
+        res.status(404).send("Invalid request");
+    }
 });
 
 router.patch("/profile", verifyTokenMdw, async (req, res) => {
