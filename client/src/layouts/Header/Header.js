@@ -7,6 +7,7 @@ import {
   ShoppingBagIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
+import { Link } from "react-router-dom";
 const navigation = {
   categories: [
     {
@@ -125,7 +126,7 @@ const navigation = {
     }, */
   ],
   pages: [
-    { name: "About Us", href: "#" },
+    { name: "About Us", href: "/about-us" },
     { name: "Policy", href: "#" },
   ],
 };
@@ -266,8 +267,8 @@ const Header = () => {
                 <div className="space-y-6 border-t border-gray-200 py-6 px-4">
                   {navigation.pages.map((page) => (
                     <div key={page.name} className="flow-root">
-                      <a
-                        href={page.href}
+                      <Link
+                        to={page.href}
                         className="-m-2 block p-2 font-medium text-gray-900"
                       >
                         {page.name}
@@ -512,7 +513,7 @@ const Header = () => {
                     />
                   </a>
                 </div>
-                
+
                 {/* Cart */}
                 <div className="ml-4 flow-root lg:ml-6">
                   <a href="#" className="group -m-2 flex items-center p-2">

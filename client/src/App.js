@@ -11,6 +11,7 @@ import AboutPage from "./pages/AboutPage/About";
 import AuthState from "./contexts/AuthContext/AuthState";
 
 import "./App.css";
+import CartProduct from "./pages/CartProduct/CartProduct";
 const App = () => {
   return (
     <HelmetProvider>
@@ -22,7 +23,7 @@ const App = () => {
             <Route path="/signup" element={<Signup />} />
             <Route path="/search" element={<SearchPage />} />
             <Route path="/about-us" element={<AboutPage />} />
-
+            <Route path="/cart" element={<CartProduct />}></Route>
             <Route path="/products:/id"></Route>
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
