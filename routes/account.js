@@ -14,7 +14,49 @@ const REFRESH_SECRET = process.env.JWT_REFRESH_SECRET;
 const REFRESH_TIME = process.env.JWT_REFRESH_TIME;
 
 const refreshTokens = {};
-
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *       User:
+ *        type: object
+ *        properties:
+ *           fullname:
+ *               type: string
+ *               description: The user's full name.
+ *               example: Tom Cruise
+ *           username:
+ *               type: string
+ *               description: Username
+ *               example: admin
+ *           email:
+ *               type: string
+ *               description: Email
+ *               example: admin@example.com
+ *           password:
+ *               type: string
+ *               description: Password for login
+ *               example: admin123
+ *           address:
+ *               type: string
+ *               description: The user's address.
+ *               example: Ho Chi Minh City
+ * /account:
+ *   post:
+ *       tags:
+ *           - Account
+ *       summary: Register a new user
+ *       requestBody:
+ *           required: true
+ *           content:
+ *               application/json:
+ *                   schema:
+ *                       type: object
+ *                       $ref: '#/components/schemas/User'
+ *       responses:
+ *           201:
+ *               description: A new account registered
+ */
 router.post("/", validateInputMdw(userShema), async (req, res) => {
     const { fullname, username, email, password } = req.body;
 
@@ -68,6 +110,31 @@ router.post("/", validateInputMdw(userShema), async (req, res) => {
     }
 });
 
+/**
+ * @swagger
+ *   /login:
+ *       post:
+ *           tags:
+ *               - Account
+ *           summary: Login to user account
+ *           requestBody:
+ *               required: true,
+ *               content:
+ *                   application/json:
+ *                       schema:
+ *                           type: object
+ *                           properties:
+ *                               username:
+ *                                   type: string
+ *                                   description: The user's username
+ *                                   example: admin
+ *                               password:
+ *                                   type: string
+ *                                   description: The user's passwordj'
+ *                                   example: admin123
+ *
+ */
+
 router.post("/login", async (req, res) => {
     const { username, password } = req.body;
     if (!username || !password) {
@@ -118,7 +185,19 @@ router.post("/login", async (req, res) => {
         throw new Error(err.message);
     }
 });
+/**
+* @swagger
+*   /profile:
+*       get:
+*           security: 
+*               - APIKeyHeader: []
+*           tags:
+*               - Account
+*           summary: Get the user's profile
+*               
 
+*           
+*/
 router.get("/profile", verifyTokenMdw, async (req, res) => {
     const { user_id } = req.decoded;
     const user = await UserController.findUserById(user_id);
