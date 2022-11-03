@@ -45,10 +45,10 @@ const navigation = {
           id: "mobile",
           name: "mobile",
           items: [
-            { name: "Apple", path: "/apple" },
-            { name: "Samsung", path: "/samsung" },
-            { name: "Oppo", path: "/oppo" },
-            { name: "Pixel", path: "/pixel" },
+            { name: "Apple", path: "/search" },
+            { name: "Samsung", path: "/search" },
+            { name: "Oppo", path: "/search" },
+            { name: "Pixel", path: "/search" },
           ],
         },
       ],
@@ -147,7 +147,7 @@ const Header = () => {
                                 />
                               </div>
                               <Link
-                                to={`/products${item.path}`}
+                                to={`${item.path}`}
                                 className="mt-6 block font-medium text-gray-900"
                               >
                                 <span
@@ -178,7 +178,7 @@ const Header = () => {
                               {section.items.map((item) => (
                                 <li key={item.name} className="flow-root">
                                   <Link
-                                    to={`/products${item.path}`}
+                                    to={`${item.path}`}
                                     className="-m-2 block p-2 text-gray-500"
                                   >
                                     {item.name}
@@ -333,7 +333,7 @@ const Header = () => {
                                               className="flex"
                                             >
                                               <Link
-                                                to={`/products${item.path}`}
+                                                to={`${item.path}`}
                                                 className="hover:text-indigo-700"
                                               >
                                                 {item.name}
@@ -356,7 +356,7 @@ const Header = () => {
                                           />
                                         </div>
                                         <Link
-                                          to={`/products${item.path}`}
+                                          to={`${item.path}`}
                                           className="mt-6 block font-medium text-gray-900"
                                         >
                                           <span

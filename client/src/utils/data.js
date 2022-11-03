@@ -1,5 +1,6 @@
 export const products = [
   {
+    id: 1,
     category: "apple",
     title: "iPhone 14 Pro Max 128GB",
     shortDesc:
@@ -19,6 +20,7 @@ export const products = [
     gallery_image: "",
   },
   {
+    id: 2,
     category: "apple",
     title: "iPhone 14 Plus 128GB",
     shortDesc:
@@ -38,6 +40,7 @@ export const products = [
     gallery_image: "",
   },
   {
+    id: 3,
     category: "apple",
     title: "iPhone 13 Pro Max 128GB",
     shortDesc:
@@ -57,6 +60,7 @@ export const products = [
     gallery_image: "",
   },
   {
+    id: 4,
     category: "samsung",
     title: "Samsung Galaxy Z Flip4",
     shortDesc:
@@ -76,6 +80,7 @@ export const products = [
     gallery_image: "",
   },
   {
+    id: 5,
     category: "samsung",
     title: "Samsung Galaxy Z Fold 4 512GB",
     shortDesc:
@@ -96,6 +101,7 @@ export const products = [
     gallery_image: "",
   },
   {
+    id: 6,
     category: "apple",
     title: "iPhone 14 Pro Max 128GB",
     shortDesc:
@@ -115,6 +121,7 @@ export const products = [
     gallery_image: "",
   },
   {
+    id: 7,
     category: "apple",
     title: "iPhone 14 Plus 128GB",
     shortDesc:
@@ -134,6 +141,7 @@ export const products = [
     gallery_image: "",
   },
   {
+    id: 8,
     category: "samsung",
     title: "Samsung Galaxy Z Flip4",
     shortDesc:

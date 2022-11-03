@@ -1,11 +1,20 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
-import AuthContext from "../../contexts/AuthContext/AuthContext";
 
 import storeService from "../../services/storeService";
+import OverlayModal from "../OverlayModal/OverlayModal";
+
+// import "./ProductItem.css";
 
 const ProductItem = (props) => {
+  const [isShowModal, setShowModal] = useState(false);
+
+  const onHandleMouseEnter = () => {
+    console.log("Event: mouseenter");
+    setShowModal(true);
+  };
   const {
+    id,
     category,
     title,
     shortDesc,
@@ -17,10 +26,12 @@ const ProductItem = (props) => {
   } = props.product;
   return (
     <div
-      key={title}
-      className="group relative product-item px-4 py-4 rounded-xl flex flex-col"
+      key={id}
+      className="group relative product-item px-4 py-4 rounded-xl flex flex-col transition-all duration-300"
+      onMouseOver={() => setShowModal(true)}
+      onMouseLeave={() => setShowModal(false)}
     >
-      <div className="mx-auto overflow-hidden rounded-md group-hover:opacity-75  h-36 w-36 lg:w-full lg:h-auto lg:aspect-square">
+      <div className="mx-auto overflow-hidden rounded-md h-36 w-36 lg:w-full lg:h-auto lg:aspect-square">
         <Link to={slug}>
           <img
             src={image_url}
@@ -29,6 +40,7 @@ const ProductItem = (props) => {
           />
         </Link>
       </div>
+      <OverlayModal isShowModal={isShowModal} itemId={id} />
       <h3 className="text-base md:text-lg text-gray-900 font-extrabold mt-4 item-title line-clamp-2">
         <Link to={slug}>{title}</Link>
       </h3>

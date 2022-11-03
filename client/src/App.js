@@ -7,7 +7,7 @@ import SigninPage from "./pages/SigninPage/SigninPage";
 import SignupPage from "./pages/SignupPage/SignupPage";
 import SearchPage from "./pages/SearchPage/SearchPage";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
-import CategoryPage from "./pages/CategoryPage/CategoryPage";
+import ItemDetailPage from "./pages/ItemDetailPage/ItemDetailPage";
 import CartPage from "./pages/CartPage/CartPage";
 
 import PrivateRoute from "./components//PrivateRoute/PrivateRoute";
@@ -35,8 +35,7 @@ const App = () => {
               <Route path="/signin" element={<SigninPage />} />
               <Route path="/signup" element={<SignupPage />} />
               <Route path="/search" element={<SearchPage />} />
-              <Route path="/products/:category" element={<CategoryPage />} />
-              <Route path="/products/:id" />
+              <Route path="/products/:id" element={<ItemDetailPage />} />
               <Route
                 path="/cart"
                 element={<PrivateRoute component={CartPage} />}

@@ -13,11 +13,11 @@ app.use(cors("*"));
 app.use("/api/v1", routes);
 
 app.use((error, _req, res, _next) => {
-    console.log(error.stack);
-    return res.status(500).send(error);
+  console.log(error.stack);
+  return res.status(500).send(error);
 });
 
-const PORT = process.env.SERVER_PORT || 3001;
+const PORT = process.env.SERVER_PORT || 8888;
 app.listen(PORT, () => {
-    console.log(`server is runnning at port ${PORT}`);
+  console.log(`server is runnning at port ${PORT}`);
 });

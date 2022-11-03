@@ -13,7 +13,7 @@ const AuthServices = {
     return axiosInstance.post("/users", userInfo);
   },
   verifyToken: () => {
-    return axiosInstance.get("/auth");
+    return axiosInstance.get("/account");
   },
 };
 
