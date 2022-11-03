@@ -21,21 +21,21 @@ const navigation = {
         {
           name: "iPhone 14 Series",
           path: "/search",
-          imageSrc: "./assets/apple/iPhone-14-plus-midnight-650x650.png",
+          imageSrc: "/assets/apple/iPhone-14-plus-midnight-650x650.png",
           imageAlt:
             "Models sitting back to back, wearing Basic Tee in black and bone.",
         },
         {
           name: "iPhone 13 Series",
           path: "/search",
-          imageSrc: "./assets/apple/iphone-14-pro-trang2-650x650.png",
+          imageSrc: "/assets/apple/iphone-14-pro-trang2-650x650.png",
           imageAlt:
             "Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.",
         },
         {
           name: "Galaxy Z Flip4",
           path: "/search",
-          imageSrc: "./assets/samsung/samsung-galaxy-z-flip-4.jpeg",
+          imageSrc: "/assets/samsung/samsung-galaxy-z-flip-4.jpeg",
           imageAlt:
             "Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.",
         },
@@ -255,6 +255,7 @@ const Header = () => {
         >
           <div className="border-b border-gray-200">
             <div className="flex h-16 items-center">
+              {/* toggle button to open menu on small devices */}
               <button
                 type="button"
                 className="rounded-md bg-white p-2 text-gray-400 lg:hidden"
@@ -316,12 +317,6 @@ const Header = () => {
                                   <div className="flex flex-wrap gap-y-4 gap-x-8 py-4">
                                     {category.sections.map((section) => (
                                       <div key={section.name} className="w-1/4">
-                                        {/* <p
-                                          id={`${section.name}-heading`}
-                                          className="font-medium text-gray-900"
-                                        >
-                                          {section.name}
-                                        </p> */}
                                         <ul
                                           role="list"
                                           aria-labelledby={`${section.name}-heading`}

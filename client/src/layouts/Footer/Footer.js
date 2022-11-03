@@ -5,7 +5,7 @@ const Footer = () => {
   return (
     <div>
       <footer className="w-full bg-white absolute">
-        <div className="max-w-screen-xl px-4 py-12 mx-auto overflow-hidden sm:px-6 lg:px-8">
+        <div className="max-w-screen-xl py-6 md:py-12 md:px-6 lg:px-8 mx-auto overflow-hidden">
           <nav className="flex flex-wrap justify-center -mx-5">
             <div className="px-5 py-2">
               <Link

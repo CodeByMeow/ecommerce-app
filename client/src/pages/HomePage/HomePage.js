@@ -6,9 +6,14 @@ import ProductList from "../../components/ProductList/ProductList";
 import "./HomePage.css";
 
 const HomePage = () => {
+  const contentSlides = [
+    "/assets/banner/apple_banner.jpeg",
+    "/assets/banner/oppo_banner.jpeg",
+    "/assets/banner/samsung_zflip3_carousel_colorcombokv_ex_pc.jpeg",
+  ];
   return (
     <PageContainer title="Mobile Shopping Store">
-      <Slider />
+      <Slider contentSlides={contentSlides} />
       <ProductList />
       <div className="container mx-auto py-6 px-6 md:px-16 columns-1 md:columns-2">
         <div className="w-full">

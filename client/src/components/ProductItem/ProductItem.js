@@ -9,10 +9,6 @@ import OverlayModal from "../OverlayModal/OverlayModal";
 const ProductItem = (props) => {
   const [isShowModal, setShowModal] = useState(false);
 
-  const onHandleMouseEnter = () => {
-    console.log("Event: mouseenter");
-    setShowModal(true);
-  };
   const {
     id,
     category,
@@ -27,7 +23,7 @@ const ProductItem = (props) => {
   return (
     <div
       key={id}
-      className="group relative product-item px-4 py-4 rounded-xl flex flex-col transition-all duration-300"
+      className="group relative product-item px-4 py-4 rounded-xl flex flex-col"
       onMouseOver={() => setShowModal(true)}
       onMouseLeave={() => setShowModal(false)}
     >
@@ -40,7 +36,6 @@ const ProductItem = (props) => {
           />
         </Link>
       </div>
-      <OverlayModal isShowModal={isShowModal} itemId={id} />
       <h3 className="text-base md:text-lg text-gray-900 font-extrabold mt-4 item-title line-clamp-2">
         <Link to={slug}>{title}</Link>
       </h3>
@@ -56,6 +51,7 @@ const ProductItem = (props) => {
 
         <p className="text-sm text-gray-500">{color}</p>
       </div>
+      <OverlayModal isShowModal={isShowModal} itemId={id} />
     </div>
   );
 };

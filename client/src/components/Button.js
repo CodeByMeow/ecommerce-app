@@ -6,7 +6,7 @@ const customStyle = 'fontSize: "0.85rem", textTransform: "capitalize"';
 
 export default function Button({ onHandledClick, type, customClass, text }) {
   return (
-    <div>
+    <>
       <button
         type={type}
         onClick={onHandledClick}
@@ -15,8 +15,6 @@ export default function Button({ onHandledClick, type, customClass, text }) {
       >
         {text}
       </button>
-    </div>
+    </>
   );
 }
-
-<button></button>;
