@@ -20,21 +20,21 @@ const navigation = {
       featured: [
         {
           name: "iPhone 14 Series",
-          path: "#",
+          path: "/search",
           imageSrc: "./assets/apple/iPhone-14-plus-midnight-650x650.png",
           imageAlt:
             "Models sitting back to back, wearing Basic Tee in black and bone.",
         },
         {
           name: "iPhone 13 Series",
-          path: "#",
+          path: "/search",
           imageSrc: "./assets/apple/iphone-14-pro-trang2-650x650.png",
           imageAlt:
             "Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.",
         },
         {
           name: "Galaxy Z Flip4",
-          path: "#",
+          path: "/search",
           imageSrc: "./assets/samsung/samsung-galaxy-z-flip-4.jpeg",
           imageAlt:
             "Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.",
@@ -139,7 +139,7 @@ const Header = () => {
                               key={item.name}
                               className="group relative text-sm"
                             >
-                              <div className="aspect-w-1 aspect-h-1 overflow-hidden rounded-lg bg-gray-100 group-hover:scale-110 transition-all">
+                              <div className="aspect-w-1 aspect-h-1 overflow-hidden rounded-lg group-hover:scale-110 transition-all">
                                 <img
                                   src={item.imageSrc}
                                   alt={item.imageAlt}
@@ -348,7 +348,7 @@ const Header = () => {
                                         key={item.name}
                                         className="group relative text-base sm:text-sm"
                                       >
-                                        <div className="w-32 aspect-w-1 aspect-h-1 overflow-hidden rounded-lg bg-gray-100 group-hover:scale-110 transition-all">
+                                        <div className="w-32 aspect-w-1 aspect-h-1 overflow-hidden rounded-lg group-hover:scale-110 transition-all">
                                           <img
                                             src={item.imageSrc}
                                             alt={item.imageAlt}
