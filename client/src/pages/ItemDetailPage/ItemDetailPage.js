@@ -38,63 +38,65 @@ const ItemDetailPage = (props) => {
       <span className="text-rose-500">Out of stock</span>
     );
 
-  const contentSlides = [image_url];
-
   return (
     <PageContainer>
-      <div className="container grid grid-cols-1 md:grid-cols-2 gap-4 pt-8 md:pt-16 lg:pt-20 pb-6 md:pb-12 px-6 md:px-12 h-full">
-        <div className="w-full flex justify-center md:justify-end">
-          <div className="img-container max-w-full max-h-full">
-            <img src={image_url} alt={title} className="w-full" />
+      <div className="container h-full gap-4 pt-8 md:pt-16 lg:pt-20 pb-6 md:pb-12 px-6 md:px-12">
+        <div className="w-full grid grid-cols-1 md:grid-cols-2 ">
+          <div className="flex justify-center md:justify-end">
+            <div className="max-w-full max-h-full img-container">
+              <img src={image_url} alt={title} className="w-full" />
+            </div>
           </div>
-        </div>
-        <div className="item-info w-full flex flex-col gap-4 md:gap-2 space-y-0 md:space-y-8">
-          <h3 className="text-gray-800 text-2xl sm:text-3xl md:text-4xl detail-title">
-            {title}
-          </h3>
-          <h2 className="text-indigo-600 text-base sm:text-xl md:text-2xl font-extrabold">
-            {storeService.convertCurrency(price, "VND")}&nbsp;
-            <span className="text-slate-400 line-through">
-              {storeService.convertCurrency(sale_price, "VND")}
-            </span>
-          </h2>
-          <p className="my-8 text-sm sm:text-base">{shortDesc}</p>
-          <p className="my-8 text-sm sm:text-base">Stock: {isAvailable}</p>
 
-          <div className="flex flex-col gap-4">
-            <div className="w-full flex flex-col sm:flex-row justify-between gap-4">
+          <div className="item-info w-full flex flex-col gap-4 md:gap-2 space-y-0 md:space-y-4">
+            <h3 className="text-gray-800 text-2xl sm:text-3xl md:text-4xl detail-title">
+              {title}
+            </h3>
+            <h2 className="text-indigo-600 text-base sm:text-xl md:text-2xl font-extrabold">
+              {storeService.convertCurrency(price, "VND")}&nbsp;
+              <span className="text-slate-400 line-through">
+                {storeService.convertCurrency(sale_price, "VND")}
+              </span>
+            </h2>
+            <p className="my-8 text-sm sm:text-base">{shortDesc}</p>
+            <p className="my-8 text-sm sm:text-base">Stock: {isAvailable}</p>
+
+            <div className="w-full flex flex-col sm:flex-row gap-6">
               <div className="w-full sm:w-1/3 lg:w-1/4 flex flex-wrap border-b border-indigo-600 justify-between items-end text-lg lg:text-xl">
-                <span>-</span>
+                <button>-</button>
                 <input
-                  type="number"
+                  type="text"
                   min="0"
+                  required
                   placeholder="1"
-                  className="w-1/3 text-center"
+                  className="w-1/2 text-center"
                 />
-                <span>+</span>
+                <button>+</button>
               </div>
               <Button
                 type="button"
                 text="Add to cart"
-                customClass="w-full sm:w-2/3 lg:w-1/2 text-sm md:text-base btn-grad"
+                customClass="w-full sm:w-1/3 md:w-1/2 text-sm md:text-base btn-grad"
               />
             </div>
-
-            <button
-              className="text-sm md:text-base border-2 border-indigo-600 hover:bg-indigo-600 hover:text-white transition-colors duration-300 rounded-lg py-2 px-4"
-              onClick={() => setShowDetail(!showDetail)}
+            {/*  <a href="#item-detail"
+              className="text-sm md:text-base text-center border-2 border-indigo-600 hover:bg-indigo-600 hover:text-white transition-colors duration-300 rounded-lg py-2 px-4"
+             
             >
               More detail
-            </button>
+            </a> */}
           </div>
         </div>
-      </div>
-      <div id="item-detail" className={`container ${showDetail ? "show" : ""}`}>
-        <div className={`w-full px-8 md:px-20 pt-2 md:pt-4 `}>
-          <h3 className="text-2xl md:text-3xl font-extrabold text-indigo-600">
-            Product information
-          </h3>
-          <p className="w-full mx-auto mt-4 text-sm sm:text-base">{fullDesc}</p>
+
+        <div id="item-detail" className="w-full mt-16 md:mt-0">
+          <div className="w-full px-0 lg:px-16 xl:px-32 pt-2 md:pt-4">
+            <h3 className="text-2xl md:text-3xl font-extrabold text-indigo-600">
+              Product information
+            </h3>
+            <p className="w-full mx-auto mt-4 text-sm sm:text-base">
+              {fullDesc}
+            </p>
+          </div>
         </div>
       </div>
     </PageContainer>

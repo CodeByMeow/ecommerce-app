@@ -40,6 +40,10 @@ const Slider = (props) => {
   return (
     <>
       <Swiper
+        style={{
+          "--swiper-navigation-size": "30px",
+          "--swiper-theme-color": "#4f46e5",
+        }}
         spaceBetween={30}
         // cssMode={true}
         grabCursor={true}

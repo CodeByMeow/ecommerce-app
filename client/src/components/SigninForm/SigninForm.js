@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { signinFields } from "../../utils/contanst.js";
+
+import SubmitLoading from "../../components/Loading/SubmitLoading";
 import Input from "../../components/Input.js";
 import Button from "../../components/Button.js";
 
@@ -10,7 +12,7 @@ let fieldsState = {};
 inputFields.map((field) => (fieldsState[field.id] = ""));
 
 const SigninForm = (props) => {
-  const { onSigninHandler, error } = props;
+  const { onSigninHandler, submitProcess, error } = props;
   const [signinState, setSigninState] = useState(fieldsState);
 
   const handleInputChange = (e) => {
@@ -57,9 +59,10 @@ const SigninForm = (props) => {
             {errNoti}
           </div>
 
-          <div>
+          {submitProcess ? <SubmitLoading /> : ( <div>
             <Button type="submit" customClass="btn-grad" text="Sign in" />
-          </div>
+          </div>)}
+         
         </form>
       </div>
     </div>

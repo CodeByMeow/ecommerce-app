@@ -2,11 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --swiper-navigation-size: 30px;
-  --swiper-theme-color: #4f46e5;
+#root {
+  position: relative;
 }
-
 html {
   font-size: 18px;
   font-family: "Garet Regular", "Segoe UI", Roboto, "Helvetica Neue", Arial,

@@ -7,7 +7,7 @@ import axiosInstance from "./axiosInstance";
 
 const AuthServices = {
   login: (authInfo) => {
-    return axiosInstance.post("/auth/login", authInfo);
+    return axiosInstance.post("/account/login", authInfo);
   },
   register: (userInfo) => {
     return axiosInstance.post("/users", userInfo);

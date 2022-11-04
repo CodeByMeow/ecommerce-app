@@ -129,6 +129,20 @@ router.get("/profile", verifyTokenMdw, async (req, res) => {
     });
 });
 
+router.get("/", verifyTokenMdw, async (req, res, next) => {
+    const {user} = req.user;
+    try {
+        const userInfo = await UserController.findUserById(user._id);
+        return res.status(200).json({
+            msg:"Token is still valid",
+            user: userInfo,
+        });
+    }
+    catch(err) {
+        next(err);
+    }
+});
+
 router.post("/token", async (req, res) => {
     const refreshToken = req.body[ACCESS_REFRESH_TOKEN_KEY];
     if ((refreshToken && refreshToken in refreshTokens) || 1) {
