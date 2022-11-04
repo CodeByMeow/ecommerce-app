@@ -10,6 +10,7 @@ connectToDB();
 
 app.use(express.json({ extended: false }));
 app.use(cors("*"));
+
 app.use("/api/v1", routes);
 
 app.use((error, _req, res, _next) => {

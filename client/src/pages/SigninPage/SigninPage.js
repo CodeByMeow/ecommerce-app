@@ -21,13 +21,13 @@ const SigninPage = () => {
     console.log(inputVal);
     setSigninProcess(true);
     try {
-      const authRes = await AuthServices.login(authRes.data);
-      console.log(authRes);
-     /*  setTimeout(() => {
-        dispatch(actionCreator(SIGN_IN, authRes));
+      const loginRes = await AuthServices.login(loginRes.data);
+      console.log(loginRes);
+      setTimeout(() => {
+        dispatch(actionCreator(SIGN_IN, loginRes));
         setSigninProcess(false);
         navigate("/");
-      },1000); */
+      },1000);
     }
     catch (err) {
       setTimeout(() => {
