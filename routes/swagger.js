@@ -4,8 +4,8 @@ const swaggerUi = require("swagger-ui-express");
 const swaggerJSDoc = require("swagger-jsdoc");
 
 const options = {
-    swaggerDefinition: {
-        openapi: "3.0.1",
+    definition: {
+        openapi: "3.0.3",
         info: {
             title: "Ecommerce API",
             version: "1.0.0",
@@ -17,13 +17,18 @@ const options = {
                 description: "Deverlopment server",
             },
         ],
-        APIKeyHeader: {
-            type: "apikey",
-            in: "header",
-            name: "x-token",
+        components: {
+            securitySchemes: {
+                ApiKeyAuth: {
+                    type: "apiKey",
+                    in: "header",
+                    name: "x-token",
+                },
+            },
         },
+        security: [{ ApiKeyAuth: [] }],
     },
-    apis: ["./routes/*.js"],
+    apis: ["./routes/*.js", "./models/*.js"],
 };
 
 const specs = swaggerJSDoc(options);
