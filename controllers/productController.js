@@ -1,3 +1,4 @@
+const { Types } = require("mongoose");
 const ProductModel = require("../models/product");
 const { generalSlug, addTailSlug } = require("../utils/url");
 const {} = require("../middlewares/verify-token");
@@ -18,7 +19,11 @@ const create = async (product) => {
         slug = addTailSlug(slug, sameSlug + 1);
     }
 
-    const newProduct = new ProductModel({ ...product, slug });
+    const newProduct = new ProductModel({
+        ...product,
+        slug,
+        category: Types.ObjectId(product.category),
+    });
 
     return newProduct.save();
 };
