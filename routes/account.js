@@ -7,13 +7,13 @@ const UserController = require("../controllers/userController");
 const { hashPassword, comparePassword } = require("../utils/pwdUtil");
 const verifyTokenMdw = require("../middlewares/verify-token");
 const validateInputMdw = require("../middlewares/validate-input");
+const { findUserByRefreshToken } = require("../controllers/userController");
 const ACCESS_REFRESH_TOKEN_KEY = process.env.ACCESS_REFRESH_TOKEN_KEY;
 const SECRET_KEY = process.env.JWT_SECRET_KEY;
 const EXPIRY_TIME = process.env.JWT_EXPIRY_TIME;
 const REFRESH_SECRET = process.env.JWT_REFRESH_SECRET;
 const REFRESH_TIME = process.env.JWT_REFRESH_TIME;
 
-const refreshTokens = {};
 /**
  * @swagger
  * components:
@@ -112,13 +112,13 @@ router.post("/", validateInputMdw(userShema), async (req, res) => {
             expiresIn: REFRESH_TIME,
         });
 
+        await UserController.updateById(userCreated._id, { refreshToken });
+
         const response = {
             msg: "User registered successfully!",
             token,
             refreshToken,
         };
-
-        refreshTokens[refreshToken] = response;
 
         return res.status(201).json(response);
     } catch (error) {
@@ -199,7 +199,7 @@ router.post("/login", async (req, res) => {
                 refreshToken,
             };
 
-            refreshTokens[refreshToken] = response;
+            await UserController.updateById(user_id, { refreshToken });
 
             return res.status(200).json(response);
         } else {
@@ -254,11 +254,26 @@ router.get("/profile", verifyTokenMdw, async (req, res) => {
  *                               x-refresh-token:
  *                                   type: string
  *                                   example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwidXNlcl9pZCI6IjYzNjIyZjMwYTQ4OGZlMzU0ZDQ0NGYxZiIsImlhdCI6MTY2NzU0NDgxOCwiZXhwIjoxNjc1MzIwODE4fQ.Gy1pY5rhTBDuxv9pKDT53XqSqk50yLYoAPkjCjuvDGY
+ *           responses:
+ *               200:
+ *                   description: Refersh token successfully.
+ *                   content:
+ *                       application/json:
+ *                           schema:
+ *                               token:
+ *                                   type: string
  *
  */
 router.post("/token", async (req, res) => {
     const refreshToken = req.body[ACCESS_REFRESH_TOKEN_KEY];
-    if (refreshToken && refreshToken in refreshTokens) {
+    if (refreshToken) {
+        const user = await findUserByRefreshToken(refreshToken);
+        console.log(user);
+        if (!user)
+            return res.status(403).json({
+                msg: "Unauthenticated",
+            });
+
         try {
             const decoded = jwt.verify(refreshToken, REFRESH_SECRET);
             if (decoded) {
@@ -270,8 +285,6 @@ router.post("/token", async (req, res) => {
                 const response = {
                     token,
                 };
-
-                refreshTokens[refreshToken].token = token;
 
                 return res.json(response);
             }

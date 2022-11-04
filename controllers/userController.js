@@ -40,6 +40,10 @@ const findUserByUsername = (username) => {
     return findOne({ username });
 };
 
+const findUserByRefreshToken = (refreshToken) => {
+    return findOne({ refreshToken });
+};
+
 const UserController = {
     create,
     updateById,
@@ -47,6 +51,7 @@ const UserController = {
     isUsernameExisted,
     findUserById,
     findUserByUsername,
+    findUserByRefreshToken,
 };
 
 module.exports = UserController;

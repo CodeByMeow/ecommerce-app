@@ -40,6 +40,11 @@ const { default: mongoose } = require("mongoose");
  *               type: array
  *               description: The list user's orders.
  *               example: [{_id: e121223412341234e32423}, {_id: q234234123424324123434} ]
+ *           refreshToken:
+ *               type: string
+ *               descruption: The refresh token.
+ *               readOnly: true
+ *
  */
 
 const userSchema = new mongoose.Schema({
@@ -90,6 +95,9 @@ const userSchema = new mongoose.Schema({
     isActive: {
         type: Boolean,
         default: true,
+    },
+    refreshToken: {
+        type: String,
     },
 });
 
