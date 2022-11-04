@@ -200,6 +200,7 @@ router.post("/login", async (req, res) => {
             };
 
             refreshTokens[refreshToken] = response;
+            console.log(response);
 
             return res.status(200).json(response);
         } else {
