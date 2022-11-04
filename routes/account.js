@@ -260,8 +260,11 @@ router.get("/profile", verifyTokenMdw, async (req, res) => {
  *                   content:
  *                       application/json:
  *                           schema:
- *                               token:
+ *                               type: object
+ *                               properties:
+ *                                  token:
  *                                   type: string
+ *                                   example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwidXNlcl9pZCI6IjYzNjIyZjMwYTQ4OGZlMzU0ZDQ0NGYxZiIsImlhdCI6MTY2NzU0NDgxOCwiZXhwIjoxNjc1MzIwODE4fQ.Gy1pY5rhTBDuxv9pKDT53XqSqk50yLYoAPkjCjuvDGY
  *
  */
 router.post("/token", async (req, res) => {
