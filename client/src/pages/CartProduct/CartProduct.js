@@ -7,7 +7,7 @@ const CartProduct = () => {
       <h1 className="m-6 text-4xl float-right">Cart</h1>
       <div className="flex flex-wrap m-6">
         <img
-          className="w-48 h-48"
+          className="w-48 h-56"
           src="https://cdn.shopify.com/s/files/1/0083/6380/2720/products/178_1_d906b06b-171e-4cf3-9866-50459f4027e7.jpg?v=1656511122"
         ></img>
         <section>
@@ -35,12 +35,12 @@ const CartProduct = () => {
           <span className="font-bold">0% interest EMIs</span>
         </p>
         <p>Credit card NOT required, Online approval in 2 minutes</p>
-        <p className="my-3 bg-amber-600 w-30 text-center h-12">
+        <p className="m-3 p-4 bg-amber-600 w-30 text-center h-12">
           <button>
             <h1>Pay via UPI/CODE</h1>
           </button>
         </p>
-        <p className="my-3 bg-amber-600 w-30 text-center h-12">
+        <p className="m-3 p-4 bg-amber-600 w-30 text-center h-12">
           <button>
             <h1>Pay via UPI/EMI/Creadits/Debit</h1>
           </button>

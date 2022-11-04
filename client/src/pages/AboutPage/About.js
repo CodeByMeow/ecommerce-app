@@ -233,7 +233,7 @@ const AboutPage = () => {
             </li>
           </ul>
         </div>
-        <div className="bg-teal-500 w-3/4 p-8 rounded-xl">
+        <div className="bg-teal-500 w-3/4 p-8 rounded-xl h-8">
           <h1 className="text-center">COME JOIN US !</h1>
           <span>
             <i className="fa-sharp fa-solid fa-arrow-up-right-from-square"></i>
