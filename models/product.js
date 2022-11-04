@@ -11,11 +11,11 @@ const productSchema = new mongoose.Schema({
         type: String,
         require: true,
     },
-    shortDesc: {
+    sortDesc: {
         type: String,
         require: true,
     },
-    fullDesc: {
+    longDesc: {
         type: String,
     },
     stock: {
@@ -30,7 +30,7 @@ const productSchema = new mongoose.Schema({
     },
     color: [
         {
-            name: String,
+            type: String,
             require: true,
         },
     ],
@@ -56,6 +56,10 @@ const productSchema = new mongoose.Schema({
         require: true,
     },
     gallery_image: [{ type: String }],
+    isDeleted: {
+        type: Boolean,
+        default: false,
+    },
 });
 
 productSchema.plugin(paginate);
