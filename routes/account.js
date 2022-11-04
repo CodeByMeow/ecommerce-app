@@ -200,6 +200,7 @@ router.post("/login", async (req, res) => {
             };
 
             refreshTokens[refreshToken] = response;
+            console.log(response);
 
             return res.status(200).json(response);
         } else {
@@ -237,25 +238,6 @@ router.get("/profile", verifyTokenMdw, async (req, res) => {
     });
 });
 
-/**
- *  @swagger
- *   /account/token:
- *       post:
- *           tags:
- *               - Account
- *           summary: Greneral new token that expired.
- *           requestBody:
- *               required: true
- *               content:
- *                   application/json:
- *                       schema:
- *                           type: object
- *                           properties:
- *                               x-refresh-token:
- *                                   type: string
- *                                   example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwidXNlcl9pZCI6IjYzNjIyZjMwYTQ4OGZlMzU0ZDQ0NGYxZiIsImlhdCI6MTY2NzU0NDgxOCwiZXhwIjoxNjc1MzIwODE4fQ.Gy1pY5rhTBDuxv9pKDT53XqSqk50yLYoAPkjCjuvDGY
- *
- */
 router.post("/token", async (req, res) => {
     const refreshToken = req.body[ACCESS_REFRESH_TOKEN_KEY];
     if (refreshToken && refreshToken in refreshTokens) {

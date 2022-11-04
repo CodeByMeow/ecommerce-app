@@ -7,13 +7,14 @@ import axiosInstance from "./axiosInstance";
 
 const AuthServices = {
   login: (authInfo) => {
-    return axiosInstance.post("/auth/login", authInfo);
+    console.log(authInfo);
+    return axiosInstance.post("/account/login", authInfo);
   },
   register: (userInfo) => {
     return axiosInstance.post("/users", userInfo);
   },
   verifyToken: () => {
-    return axiosInstance.get("/auth");
+    return axiosInstance.get("/account/token");
   },
 };
 

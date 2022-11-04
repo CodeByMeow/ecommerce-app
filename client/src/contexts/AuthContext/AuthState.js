@@ -4,11 +4,12 @@ import AuthContext from "./AuthContext";
 
 import { SIGN_IN, GET_USER_INFO, LOG_OUT } from "../../contexts/types.js";
 import actionCreator from "../../utils/actionCreator.js";
-import authService from "../../services/authService.js";
+import AuthServices from "../../services/authService.js";
 import axiosInstance from "../../services/axiosInstance.js";
 
 const initialState = {
   token: localStorage.getItem("token") || null,
+  refreshToken: localStorage.getItem("refreshToken") || null,
   isAuthenticated: !!localStorage.getItem("token") || false,
   authLoading: false,
   user: null,
@@ -28,7 +29,7 @@ const AuthState = (props) => {
   /* check if token was stored in localStorage is expired or not */
   const verifyToken = async () => {
     try {
-      const authorizedToken = await authService.verifyToken();
+      const authorizedToken = await AuthServices.verifyToken();
       console.log(authorizedToken.data.msg);
 
       // if token does not expired or invalid => dispatch to global state
@@ -56,11 +57,6 @@ const AuthState = (props) => {
       {props.children}
     </AuthContext.Provider>
   );
-};
-
-export const useAuthContext = () => {
-  const { state, dispatch } = useContext(AuthContext);
-  return [state, dispatch];
 };
 
 export default AuthState;

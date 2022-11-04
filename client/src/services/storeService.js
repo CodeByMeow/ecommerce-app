@@ -5,6 +5,10 @@ const storeService = {
       month: "long",
     });
   },
+  convertToCurrentTime: (time) => {
+    // return Date obj
+    return new Date(time);
+  },
   convertCurrency: (amount, currency) => {
     // Format the price above to USD, INR, EUR using their locales.
     let formatCurrency = new Intl.NumberFormat(undefined, {

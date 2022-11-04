@@ -20,22 +20,22 @@ const navigation = {
       featured: [
         {
           name: "iPhone 14 Series",
-          path: "#",
-          imageSrc: "./assets/apple/iPhone-14-plus-midnight-650x650.png",
+          path: "/search",
+          imageSrc: "/assets/apple/iPhone-14-plus-midnight-650x650.png",
           imageAlt:
             "Models sitting back to back, wearing Basic Tee in black and bone.",
         },
         {
           name: "iPhone 13 Series",
-          path: "#",
-          imageSrc: "./assets/apple/iphone-14-pro-trang2-650x650.png",
+          path: "/search",
+          imageSrc: "/assets/apple/iphone-14-pro-trang2-650x650.png",
           imageAlt:
             "Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.",
         },
         {
           name: "Galaxy Z Flip4",
-          path: "#",
-          imageSrc: "./assets/samsung/samsung-galaxy-z-flip-4.jpeg",
+          path: "/search",
+          imageSrc: "/assets/samsung/samsung-galaxy-z-flip-4.jpeg",
           imageAlt:
             "Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.",
         },
@@ -45,10 +45,10 @@ const navigation = {
           id: "mobile",
           name: "mobile",
           items: [
-            { name: "Apple", path: "/apple" },
-            { name: "Samsung", path: "/samsung" },
-            { name: "Oppo", path: "/oppo" },
-            { name: "Pixel", path: "/pixel" },
+            { name: "Apple", path: "/search" },
+            { name: "Samsung", path: "/search" },
+            { name: "Oppo", path: "/search" },
+            { name: "Pixel", path: "/search" },
           ],
         },
       ],
@@ -139,7 +139,7 @@ const Header = () => {
                               key={item.name}
                               className="group relative text-sm"
                             >
-                              <div className="aspect-w-1 aspect-h-1 overflow-hidden rounded-lg bg-gray-100 group-hover:scale-110 transition-all">
+                              <div className="aspect-w-1 aspect-h-1 overflow-hidden rounded-lg group-hover:scale-110 transition-all">
                                 <img
                                   src={item.imageSrc}
                                   alt={item.imageAlt}
@@ -147,7 +147,7 @@ const Header = () => {
                                 />
                               </div>
                               <Link
-                                to={`/products${item.path}`}
+                                to={`${item.path}`}
                                 className="mt-6 block font-medium text-gray-900"
                               >
                                 <span
@@ -178,7 +178,7 @@ const Header = () => {
                               {section.items.map((item) => (
                                 <li key={item.name} className="flow-root">
                                   <Link
-                                    to={`/products${item.path}`}
+                                    to={`${item.path}`}
                                     className="-m-2 block p-2 text-gray-500"
                                   >
                                     {item.name}
@@ -255,6 +255,7 @@ const Header = () => {
         >
           <div className="border-b border-gray-200">
             <div className="flex h-16 items-center">
+              {/* toggle button to open menu on small devices */}
               <button
                 type="button"
                 className="rounded-md bg-white p-2 text-gray-400 lg:hidden"
@@ -316,12 +317,6 @@ const Header = () => {
                                   <div className="flex flex-wrap gap-y-4 gap-x-8 py-4">
                                     {category.sections.map((section) => (
                                       <div key={section.name} className="w-1/4">
-                                        {/* <p
-                                          id={`${section.name}-heading`}
-                                          className="font-medium text-gray-900"
-                                        >
-                                          {section.name}
-                                        </p> */}
                                         <ul
                                           role="list"
                                           aria-labelledby={`${section.name}-heading`}
@@ -333,7 +328,7 @@ const Header = () => {
                                               className="flex"
                                             >
                                               <Link
-                                                to={`/products${item.path}`}
+                                                to={`${item.path}`}
                                                 className="hover:text-indigo-700"
                                               >
                                                 {item.name}
@@ -348,7 +343,7 @@ const Header = () => {
                                         key={item.name}
                                         className="group relative text-base sm:text-sm"
                                       >
-                                        <div className="w-32 aspect-w-1 aspect-h-1 overflow-hidden rounded-lg bg-gray-100 group-hover:scale-110 transition-all">
+                                        <div className="w-32 aspect-w-1 aspect-h-1 overflow-hidden rounded-lg group-hover:scale-110 transition-all">
                                           <img
                                             src={item.imageSrc}
                                             alt={item.imageAlt}
@@ -356,7 +351,7 @@ const Header = () => {
                                           />
                                         </div>
                                         <Link
-                                          to={`/products${item.path}`}
+                                          to={`${item.path}`}
                                           className="mt-6 block font-medium text-gray-900"
                                         >
                                           <span

@@ -1,5 +1,8 @@
+import storeService from "../services/storeService";
+
 export const products = [
   {
+    id: 1,
     category: "apple",
     title: "iPhone 14 Pro Max 128GB",
     shortDesc:
@@ -8,7 +11,7 @@ export const products = [
       "The iPhone 14 looks identical to the iPhone 13, but there's a new 6.7-inch model called the iPhone 14 Plus. Under-the-hood improvements include 6GB of RAM, a 5-core GPU, Bluetooth 5.3, and multiple camera updates. Color options have been updated with (PRODUCT)RED, blue, purple, midnight, and starlight.",
     stock: {
       quantity: 5,
-      remain: 5,
+      remain: 2,
     },
     color: "Gold",
     slug: "/iPhone14-Pro-Max-128gb",
@@ -19,6 +22,7 @@ export const products = [
     gallery_image: "",
   },
   {
+    id: 2,
     category: "apple",
     title: "iPhone 14 Plus 128GB",
     shortDesc:
@@ -38,6 +42,7 @@ export const products = [
     gallery_image: "",
   },
   {
+    id: 3,
     category: "apple",
     title: "iPhone 13 Pro Max 128GB",
     shortDesc:
@@ -57,6 +62,7 @@ export const products = [
     gallery_image: "",
   },
   {
+    id: 4,
     category: "samsung",
     title: "Samsung Galaxy Z Flip4",
     shortDesc:
@@ -76,6 +82,7 @@ export const products = [
     gallery_image: "",
   },
   {
+    id: 5,
     category: "samsung",
     title: "Samsung Galaxy Z Fold 4 512GB",
     shortDesc:
@@ -96,6 +103,7 @@ export const products = [
     gallery_image: "",
   },
   {
+    id: 6,
     category: "apple",
     title: "iPhone 14 Pro Max 128GB",
     shortDesc:
@@ -115,6 +123,7 @@ export const products = [
     gallery_image: "",
   },
   {
+    id: 7,
     category: "apple",
     title: "iPhone 14 Plus 128GB",
     shortDesc:
@@ -134,6 +143,7 @@ export const products = [
     gallery_image: "",
   },
   {
+    id: 8,
     category: "samsung",
     title: "Samsung Galaxy Z Flip4",
     shortDesc:
@@ -151,5 +161,30 @@ export const products = [
     total_selling: "",
     image_url: "/assets/samsung/samsung-galaxy-z-flip-4.jpeg",
     gallery_image: "",
+  },
+];
+
+export const order = {
+  userId: {
+    ref: "user",
+  },
+  products: [],
+  status: "Processing",
+};
+
+export const users = [
+  {
+    fullname: "Ngoc Le",
+    username: "shane",
+    email: "ngoc.le@gmail.com",
+    password: "ngoc123",
+    role: "user",
+    address: "123 Pham Ngu Lao District 1, TPHCM",
+    orders: [],
+    createdDate: Date.now() /* return miliseconds */,
+    // createdDate: storeService.convertToCurrentTime(Date.now()),
+    modifiedDate: storeService.convertToCurrentTime(Date.now()),
+    isDeleted: null,
+    isActive: null,
   },
 ];

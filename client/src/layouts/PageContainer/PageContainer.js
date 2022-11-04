@@ -21,7 +21,7 @@ const PageContainer = ({
         <link rel="canonical" href="https://www.tacobell.com/" />
       </Helmet>
       {shouldShowHeader && <Header />}
-      <main className="h-screen">{children}</main>
+      <main>{children}</main>
       {shouldShowFooter && <Footer />}
     </>
   );

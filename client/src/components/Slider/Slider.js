@@ -12,12 +12,8 @@ import "./Slider.css";
 // import required modules
 import { Autoplay, Pagination, Navigation } from "swiper";
 
-const Slider = () => {
-  const contentSlides = [
-    "/assets/banner/apple_banner.jpeg",
-    "/assets/banner/oppo_banner.jpeg",
-    "/assets/banner/samsung_zflip3_carousel_colorcombokv_ex_pc.jpeg",
-  ];
+const Slider = (props) => {
+  const { contentSlides } = props;
 
   const slides = contentSlides.map((slide) => {
     return (
@@ -30,7 +26,7 @@ const Slider = () => {
               backgroundSize: "cover",
               backgroundPosition: "top center",
               backgroundRepeat: "no-repeat",
-              backgroundColor: "#8481b0",
+              // backgroundColor: "#8481b0",
               backgroundBlendMode: "fixed",
             }}
           >
@@ -44,15 +40,19 @@ const Slider = () => {
   return (
     <>
       <Swiper
+        style={{
+          "--swiper-navigation-size": "30px",
+          "--swiper-theme-color": "#4f46e5",
+        }}
         spaceBetween={30}
         // cssMode={true}
         grabCursor={true}
         centeredSlides={true}
         loop={true}
-        /* autoplay={{
+        autoplay={{
           delay: 3000,
           disableOnInteraction: false,
-        }} */
+        }}
         // autoplay={false}
         pagination={{
           clickable: true,

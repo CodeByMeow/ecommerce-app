@@ -1,13 +1,13 @@
 const signinFields = [
   {
-    labelText: "Email address",
-    labelFor: "email",
-    id: "email",
-    name: "email",
-    type: "email",
-    autoComplete: "email",
+    labelText: "Username",
+    labelFor: "username",
+    id: "username",
+    name: "username",
+    type: "username",
+    autoComplete: "username",
     isRequired: true,
-    placeholder: "Email address",
+    placeholder: "Username",
   },
   {
     labelText: "Password",
