@@ -13,8 +13,8 @@ const AuthServices = {
   register: (userInfo) => {
     return axiosInstance.post("/users", userInfo);
   },
-  verifyToken: () => {
-    return axiosInstance.get("/account/token");
+  verifyToken: (refreshToken) => {
+    return axiosInstance.post("/account/token");
   },
 };
 
