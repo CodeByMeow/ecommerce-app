@@ -2,7 +2,7 @@
     "type": "object",
     "required": ["title"],
     "properties": {
-        "tittle": {
+        "title": {
             "type": "string"
         }
     },

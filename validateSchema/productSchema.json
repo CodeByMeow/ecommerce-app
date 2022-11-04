@@ -1,0 +1,22 @@
+{
+    "type": "object",
+    "required": ["category", "title", "sortDesc", "color", "image_url"],
+    "properties": {
+        "category": {
+            "type": "string"
+        },
+        "title": {
+            "type": "string"
+        },
+        "sortDesc": {
+            "type": "string"
+        },
+        "color": {
+            "type": "string"
+        },
+        "image_url": {
+            "type": "string"
+        }
+    },
+    "additionalProperties": true
+}

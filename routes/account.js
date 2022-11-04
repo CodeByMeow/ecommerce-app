@@ -14,7 +14,65 @@ const REFRESH_SECRET = process.env.JWT_REFRESH_SECRET;
 const REFRESH_TIME = process.env.JWT_REFRESH_TIME;
 
 const refreshTokens = {};
-
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *      TokenResponse:
+ *          type: object
+ *          properties:
+ *              msg:
+ *                  type: string
+ *              token:
+ *                  type: string
+ *              refreshToken:
+ *                  type: string
+ *      UserResponse:
+ *          type: object
+ *          properties:
+ *              fullname:
+ *                  type: string
+ *              username:
+ *                  type: string
+ *              email:
+ *                  type: string
+ *              role:
+ *                  type: string
+ *              address:
+ *                  type: string
+ *              orders:
+ *                  type: array
+ *                  default: []
+ *              isDeleted:
+ *                  type: boolean
+ *                  default: false
+ *              isActive:
+ *                  type: boolean
+ */
+/**
+ * @swagger
+ * /account:
+ *   post:
+ *       tags:
+ *           - Account
+ *       summary: Register a new user.
+ *       requestBody:
+ *           content:
+ *               application/json:
+ *                   schema:
+ *                       type: object
+ *                       $ref: '#/components/schemas/User'
+ *       responses:
+ *           201:
+ *               description: A new account registered
+ *               content:
+ *                   application/json:
+ *                       schema:
+ *                           type: object
+ *                           $ref: '#components/schemas/TokenResponse'
+ *           400:
+ *               description: Bad request
+ */
 router.post("/", validateInputMdw(userShema), async (req, res) => {
     const { fullname, username, email, password } = req.body;
 
@@ -68,6 +126,41 @@ router.post("/", validateInputMdw(userShema), async (req, res) => {
     }
 });
 
+/**
+ * @swagger
+ *   /account/login:
+ *       post:
+ *           tags:
+ *               - Account
+ *           summary: Login to user account.
+ *           requestBody:
+ *               required: true
+ *               content:
+ *                   application/json:
+ *                       schema:
+ *                           type: object
+ *                           properties:
+ *                               username:
+ *                                   type: string
+ *                                   description: The user's username
+ *                                   example: admin
+ *                               password:
+ *                                   type: string
+ *                                   description: The user's password
+ *                                   example: admin123
+ *           responses:
+ *               200:
+ *                   description: Retrieved login result
+ *                   content:
+ *                       application/json:
+ *                           schema:
+ *                               type: object
+ *                               $ref: '#/components/schemas/UserResponse'
+ *               400:
+ *                   description: Bad request
+ *
+ */
+
 router.post("/login", async (req, res) => {
     const { username, password } = req.body;
     if (!username || !password) {
@@ -118,7 +211,22 @@ router.post("/login", async (req, res) => {
         throw new Error(err.message);
     }
 });
-
+/**
+ * @swagger
+ *   /account/profile:
+ *       get:
+ *           tags:
+ *               - Account
+ *           summary: Get the user's profile.
+ *           responses:
+ *               200:
+ *                   description: The user's profile
+ *                   content:
+ *                       application/json:
+ *                           schema:
+ *                              type: object
+ *                              $ref: '#/components/schemas/UserResponse'
+ */
 router.get("/profile", verifyTokenMdw, async (req, res) => {
     const { user_id } = req.decoded;
     const user = await UserController.findUserById(user_id);
@@ -129,9 +237,28 @@ router.get("/profile", verifyTokenMdw, async (req, res) => {
     });
 });
 
+/**
+ *  @swagger
+ *   /account/token:
+ *       post:
+ *           tags:
+ *               - Account
+ *           summary: Greneral new token that expired.
+ *           requestBody:
+ *               required: true
+ *               content:
+ *                   application/json:
+ *                       schema:
+ *                           type: object
+ *                           properties:
+ *                               x-refresh-token:
+ *                                   type: string
+ *                                   example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwidXNlcl9pZCI6IjYzNjIyZjMwYTQ4OGZlMzU0ZDQ0NGYxZiIsImlhdCI6MTY2NzU0NDgxOCwiZXhwIjoxNjc1MzIwODE4fQ.Gy1pY5rhTBDuxv9pKDT53XqSqk50yLYoAPkjCjuvDGY
+ *
+ */
 router.post("/token", async (req, res) => {
     const refreshToken = req.body[ACCESS_REFRESH_TOKEN_KEY];
-    if ((refreshToken && refreshToken in refreshTokens) || 1) {
+    if (refreshToken && refreshToken in refreshTokens) {
         try {
             const decoded = jwt.verify(refreshToken, REFRESH_SECRET);
             if (decoded) {
@@ -149,7 +276,6 @@ router.post("/token", async (req, res) => {
                 return res.json(response);
             }
         } catch (error) {
-            console.log(error);
             return res.status(403).json({
                 msg: "Invalid token",
             });
@@ -158,7 +284,28 @@ router.post("/token", async (req, res) => {
         res.status(404).send("Invalid request");
     }
 });
-
+/**
+ * @swagger
+ *   /account/profile:
+ *       patch:
+ *           tags:
+ *               - Account
+ *           summary: Update properties of the user.
+ *           requestBody:
+ *               content:
+ *                   application/json:
+ *                       schema:
+ *                           type: object
+ *                           $ref: '#/components/schemas/User'
+ *           responses:
+ *               200:
+ *                  description: User was updated
+ *                  content:
+ *                       application/json:
+ *                           schema:
+ *                               type: object
+ *                               $ref: '#/components/schemas/UserResponse'
+ */
 router.patch("/profile", verifyTokenMdw, async (req, res) => {
     const { user_id } = req.decoded;
     const fieldNeedUpdate = req.body;
