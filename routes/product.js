@@ -62,12 +62,12 @@ router.get("/", async (req, res) => {
     let { sortBy = "price" } = req.query;
     const query = validObject({
         categoryId,
-        title: { $regex: title, $options: "i" },
+        title,
         isDeleted: false,
     });
     const validSort = {
         price: "price",
-        date: "createAt",
+        date: "createdAt",
         selling: "total_selling",
     };
     sortBy = validSort[sortBy] ? validSort[sortBy] : validSort.price;
