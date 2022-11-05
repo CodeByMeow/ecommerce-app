@@ -46,7 +46,51 @@ router.post(
         }
     }
 );
-
+/**
+ * @swagger
+ *   /products:
+ *       get:
+ *           tags:
+ *               - Products
+ *           summary: Get list product with paginate and query parameters.
+ *           parameters:
+ *               - in: query
+ *                 name: page
+ *                 schema:
+ *                   type: integer
+ *                   default: 1
+ *                 description: The number of items to skip.
+ *               - in: query
+ *                 name: perpage
+ *                 schema:
+ *                   type: integer
+ *                   default: 10
+ *                 description: The number of items to return.
+ *               - in: query
+ *                 name: sort
+ *                 schema:
+ *                   type: string
+ *                   default: desc
+ *                 description: Set the sort order.
+ *               - in: query
+ *                 name: title
+ *                 schema:
+ *                   type: string
+ *                 description: The title of product that need to search.
+ *               - in: query
+ *                 name: category
+ *                 schema:
+ *                   type: string
+ *                 description: The cateogry's slug.
+ *               - in: query
+ *                 name: sortBy
+ *                 schema:
+ *                   type: string
+ *                   default: price
+ *                 description: Field to sorting. One in ["price", "date", "selling"].
+ *
+ *
+ */
 router.get("/", async (req, res) => {
     const { page, perpage, sort = "desc", title, category } = req.query;
     let categoryId;
