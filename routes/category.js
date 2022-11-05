@@ -8,6 +8,26 @@ const verifyToken = require("../middlewares/verify-token");
 
 router.use(verifyToken);
 
+/**
+ * @swagger
+ *   /category:
+ *       post:
+ *           tags:
+ *               - Category
+ *           summary: Create new category.
+ *           requestBody:
+ *             content:
+ *               application/json:
+ *                   schema:
+ *                       $ref: '#/components/schemas/Category'
+ *           responses:
+ *               200:
+ *                   description: Created category.
+ *                   content:
+ *                       application/json:
+ *                           schema:
+ *                               $ref: '#/components/schemas/Category'
+ */
 router.post("/", validateInput(categorySchema), async (req, res) => {
     const { title, shortDesc, longDesc, image_url } = req.body;
     const newCategory = {
@@ -27,7 +47,32 @@ router.post("/", validateInput(categorySchema), async (req, res) => {
         throw new Error(error.message);
     }
 });
-
+/**
+ * @swagger
+ *   /category:
+ *       patch:
+ *           tags:
+ *               - Category
+ *           summary: Update category.
+ *           requestBody:
+ *               content:
+ *                   application/json:
+ *                       schema:
+ *                           type: object
+ *                           required:
+ *                               - id
+ *                           properties:
+ *                                id:
+ *                                   type: string
+ *                                title:
+ *                                   type: string
+ *                                sortDesc:
+ *                                   type: string
+ *                                longDesc:
+ *                                   type: string
+ *                                image_url:
+ *                                   type: string
+ */
 router.patch("/", validateInput(categorySchema), async (req, res) => {
     const { id, title, sortDesc, longDesc, image_url } = req.body;
     if (!id) {
