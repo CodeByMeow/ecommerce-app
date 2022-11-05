@@ -72,9 +72,26 @@ router.post("/", validateInput(categorySchema), async (req, res) => {
  *                                   type: string
  *                                image_url:
  *                                   type: string
+ *                                isDeleted:
+ *                                    type: boolean
+ *                                    default: false
+ *           responses:
+ *               200:
+ *                   description: Category updated.
+ *                   content:
+ *                       application/json:
+ *                           schema:
+ *                               $ref: '#/components/schemas/Category'
  */
 router.patch("/", validateInput(categorySchema), async (req, res) => {
-    const { id, title, sortDesc, longDesc, image_url } = req.body;
+    const {
+        id,
+        title,
+        sortDesc,
+        longDesc,
+        image_url,
+        isDeleted = false,
+    } = req.body;
     if (!id) {
         return res.status(400).json({
             msg: "missing id of category",
@@ -87,6 +104,7 @@ router.patch("/", validateInput(categorySchema), async (req, res) => {
             sortDesc,
             longDesc,
             image_url,
+            isDeleted,
         });
 
         return res.json({

@@ -199,7 +199,7 @@ router.post("/login", async (req, res) => {
                 refreshToken,
             };
 
-            await UserController.updateById(user_id, { refreshToken });
+            await UserController.updateById(user.id, { refreshToken });
 
             return res.status(200).json(response);
         } else {

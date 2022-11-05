@@ -16,37 +16,52 @@ const paginate = require("mongoose-paginate-v2");
  *             properties:
  *                   category:
  *                       type: string
+ *                       example: 6361da66cac64578a1dcd8e7
  *                   title:
  *                       type: string
+ *                       example: iPhone 14
  *                   sortDesc:
  *                       type: string
+ *                       example: Ceramic Shield front Glass back and aluminum design
  *                   longDesc:
  *                       type: string
+ *                       example: The iPhone 14 display has rounded corners that follow a beautiful curved design, and these corners are within a standard rectangle. When measured as a standard rectangular shape, the screen is 6.06 inches diagonally (actual viewable area is less).
  *                   stock:
  *                       type: object
  *                       properties:
  *                           quantity:
  *                               type: int32
  *                               default: 0
+ *                               example: 10
  *                           remain:
  *                               type: int32
+ *                               readOnly: true
  *                               default: 0
+ *                               example: 5
  *                   color:
  *                       type: array
  *                       items:
  *                           type: string
+ *                       example: ['red', 'blue', 'black', 'rose']
  *                   slug:
  *                      type: string
+ *                      readOnly: true
+ *                      example: iPhone-14
  *                   price:
  *                      type: int32
  *                      default: 0
+ *                      example: 400000
  *                   sale_price:
  *                      type: int32
  *                      default: 0
- *                   total_salling:
+ *                   total_selling:
  *                      type: int32
+ *                      default: 0
+ *                      example: 5
+ *                      readOnly: true
  *                   image_url:
  *                       type: string
+ *                       example: https://elektragt.vtexassets.com/arquivos/ids/186678/iPhone_14_Plus_Purple_Pure_Back_iPhone_14_Plus_Purple_Pure_Front_2-up_Screen__USEN.jpg?v=638013456772430000
  *                   galerry_image:
  *                       type: array
  *                       items:
@@ -54,6 +69,7 @@ const paginate = require("mongoose-paginate-v2");
  *                   isDeleted:
  *                       type: boolean
  *                       default: false
+ *                       readOnly: true
  *
  */
 

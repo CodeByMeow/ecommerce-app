@@ -12,7 +12,8 @@
             "type": "string"
         },
         "color": {
-            "type": "string"
+            "type": "array",
+            "items": [{ "type": "string" }]
         },
         "image_url": {
             "type": "string"
