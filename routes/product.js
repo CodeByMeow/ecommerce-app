@@ -4,7 +4,9 @@ const router = express.Router();
 const validateInput = require("../middlewares/validate-input");
 const productSchema = require("../validateSchema/productSchema.json");
 const verifyToken = require("../middlewares/verify-token");
+const categoryController = require("../controllers/categoryController");
 const ProductController = require("../controllers/productController");
+const { validObject } = require("../utils/object");
 
 /**
  * @swagger
@@ -44,5 +46,43 @@ router.post(
         }
     }
 );
+
+router.get("/", async (req, res) => {
+    const { page, perpage, sort = "desc", title, category } = req.query;
+    let categoryId;
+    if (category) {
+        const categoryRes = await categoryController.findBySlug(category);
+        if (!categoryRes)
+            return res.status(404).json({
+                msg: "Not found",
+            });
+
+        categoryId = categoryRes._id;
+    }
+    let { sortBy = "price" } = req.query;
+    const query = validObject({
+        categoryId,
+        title: { $regex: title, $options: "i" },
+        isDeleted: false,
+    });
+    const validSort = {
+        price: "price",
+        date: "createAt",
+        selling: "total_selling",
+    };
+    sortBy = validSort[sortBy] ? validSort[sortBy] : validSort.price;
+    const options = validObject({
+        page,
+        limit: perpage,
+        select: "-isDeleted",
+        sort: [[sortBy, sort]],
+    });
+    const productList = await ProductController.getList(query, options);
+
+    return res.json({
+        msg: "The product list",
+        data: productList,
+    });
+});
 
 module.exports = router;

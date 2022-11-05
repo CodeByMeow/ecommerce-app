@@ -73,65 +73,68 @@ const paginate = require("mongoose-paginate-v2");
  *
  */
 
-const productSchema = new mongoose.Schema({
-    category: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "categories",
-    },
-    title: {
-        type: String,
-        require: true,
-    },
-    sortDesc: {
-        type: String,
-        require: true,
-    },
-    longDesc: {
-        type: String,
-    },
-    stock: {
-        quantity: {
-            type: Number,
-            default: 0,
+const productSchema = new mongoose.Schema(
+    {
+        category: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "categories",
         },
-        remain: {
-            type: Number,
-            default: 0,
-        },
-    },
-    color: [
-        {
+        title: {
             type: String,
             require: true,
         },
-    ],
-    slug: {
-        type: String,
-        default: function () {
-            return slugify(this.title);
+        sortDesc: {
+            type: String,
+            require: true,
+        },
+        longDesc: {
+            type: String,
+        },
+        stock: {
+            quantity: {
+                type: Number,
+                default: 0,
+            },
+            remain: {
+                type: Number,
+                default: 0,
+            },
+        },
+        color: [
+            {
+                type: String,
+                require: true,
+            },
+        ],
+        slug: {
+            type: String,
+            default: function () {
+                return slugify(this.title);
+            },
+        },
+        price: {
+            type: Number,
+            default: 0,
+        },
+        sale_price: {
+            type: Number,
+        },
+        total_selling: {
+            type: Number,
+            default: 0,
+        },
+        image_url: {
+            type: String,
+            require: true,
+        },
+        gallery_image: [{ type: String }],
+        isDeleted: {
+            type: Boolean,
+            default: false,
         },
     },
-    price: {
-        type: Number,
-        default: 0,
-    },
-    sale_price: {
-        type: Number,
-    },
-    total_selling: {
-        type: Number,
-        default: 0,
-    },
-    image_url: {
-        type: String,
-        require: true,
-    },
-    gallery_image: [{ type: String }],
-    isDeleted: {
-        type: Boolean,
-        default: false,
-    },
-});
+    { timestamps: true }
+);
 
 productSchema.plugin(paginate);
 

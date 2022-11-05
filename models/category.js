@@ -37,31 +37,34 @@ const paginate = require("mongoose-paginate-v2");
  *                       description: The category image.
  *                       example: https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c2Ftc3VuZ3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60
  */
-const categorySchema = new mongoose.Schema({
-    title: {
-        type: String,
-        require: true,
-    },
-    sortDesc: {
-        type: String,
-    },
-    longDesc: {
-        type: String,
-    },
-    isDeteled: {
-        type: Boolean,
-        default: false,
-    },
-    slug: {
-        type: String,
-        default: function () {
-            return slugify(this.title);
+const categorySchema = new mongoose.Schema(
+    {
+        title: {
+            type: String,
+            require: true,
+        },
+        sortDesc: {
+            type: String,
+        },
+        longDesc: {
+            type: String,
+        },
+        isDeteled: {
+            type: Boolean,
+            default: false,
+        },
+        slug: {
+            type: String,
+            default: function () {
+                return slugify(this.title);
+            },
+        },
+        image_url: {
+            type: String,
         },
     },
-    image_url: {
-        type: String,
-    },
-});
+    { timestamps: true }
+);
 
 categorySchema.plugin(paginate);
 
