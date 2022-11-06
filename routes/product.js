@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const validateInput = require("../middlewares/validate-input");
+const validateInput = require("../middlewares/validateInput");
 const productSchema = require("../validateSchema/productSchema.json");
 const verifyToken = require("../middlewares/verifyToken");
 const categoryController = require("../controllers/categoryController");
