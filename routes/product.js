@@ -173,11 +173,16 @@ router.get("/", async (req, res) => {
         sort: [[sortBy, sort]],
     });
     const productList = await ProductController.getList(query, options);
-
-    return res.json({
-        msg: "The product list",
-        data: productList,
-    });
+    if (productList.itemsList.length > 0) {
+        return res.json({
+            msg: "The product list",
+            data: productList,
+        });
+    } else {
+        return res.status(404).json({
+            msg: "The server not found any resources.",
+        });
+    }
 });
 
 module.exports = router;
