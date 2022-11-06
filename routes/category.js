@@ -5,7 +5,7 @@ const validateInput = require("../middlewares/validate-input");
 const { verifyUserRole } = require("../middlewares/verifyUserRole");
 const categorySchema = require("../validateSchema/categorySchema.json");
 const categoryController = require("../controllers/categoryController");
-const verifyToken = require("../middlewares/verify-token");
+const verifyToken = require("../middlewares/verifyToken");
 
 /**
  * @swagger
@@ -156,22 +156,14 @@ router.patch(
  *                               type: array
  *                               items:
  *                                      $ref: '#/components/schemas/Category'
- *               404:
- *                   $ref: '#/components/responses/404'
  */
 router.get("/", async (_req, res) => {
     const categoryList = await categoryController.getAll();
 
-    if (categoryList.length > 0) {
-        return res.json({
-            msg: "Get categories list successfully!",
-            data: categoryList,
-        });
-    } else {
-        return res.status(404).json({
-            msg: "Not found any resource.",
-        });
-    }
+    return res.json({
+        msg: "Get categories list successfully!",
+        data: categoryList,
+    });
 });
 
 module.exports = router;

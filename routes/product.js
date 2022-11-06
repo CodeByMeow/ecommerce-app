@@ -3,7 +3,7 @@ const router = express.Router();
 
 const validateInput = require("../middlewares/validate-input");
 const productSchema = require("../validateSchema/productSchema.json");
-const verifyToken = require("../middlewares/verify-token");
+const verifyToken = require("../middlewares/verifyToken");
 const categoryController = require("../controllers/categoryController");
 const ProductController = require("../controllers/productController");
 const { validObject } = require("../utils/object");
@@ -144,9 +144,6 @@ router.post(
  *                                   description: The starting index/serial/chronological number of first document in current page.
  *                               paginator:
  *                                   type: object
- *                                   description: Object of pagination meta data.
- *               404:
- *                   $ref: '#/components/responses/404'
  *
  */
 router.get("/", async (req, res) => {
@@ -179,16 +176,10 @@ router.get("/", async (req, res) => {
         sort: [[sortBy, sort]],
     });
     const productList = await ProductController.getList(query, options);
-    if (productList.itemsList.length > 0) {
-        return res.json({
-            msg: "The product list",
-            data: productList,
-        });
-    } else {
-        return res.status(404).json({
-            msg: "The server not found any resources.",
-        });
-    }
+    return res.json({
+        msg: "The product list",
+        data: productList,
+    });
 });
 /**
  * @swagger

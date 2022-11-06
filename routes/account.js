@@ -5,7 +5,7 @@ const userShema = require("../validateSchema/userSchema.json");
 
 const UserController = require("../controllers/userController");
 const { hashPassword, comparePassword } = require("../utils/pwdUtil");
-const verifyTokenMdw = require("../middlewares/verify-token");
+const verifyTokenMdw = require("../middlewares/verifyToken");
 const validateInputMdw = require("../middlewares/validate-input");
 const { findUserByRefreshToken } = require("../controllers/userController");
 const ACCESS_REFRESH_TOKEN_KEY = process.env.ACCESS_REFRESH_TOKEN_KEY;
