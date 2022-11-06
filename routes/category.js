@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const validateInput = require("../middlewares/validate-input");
+const { verifyUserRole } = require("../middlewares/verifyUserRole");
 const categorySchema = require("../validateSchema/categorySchema.json");
 const categoryController = require("../controllers/categoryController");
 const verifyToken = require("../middlewares/verify-token");
@@ -27,10 +28,13 @@ const verifyToken = require("../middlewares/verify-token");
  *                               $ref: '#/components/schemas/Category'
  *               401:
  *                   $ref: '#/components/responses/401'
+ *               403:
+ *                   $ref: '#/components/responses/403'
  */
 router.post(
     "/",
     verifyToken,
+    verifyUserRole,
     validateInput(categorySchema),
     async (req, res) => {
         const { title, shortDesc, longDesc, image_url } = req.body;
@@ -71,14 +75,19 @@ router.post(
  *                           properties:
  *                                id:
  *                                   type: string
+ *                                   example: 63675fcb93f5623d2b684b72
  *                                title:
  *                                   type: string
+ *                                   example: Redme
  *                                sortDesc:
  *                                   type: string
+ *                                   example: This is a sortDesc.
  *                                longDesc:
  *                                   type: string
+ *                                   example: This is a long description.
  *                                image_url:
  *                                   type: string
+ *                                   example: https://images.unsplash.com/photo-1602918955248-d1bbfcbfae38?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8Zmxhc2h8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60
  *                                isDeleted:
  *                                    type: boolean
  *                                    default: false
@@ -91,10 +100,13 @@ router.post(
  *                               $ref: '#/components/schemas/Category'
  *               401:
  *                   $ref: '#/components/responses/401'
+ *               403:
+ *                   $ref: '#/components/responses/403'
  */
 router.patch(
     "/",
     verifyToken,
+    verifyUserRole,
     validateInput(categorySchema),
     async (req, res) => {
         const {
@@ -107,7 +119,7 @@ router.patch(
         } = req.body;
         if (!id) {
             return res.status(400).json({
-                msg: "missing id of category",
+                msg: "Missing category id",
             });
         }
 

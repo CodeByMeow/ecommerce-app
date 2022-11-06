@@ -331,7 +331,8 @@ router.post("/token", async (req, res) => {
  */
 router.patch("/profile", verifyTokenMdw, async (req, res) => {
     const { user_id } = req.decoded;
-    const fieldNeedUpdate = req.body;
+    const { role, ...fieldNeedUpdate } = req.body;
+
     try {
         const updated = await UserController.updateById(
             user_id,

@@ -14,6 +14,9 @@ const paginate = require("mongoose-paginate-v2");
  *               - sortDesc
  *               - image_url
  *             properties:
+ *                   _id:
+ *                       type: string
+ *                       example: 63675ab9f17a55d423321f31
  *                   category:
  *                       type: string
  *                       example: 6361da66cac64578a1dcd8e7
@@ -62,7 +65,7 @@ const paginate = require("mongoose-paginate-v2");
  *                   image_url:
  *                       type: string
  *                       example: https://elektragt.vtexassets.com/arquivos/ids/186678/iPhone_14_Plus_Purple_Pure_Back_iPhone_14_Plus_Purple_Pure_Front_2-up_Screen__USEN.jpg?v=638013456772430000
- *                   galerry_image:
+ *                   gallery_image:
  *                       type: array
  *                       items:
  *                           type: string

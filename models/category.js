@@ -13,6 +13,7 @@ const slugify = require("slugify");
  *                      type: string
  *                      readOnly: true
  *                      description: The automic id of category.
+ *                      example: 63675fcb93f5623d2b684b72
  *                   title:
  *                       type: string
  *                       description: The category title.

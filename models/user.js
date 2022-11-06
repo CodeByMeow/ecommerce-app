@@ -12,6 +12,10 @@ const { default: mongoose } = require("mongoose");
  *           - password
  *           - email
  *        properties:
+ *           _id:
+ *               type: string
+ *               example: 63675ab9f17a55d423321f31
+ *               readOnly: true
  *           fullname:
  *               type: string
  *               description: The user's full name.
@@ -35,11 +39,15 @@ const { default: mongoose } = require("mongoose");
  *               example: Ho Chi Minh City
  *           role:
  *               type: string
- *               description: admin | user | customer
+ *               enum: [admin, user, customer]
+ *               readOnly: true
  *               default: customer
  *           orders:
  *               type: array
+ *               items:
+ *                   type: object
  *               description: The list user's orders.
+ *               readOnly: true
  *               example: [{_id: e121223412341234e32423}, {_id: q234234123424324123434} ]
  *           refreshToken:
  *               type: string

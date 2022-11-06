@@ -7,6 +7,7 @@ const verifyToken = require("../middlewares/verify-token");
 const categoryController = require("../controllers/categoryController");
 const ProductController = require("../controllers/productController");
 const { validObject } = require("../utils/object");
+const { verifyUserRole } = require("../middlewares/verifyUserRole");
 
 /**
  * @swagger
@@ -29,10 +30,13 @@ const { validObject } = require("../utils/object");
  *                               $ref: '#/components/schemas/Product'
  *               401:
  *                   $ref: '#/components/responses/401'
+ *               403:
+ *                   $ref: '#/components/responses/403'
  */
 router.post(
     "/",
     verifyToken,
+    verifyUserRole,
     validateInput(productSchema),
     async (req, res) => {
         const product = req.body;
@@ -184,6 +188,77 @@ router.get("/", async (req, res) => {
         return res.status(404).json({
             msg: "The server not found any resources.",
         });
+    }
+});
+/**
+ * @swagger
+ *   /products:
+ *       patch:
+ *           tags:
+ *               - Products
+ *           summary: Update product.
+ *           requestBody:
+ *               content:
+ *                   application/json:
+ *                       schema:
+ *                           $ref: '#components/schemas/Product'
+ *           responses:
+ *               200:
+ *                   description: Product was updated successfully.
+ *                   content:
+ *                       application/json:
+ *                           schema:
+ *                               $ref: '#components/schemas/Product'
+ *               401:
+ *                   $ref: '#/components/responses/401'
+ *               403:
+ *                   $ref: '#/components/responses/403'
+ */
+router.patch("/", verifyUserRole, verifyToken, async (req, res) => {
+    const {
+        id,
+        category,
+        title,
+        sortDesc,
+        longDesc,
+        stock,
+        color,
+        price,
+        sale_price,
+        image_url,
+        gallery_image,
+        isDeleted,
+    } = req.body;
+    if (!id) {
+        return res.status(400).json({
+            msg: "Missing product id",
+        });
+    }
+
+    const fieldNeedUpdate = validObject({
+        category,
+        title,
+        sortDesc,
+        longDesc,
+        stock,
+        color,
+        price,
+        sale_price,
+        image_url,
+        gallery_image,
+        isDeleted,
+    });
+    try {
+        const productUpdated = await ProductController.updateById(
+            id,
+            fieldNeedUpdate
+        );
+        return res.json({
+            msg: "Product was successfully!",
+            data: productUpdated,
+        });
+    } catch (error) {
+        throw new Error(error.message);
     }
 });
 

@@ -31,7 +31,12 @@ const options = {
                     contents: "application/json",
                 },
                 401: {
-                    description: "Unauthorized",
+                    description: "Unauthorized.",
+                    contents: "application/json",
+                },
+                403: {
+                    description:
+                        "You don't have permission to do those action.",
                     contents: "application/json",
                 },
             },
