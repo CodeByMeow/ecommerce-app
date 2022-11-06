@@ -10,6 +10,10 @@ const paginate = require("mongoose-paginate-v2");
  *               required:
  *                   - title
  *               properties:
+ *                   _id:
+ *                      type: string
+ *                      readOnly: true
+ *                      description: The automic id of category.
  *                   title:
  *                       type: string
  *                       description: The category title.

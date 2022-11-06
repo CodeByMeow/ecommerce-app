@@ -139,11 +139,12 @@ router.post(
  *                                   description: Object of pagination meta data.
  */
 router.get("/", async (req, res) => {
-    const { page, perpage, sort = "desc", title, category } = req.query;
+    const { page, perpage, sort = "desc", title = "", category } = req.query;
     let categoryId;
     if (category) {
         const categoryRes = await categoryController.findBySlug(category);
-        if (!categoryRes)
+        console.log(categoryRes);
+        if (categoryRes.length <= 0)
             return res.status(404).json({
                 msg: "Not found",
             });

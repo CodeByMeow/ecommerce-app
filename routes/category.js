@@ -115,5 +115,35 @@ router.patch("/", validateInput(categorySchema), async (req, res) => {
         throw new Error(error.message);
     }
 });
+/**
+ * @swagger
+ *   /category:
+ *       get:
+ *           tags:
+ *               - Category
+ *           summary: Get a category list.
+ *           responses:
+ *               200:
+ *                   content:
+ *                       application/json:
+ *                           schema:
+ *                               type: array
+ *                               items:
+ *                                      $ref: '#/components/schemas/Category'
+ */
+router.get("/", async (req, res) => {
+    const categoryList = await categoryController.getAll();
+
+    if (categoryList.length > 0) {
+        return res.json({
+            msg: "Get categories list successfully!",
+            data: categoryList,
+        });
+    } else {
+        return res.json({
+            msg: "Not found any resource.",
+        });
+    }
+});
 
 module.exports = router;
