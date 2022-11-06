@@ -25,6 +25,12 @@ const options = {
                     name: "x-token",
                 },
             },
+            responses: {
+                404: {
+                    description: "The server not found any resources.",
+                    contents: "application/json",
+                },
+            },
         },
         security: [{ ApiKeyAuth: [] }],
     },

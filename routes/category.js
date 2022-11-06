@@ -140,6 +140,8 @@ router.patch(
  *                               type: array
  *                               items:
  *                                      $ref: '#/components/schemas/Category'
+ *               404:
+ *                   $ref: '#/components/responses/404'
  */
 router.get("/", async (_req, res) => {
     const categoryList = await categoryController.getAll();

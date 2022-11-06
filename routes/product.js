@@ -52,7 +52,7 @@ router.post(
  *       get:
  *           tags:
  *               - Products
- *           summary: Get list product with paginate and query parameters.
+ *           summary: Get list product with paginate, search and filter.
  *           parameters:
  *               - in: query
  *                 name: page
@@ -139,12 +139,19 @@ router.post(
  *                               paginator:
  *                                   type: object
  *                                   description: Object of pagination meta data.
+ *               404:
+ *                   $ref: '#/components/responses/404'
+ *
  */
 router.get("/", async (req, res) => {
     const { page, perpage, sort = "desc", title = "", category } = req.query;
     let categoryId;
     if (category) {
         const categoryRes = await categoryController.findBySlug(category);
+        if (categoryRes.length <= 0)
+            return res.status(404).json({
+                msg: "Server not found any resources.",
+            });
         categoryId = categoryRes._id;
     }
     let { sortBy = "price" } = req.query;
