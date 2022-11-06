@@ -70,6 +70,10 @@ const paginate = require("mongoose-paginate-v2");
  *                       type: boolean
  *                       default: false
  *                       readOnly: true
+ *                   createdAt:
+ *                       type: string
+ *                       format: date-time
+ *                       readOnly: true
  *
  */
 

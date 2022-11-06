@@ -32,22 +32,29 @@ const REFRESH_TIME = process.env.JWT_REFRESH_TIME;
  *          properties:
  *              fullname:
  *                  type: string
+ *                  example: Tom Cruise
  *              username:
  *                  type: string
+ *                  example: admin
  *              email:
  *                  type: string
+ *                  format: email
+ *                  example: admin@example.com
  *              role:
  *                  type: string
+ *                  example: customer
  *              address:
  *                  type: string
+ *                  example: Ho Chi Minh City
  *              orders:
  *                  type: array
- *                  default: []
+ *                  example: []
  *              isDeleted:
  *                  type: boolean
  *                  default: false
  *              isActive:
  *                  type: boolean
+ *                  default: true
  */
 /**
  * @swagger

@@ -71,7 +71,7 @@ router.post(
  *                 schema:
  *                   type: string
  *                   default: desc
- *                 description: Set the sort order.
+ *                 description: Set the sort order. "asc" or "desc".
  *               - in: query
  *                 name: title
  *                 schema:
@@ -88,8 +88,55 @@ router.post(
  *                   type: string
  *                   default: price
  *                 description: Field to sorting. One in ["price", "date", "selling"].
- *
- *
+ *           responses:
+ *               200:
+ *                description: The list of producrt with paginate.
+ *                content:
+ *                   application/json:
+ *                       schema:
+ *                           type: object
+ *                           properties:
+ *                               itemsList:
+ *                                   type: array
+ *                                   description: Array of documents.
+ *                                   items:
+ *                                       $ref: '#/components/schemas/Product'
+ *                               itemCount:
+ *                                   type: number
+ *                                   description: Total number of documents in collection that match the query.
+ *                                   example: 10
+ *                               perPage:
+ *                                   type: number
+ *                                   description: Limit that was used.
+ *                                   example: 10
+ *                               hasPrevPage:
+ *                                   type: boolean
+ *                                   description: Available of prev page.
+ *                               hasNextPage:
+ *                                   type: boolean
+ *                                   description: Available of next page.
+ *                               page:
+ *                                   type: number
+ *                                   description: Current page number.
+ *                                   example: 1
+ *                               pageCount:
+ *                                   type: number
+ *                                   description: Total number of pages.
+ *                                   example: 1
+ *                               prev:
+ *                                   type: number
+ *                                   description: Previous page number if available or NULL.
+ *                                   example: 1
+ *                               next:
+ *                                   type: number
+ *                                   description: Next page number if available or NULL.
+ *                                   example: 2
+ *                               slNo:
+ *                                   type: number
+ *                                   description: The starting index/serial/chronological number of first document in current page.
+ *                               paginator:
+ *                                   type: object
+ *                                   description: Object of pagination meta data.
  */
 router.get("/", async (req, res) => {
     const { page, perpage, sort = "desc", title, category } = req.query;
@@ -106,7 +153,7 @@ router.get("/", async (req, res) => {
     let { sortBy = "price" } = req.query;
     const query = validObject({
         categoryId,
-        title,
+        title: { $regex: title, $options: "i" },
         isDeleted: false,
     });
     const validSort = {

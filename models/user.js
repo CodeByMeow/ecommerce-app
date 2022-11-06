@@ -22,6 +22,7 @@ const { default: mongoose } = require("mongoose");
  *               example: admin
  *           email:
  *               type: string
+ *               format: email
  *               description: Email
  *               example: admin@example.com
  *           password:
