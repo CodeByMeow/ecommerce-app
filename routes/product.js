@@ -145,11 +145,6 @@ router.get("/", async (req, res) => {
     let categoryId;
     if (category) {
         const categoryRes = await categoryController.findBySlug(category);
-        if (categoryRes.length <= 0)
-            return res.status(404).json({
-                msg: "Not found",
-            });
-
         categoryId = categoryRes._id;
     }
     let { sortBy = "price" } = req.query;

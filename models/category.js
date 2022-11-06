@@ -25,7 +25,7 @@ const slugify = require("slugify");
  *                       type: string
  *                       description: The category's long description.
  *                       example: Samsung Electronics constantly reinvents the future. We explore the unknown to discover technologies to help people all over the world lead happier, healthier lives.
- *                   isDeteled:
+ *                   isDeleted:
  *                       type: boolean
  *                       description: mark the category is not available.
  *                       default: false
@@ -52,7 +52,7 @@ const categorySchema = new mongoose.Schema(
         longDesc: {
             type: String,
         },
-        isDeteled: {
+        isDeleted: {
             type: Boolean,
             default: false,
         },
