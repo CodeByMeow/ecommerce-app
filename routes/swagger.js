@@ -27,7 +27,7 @@ const options = {
             },
             responses: {
                 404: {
-                    description: "The server not found any resources.",
+                    description: "Not found.",
                     contents: "application/json",
                 },
                 401: {

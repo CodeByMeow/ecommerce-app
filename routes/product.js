@@ -252,5 +252,45 @@ router.patch("/", verifyUserRole, verifyToken, async (req, res) => {
         throw new Error(error.message);
     }
 });
+/**
+ * @swagger
+ *   /products/{productSlug}:
+ *       get:
+ *           tags:
+ *               - Products
+ *           summary: Product detail.
+ *           parameters:
+ *               - in: path
+ *                 name: productSlug
+ *                 schema:
+ *                  type: string
+ *                  example: dien-thoai-samsung
+ *                 required: true
+ *                 description: The detail of product to get.
+ *           responses:
+ *               200:
+ *                   description: Get product detail successfully.
+ *                   content:
+ *                       application/json:
+ *                           schema:
+ *                              $ref: '#/components/schemas/Product'
+ *               404:
+ *                   $ref: '#/components/responses/404'
+ */
+router.get("/:productSlug", async (req, res) => {
+    const slug = req.params.productSlug;
+
+    try {
+        const product = await ProductController.findBySlug(slug);
+        if (!product) throw new Error();
+
+        return res.json({
+            msg: "The product's detail.",
+            data: product,
+        });
+    } catch (error) {
+        return res.status(404).send("Not found");
+    }
+});
 
 module.exports = router;

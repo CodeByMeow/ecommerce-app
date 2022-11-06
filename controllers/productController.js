@@ -46,8 +46,13 @@ const updateById = async (productId, field) => {
 
     return updated;
 };
+
+const findBySlug = (slug) => {
+    return ProductModel.findOne({ slug, isDeleted: false });
+};
 module.exports = {
     create,
     getList,
     updateById,
+    findBySlug,
 };
