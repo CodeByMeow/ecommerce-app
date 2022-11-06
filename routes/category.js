@@ -25,6 +25,8 @@ const verifyToken = require("../middlewares/verify-token");
  *                       application/json:
  *                           schema:
  *                               $ref: '#/components/schemas/Category'
+ *               401:
+ *                   $ref: '#/components/responses/401'
  */
 router.post(
     "/",
@@ -87,6 +89,8 @@ router.post(
  *                       application/json:
  *                           schema:
  *                               $ref: '#/components/schemas/Category'
+ *               401:
+ *                   $ref: '#/components/responses/401'
  */
 router.patch(
     "/",

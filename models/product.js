@@ -113,7 +113,7 @@ const productSchema = new mongoose.Schema(
         slug: {
             type: String,
             default: function () {
-                return slugify(this.title);
+                return slugify(this.title, { lower: true });
             },
         },
         price: {

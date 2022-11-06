@@ -27,6 +27,8 @@ const { validObject } = require("../utils/object");
  *                       application/json:
  *                           schema:
  *                               $ref: '#/components/schemas/Product'
+ *               401:
+ *                   $ref: '#/components/responses/401'
  */
 router.post(
     "/",

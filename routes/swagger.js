@@ -30,6 +30,10 @@ const options = {
                     description: "The server not found any resources.",
                     contents: "application/json",
                 },
+                401: {
+                    description: "Unauthorized",
+                    contents: "application/json",
+                },
             },
         },
         security: [{ ApiKeyAuth: [] }],
