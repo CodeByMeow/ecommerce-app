@@ -6,8 +6,6 @@ const categorySchema = require("../validateSchema/categorySchema.json");
 const categoryController = require("../controllers/categoryController");
 const verifyToken = require("../middlewares/verify-token");
 
-router.use(verifyToken);
-
 /**
  * @swagger
  *   /category:
@@ -28,25 +26,32 @@ router.use(verifyToken);
  *                           schema:
  *                               $ref: '#/components/schemas/Category'
  */
-router.post("/", validateInput(categorySchema), async (req, res) => {
-    const { title, shortDesc, longDesc, image_url } = req.body;
-    const newCategory = {
-        title,
-        shortDesc,
-        longDesc,
-        image_url,
-    };
+router.post(
+    "/",
+    verifyToken,
+    validateInput(categorySchema),
+    async (req, res) => {
+        const { title, shortDesc, longDesc, image_url } = req.body;
+        const newCategory = {
+            title,
+            shortDesc,
+            longDesc,
+            image_url,
+        };
 
-    try {
-        const categoryCreated = await categoryController.create(newCategory);
-        return res.json({
-            msg: "Create category successfully",
-            data: categoryCreated,
-        });
-    } catch (error) {
-        throw new Error(error.message);
+        try {
+            const categoryCreated = await categoryController.create(
+                newCategory
+            );
+            return res.json({
+                msg: "Create category successfully",
+                data: categoryCreated,
+            });
+        } catch (error) {
+            throw new Error(error.message);
+        }
     }
-});
+);
 /**
  * @swagger
  *   /category:
@@ -83,38 +88,43 @@ router.post("/", validateInput(categorySchema), async (req, res) => {
  *                           schema:
  *                               $ref: '#/components/schemas/Category'
  */
-router.patch("/", validateInput(categorySchema), async (req, res) => {
-    const {
-        id,
-        title,
-        sortDesc,
-        longDesc,
-        image_url,
-        isDeleted = false,
-    } = req.body;
-    if (!id) {
-        return res.status(400).json({
-            msg: "missing id of category",
-        });
-    }
-
-    try {
-        const updated = await categoryController.updateById(id, {
+router.patch(
+    "/",
+    verifyToken,
+    validateInput(categorySchema),
+    async (req, res) => {
+        const {
+            id,
             title,
             sortDesc,
             longDesc,
             image_url,
-            isDeleted,
-        });
+            isDeleted = false,
+        } = req.body;
+        if (!id) {
+            return res.status(400).json({
+                msg: "missing id of category",
+            });
+        }
 
-        return res.json({
-            msg: "Category updated successfully",
-            data: updated,
-        });
-    } catch (error) {
-        throw new Error(error.message);
+        try {
+            const updated = await categoryController.updateById(id, {
+                title,
+                sortDesc,
+                longDesc,
+                image_url,
+                isDeleted,
+            });
+
+            return res.json({
+                msg: "Category updated successfully",
+                data: updated,
+            });
+        } catch (error) {
+            throw new Error(error.message);
+        }
     }
-});
+);
 /**
  * @swagger
  *   /category:
@@ -131,7 +141,7 @@ router.patch("/", validateInput(categorySchema), async (req, res) => {
  *                               items:
  *                                      $ref: '#/components/schemas/Category'
  */
-router.get("/", async (req, res) => {
+router.get("/", async (_req, res) => {
     const categoryList = await categoryController.getAll();
 
     if (categoryList.length > 0) {
