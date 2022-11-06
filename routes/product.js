@@ -70,8 +70,9 @@ router.post(
  *                 name: sort
  *                 schema:
  *                   type: string
+ *                   enum: [asc, desc]
  *                   default: desc
- *                 description: Set the sort order. "asc" or "desc".
+ *                 description: Set the sort order
  *               - in: query
  *                 name: title
  *                 schema:
@@ -86,8 +87,9 @@ router.post(
  *                 name: sortBy
  *                 schema:
  *                   type: string
+ *                   enum: [price, date, selling]
  *                   default: price
- *                 description: Field to sorting. One in ["price", "date", "selling"].
+ *                 description: Field to sorting.
  *           responses:
  *               200:
  *                description: The list of producrt with paginate.
@@ -143,7 +145,6 @@ router.get("/", async (req, res) => {
     let categoryId;
     if (category) {
         const categoryRes = await categoryController.findBySlug(category);
-        console.log(categoryRes);
         if (categoryRes.length <= 0)
             return res.status(404).json({
                 msg: "Not found",

@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const slugify = require("slugify");
-const paginate = require("mongoose-paginate-v2");
 /**
  * @swagger
  *   components:
@@ -69,7 +68,5 @@ const categorySchema = new mongoose.Schema(
     },
     { timestamps: true }
 );
-
-categorySchema.plugin(paginate);
 
 module.exports = mongoose.model("category", categorySchema);
