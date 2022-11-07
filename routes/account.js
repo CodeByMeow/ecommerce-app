@@ -278,7 +278,6 @@ router.post("/token", async (req, res) => {
     const refreshToken = req.body[ACCESS_REFRESH_TOKEN_KEY];
     if (refreshToken) {
         const user = await findUserByRefreshToken(refreshToken);
-        console.log(user);
         if (!user)
             return res.status(403).json({
                 msg: "Unauthenticated",
