@@ -282,8 +282,8 @@ router.get("/token", verifyTokenMdw, (_req, res) => {
  */
 router.post("/token", async (req, res) => {
     const { refreshToken } = req.body;
+    console.log("refreshToken: ", refreshToken);
     if (refreshToken) {
-        console.log(refreshToken);
         const user = await findUserByRefreshToken(refreshToken);
         if (!user)
             return res.status(403).json({

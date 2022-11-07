@@ -28,10 +28,10 @@ const AuthState = (props) => {
     }
   };
 
-  /* check if token was stored in localStorage is expired or not */
+  /* check if refreshToken was stored in localStorage is expired or not */
   const verifyToken = async () => {    
     try {
-      const authorizedRefreshToken = await AuthServices.verifyRefreshToken(refreshToken);
+      const authorizedRefreshToken = await AuthServices.verifyTk(refreshToken);
       console.log(authorizedRefreshToken.data.msg);
 
       // if token does not expired or invalid => dispatch to global state
