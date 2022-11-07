@@ -23,6 +23,16 @@ const signinFields = [
 
 const signupFields = [
   {
+    labelText: "Fullname",
+    labelFor: "fullname",
+    id: "fullname",
+    name: "fullname",
+    type: "text",
+    autoComplete: "fullname",
+    isRequired: true,
+    placeholder: "Fullname",
+  },
+  {
     labelText: "Username",
     labelFor: "username",
     id: "username",
@@ -61,6 +71,16 @@ const signupFields = [
     autoComplete: "confirm-password",
     isRequired: true,
     placeholder: "Confirm Password",
+  },
+  {
+    labelText: "Address",
+    labelFor: "address",
+    id: "address",
+    name: "address",
+    type: "type",
+    autoComplete: "address",
+    isRequired: true,
+    placeholder: "Address",
   },
 ];
 

@@ -11,10 +11,11 @@ const AuthServices = {
     return axiosInstance.post("/account/login", authInfo);
   },
   register: (userInfo) => {
-    return axiosInstance.post("/users", userInfo);
+    return axiosInstance.post("/account", userInfo);
   },
-  verifyToken: (refreshToken) => {
-    return axiosInstance.post("/account/token");
+  verifyRefreshToken: (refreshToken) => {
+    console.log("refreshToken: ",typeof refreshToken);
+    return axiosInstance.post("/account/token", refreshToken);
   },
 };
 
