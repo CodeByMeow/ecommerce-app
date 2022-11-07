@@ -5,15 +5,15 @@ const userShema = require("../validateSchema/userSchema.json");
 
 const UserController = require("../controllers/userController");
 const { hashPassword, comparePassword } = require("../utils/pwdUtil");
-const verifyTokenMdw = require("../middlewares/verify-token");
-const validateInputMdw = require("../middlewares/validate-input");
+const verifyTokenMdw = require("../middlewares/verifyToken");
+const validateInputMdw = require("../middlewares/validateInput");
+const { findUserByRefreshToken } = require("../controllers/userController");
 const ACCESS_REFRESH_TOKEN_KEY = process.env.ACCESS_REFRESH_TOKEN_KEY;
 const SECRET_KEY = process.env.JWT_SECRET_KEY;
 const EXPIRY_TIME = process.env.JWT_EXPIRY_TIME;
 const REFRESH_SECRET = process.env.JWT_REFRESH_SECRET;
 const REFRESH_TIME = process.env.JWT_REFRESH_TIME;
 
-const refreshTokens = {};
 /**
  * @swagger
  * components:
@@ -32,22 +32,29 @@ const refreshTokens = {};
  *          properties:
  *              fullname:
  *                  type: string
+ *                  example: Tom Cruise
  *              username:
  *                  type: string
+ *                  example: admin
  *              email:
  *                  type: string
+ *                  format: email
+ *                  example: admin@example.com
  *              role:
  *                  type: string
+ *                  example: customer
  *              address:
  *                  type: string
+ *                  example: Ho Chi Minh City
  *              orders:
  *                  type: array
- *                  default: []
+ *                  example: []
  *              isDeleted:
  *                  type: boolean
  *                  default: false
  *              isActive:
  *                  type: boolean
+ *                  default: true
  */
 /**
  * @swagger
@@ -112,13 +119,13 @@ router.post("/", validateInputMdw(userShema), async (req, res) => {
             expiresIn: REFRESH_TIME,
         });
 
+        await UserController.updateById(userCreated._id, { refreshToken });
+
         const response = {
             msg: "User registered successfully!",
             token,
             refreshToken,
         };
-
-        refreshTokens[refreshToken] = response;
 
         return res.status(201).json(response);
     } catch (error) {
@@ -199,8 +206,7 @@ router.post("/login", async (req, res) => {
                 refreshToken,
             };
 
-            refreshTokens[refreshToken] = response;
-            console.log(response);
+            await UserController.updateById(user.id, { refreshToken });
 
             return res.status(200).json(response);
         } else {
@@ -238,9 +244,46 @@ router.get("/profile", verifyTokenMdw, async (req, res) => {
     });
 });
 
+/**
+ *  @swagger
+ *   /account/token:
+ *       post:
+ *           tags:
+ *               - Account
+ *           summary: Greneral new token that expired.
+ *           requestBody:
+ *               required: true
+ *               content:
+ *                   application/json:
+ *                       schema:
+ *                           type: object
+ *                           properties:
+ *                               x-refresh-token:
+ *                                   type: string
+ *                                   example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwidXNlcl9pZCI6IjYzNjIyZjMwYTQ4OGZlMzU0ZDQ0NGYxZiIsImlhdCI6MTY2NzU0NDgxOCwiZXhwIjoxNjc1MzIwODE4fQ.Gy1pY5rhTBDuxv9pKDT53XqSqk50yLYoAPkjCjuvDGY
+ *           responses:
+ *               200:
+ *                   description: Refersh token successfully.
+ *                   content:
+ *                       application/json:
+ *                           schema:
+ *                               type: object
+ *                               properties:
+ *                                  token:
+ *                                   type: string
+ *                                   example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwidXNlcl9pZCI6IjYzNjIyZjMwYTQ4OGZlMzU0ZDQ0NGYxZiIsImlhdCI6MTY2NzU0NDgxOCwiZXhwIjoxNjc1MzIwODE4fQ.Gy1pY5rhTBDuxv9pKDT53XqSqk50yLYoAPkjCjuvDGY
+ *
+ */
 router.post("/token", async (req, res) => {
     const refreshToken = req.body[ACCESS_REFRESH_TOKEN_KEY];
-    if (refreshToken && refreshToken in refreshTokens) {
+    if (refreshToken) {
+        const user = await findUserByRefreshToken(refreshToken);
+        console.log(user);
+        if (!user)
+            return res.status(403).json({
+                msg: "Unauthenticated",
+            });
+
         try {
             const decoded = jwt.verify(refreshToken, REFRESH_SECRET);
             if (decoded) {
@@ -252,8 +295,6 @@ router.post("/token", async (req, res) => {
                 const response = {
                     token,
                 };
-
-                refreshTokens[refreshToken].token = token;
 
                 return res.json(response);
             }
@@ -290,7 +331,8 @@ router.post("/token", async (req, res) => {
  */
 router.patch("/profile", verifyTokenMdw, async (req, res) => {
     const { user_id } = req.decoded;
-    const fieldNeedUpdate = req.body;
+    const { role, ...fieldNeedUpdate } = req.body;
+
     try {
         const updated = await UserController.updateById(
             user_id,

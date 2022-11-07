@@ -3,6 +3,7 @@ const ajv = require("ajv");
 module.exports = (schema) => (req, res, next) => {
     const validator = new ajv({
         allErrors: true,
+        strictTuples: false,
     });
 
     const validateFn = validator.compile(schema);

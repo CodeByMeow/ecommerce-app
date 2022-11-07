@@ -13,6 +13,6 @@ module.exports = async (req, res, next) => {
             next();
         }
     } catch (err) {
-        res.status(401).send("Invalid token");
+        res.status(401).send(err.message);
     }
 };

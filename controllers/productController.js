@@ -1,8 +1,9 @@
 const { Types } = require("mongoose");
 const ProductModel = require("../models/product");
 const { generalSlug, addTailSlug } = require("../utils/url");
-const {} = require("../middlewares/verify-token");
-const {} = require("../middlewares/validate-input");
+const { paginateOptions } = require("../utils/pagination");
+const product = require("../models/product");
+const { updateOne } = require("../models/user");
 
 const getAll = (param) => {
     return ProductModel.find(param);
@@ -27,7 +28,31 @@ const create = async (product) => {
 
     return newProduct.save();
 };
+const getList = async (query = {}, options) => {
+    return await ProductModel.paginate(query, {
+        ...paginateOptions,
+        ...options,
+    });
+};
 
+const updateById = async (productId, field) => {
+    const updated = await ProductModel.findOneAndUpdate(
+        { _id: productId },
+        field,
+        {
+            new: true,
+        }
+    );
+
+    return updated;
+};
+
+const findBySlug = (slug) => {
+    return ProductModel.findOne({ slug, isDeleted: false });
+};
 module.exports = {
     create,
+    getList,
+    updateById,
+    findBySlug,
 };
