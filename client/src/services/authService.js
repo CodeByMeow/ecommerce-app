@@ -13,9 +13,10 @@ const AuthServices = {
   register: (userInfo) => {
     return axiosInstance.post("/account", userInfo);
   },
-  verifyRefreshToken: (refreshToken) => {
-    console.log("refreshToken: ",typeof refreshToken);
-    return axiosInstance.post("/account/token", refreshToken);
+  verifyTk: (refreshToken /* type: obj because body in request is an Object  */) => {
+    console.log("refreshToken: ", refreshToken);
+    // return axiosInstance.post("/account/token", {"x-refresh-token": refreshToken});
+    return axiosInstance.post("/account/token", {refreshToken});
   },
 };
 
