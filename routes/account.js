@@ -72,11 +72,6 @@ const REFRESH_TIME = process.env.JWT_REFRESH_TIME;
  *       responses:
  *           201:
  *               description: A new account registered
- *               content:
- *                   application/json:
- *                       schema:
- *                           type: object
- *                           $ref: '#components/schemas/TokenResponse'
  *           400:
  *               description: Bad request
  */
@@ -107,24 +102,8 @@ router.post("/", validateInputMdw(userShema), async (req, res) => {
 
         const userCreated = await UserController.create(newUser);
 
-        const tokenContent = {
-            username,
-            user_id: userCreated._id,
-        };
-        const token = jwt.sign(tokenContent, SECRET_KEY, {
-            expiresIn: EXPIRY_TIME,
-        });
-
-        const refreshToken = jwt.sign(tokenContent, REFRESH_SECRET, {
-            expiresIn: REFRESH_TIME,
-        });
-
-        await UserController.updateById(userCreated._id, { refreshToken });
-
         const response = {
             msg: "User registered successfully!",
-            token,
-            refreshToken,
         };
 
         return res.status(201).json(response);
