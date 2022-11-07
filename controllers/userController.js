@@ -24,7 +24,7 @@ const isUsernameExisted = async (username) => {
 };
 
 const findUserById = (userId) => {
-    return UserModel.findById(userId).select("-password");
+    return UserModel.findById(userId).select("-password -refreshToken");
 };
 
 const updateById = async (id, fields) => {
