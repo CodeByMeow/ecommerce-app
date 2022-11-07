@@ -2,13 +2,12 @@ import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import {SIGN_IN} from "../../contexts/types.js";
 import AuthContext from "../../contexts/AuthContext/AuthContext";
-import SigninForm from "../../components/SigninForm/SigninForm";
-import PageContainer from "../../layouts/PageContainer/PageContainer";
+import SigninForm from "../../components/Forms/SigninForm";
 
 import AuthServices from "../../services/authService.js";
 import actionCreator from "../../utils/actionCreator.js";
 
-import "../../components/SigninForm/SigninForm.css";
+import "../../components/Forms/Forms.css";
 
 const SigninPage = () => {
   const [signinErr, setSigninErr] = useState(null);

@@ -19,6 +19,7 @@ const initialState = {
 const AuthState = (props) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
   const {refreshToken} = state;
+  // console.log("refreshToken: ", refreshToken);
 
   // implement token in localStorage to Header in axiosInstance to call API POST method
   const setAuthToken = async (refreshTok) => {
@@ -28,19 +29,19 @@ const AuthState = (props) => {
   };
 
   /* check if token was stored in localStorage is expired or not */
-  const verifyToken = async () => {
+  const verifyToken = async () => {    
     try {
-      const authorizedToken = await AuthServices.verifyToken(refreshToken);
-      console.log(authorizedToken.data.msg);
+      const authorizedRefreshToken = await AuthServices.verifyRefreshToken(refreshToken);
+      console.log(authorizedRefreshToken.data.msg);
 
       // if token does not expired or invalid => dispatch to global state
-      dispatch(actionCreator(GET_USER_INFO, authorizedToken.data));
+      dispatch(actionCreator(GET_USER_INFO, authorizedRefreshToken.data));
     } catch (err) {
       console.log(err.response);
       err.response.data.msg
         ? console.log(err.response.data.msg)
         : console.log(err.response.data);
-      dispatch(actionCreator(LOG_OUT));
+      // dispatch(actionCreator(LOG_OUT));
     }
   };
 
