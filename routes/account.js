@@ -215,7 +215,7 @@ router.post("/login", async (req, res) => {
  *                              $ref: '#/components/schemas/UserResponse'
  */
 router.get("/profile", verifyTokenMdw, async (req, res) => {
-    const { user_id } = req.decoded;
+    const { user_id } = req.user;
     const user = await UserController.findUserById(user_id);
 
     return res.json({
