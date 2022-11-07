@@ -1,4 +1,4 @@
-/*
+
 
   1. Homepage (*) (DONE)
 
@@ -53,4 +53,4 @@
         screenSize: ...,
       }
 
-*/
+
