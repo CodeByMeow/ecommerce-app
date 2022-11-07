@@ -48,7 +48,6 @@ const { default: mongoose } = require("mongoose");
  *                   type: object
  *               description: The list user's orders.
  *               readOnly: true
- *               example: [{_id: e121223412341234e32423}, {_id: q234234123424324123434} ]
  *           refreshToken:
  *               type: string
  *               descruption: The refresh token.
