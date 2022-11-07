@@ -1,4 +1,4 @@
-import { LOG_OUT, SIGN_IN, SIGN_UP, GET_USER_INFO } from "../types";
+import { LOG_OUT, SIGN_IN, SIGN_UP, GET_USER_INFO, RENEW_TOKEN } from "../types";
 
 const authReducer = (state, action) => {
   const { type, payload } = action;
@@ -22,10 +22,19 @@ const authReducer = (state, action) => {
       };
     case GET_USER_INFO: {
       const { user } = payload;
-      // console.log(payload);
+      console.log(payload);
       return {
         ...state,
-        user: user.username,
+        user: user,
+      };
+    }
+    case RENEW_TOKEN: {
+      // console.log(payload);
+      const { token } = payload;      
+      localStorage.setItem("token", token);
+      return {
+        ...state,
+        token,
       };
     }
     default:

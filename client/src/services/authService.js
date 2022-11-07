@@ -13,11 +13,14 @@ const AuthServices = {
   register: (userInfo) => {
     return axiosInstance.post("/account", userInfo);
   },
-  verifyTk: (refreshToken /* type: obj because body in request is an Object  */) => {
+  verifyRefreshTk: (refreshToken /* type: obj because body in request is an Object  */) => {
     console.log("refreshToken: ", refreshToken);
     // return axiosInstance.post("/account/token", {"x-refresh-token": refreshToken});
     return axiosInstance.post("/account/token", {refreshToken});
   },
+  verifyToken: () => {
+    return axiosInstance.get("/account/profile");
+  }
 };
 
 export default AuthServices;
