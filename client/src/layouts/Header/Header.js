@@ -136,9 +136,9 @@ const Header = () => {
                     {navigation.categories.map((category) => (
                       <Tab.Panel
                         key={category.name}
-                        className="space-y-10 px-4 pt-10 pb-8"
+                        className="space-y-0 lg:space-y-10 px-4 pt-10 pb-8"
                       >
-                        <div className="grid grid-cols-2 gap-x-4">
+                        <div className="grid grid-cols-2 gap-y-6 lg:gap-x-4">
                           {category.featured.map((item) => (
                             <div
                               key={item.name}
@@ -169,12 +169,12 @@ const Header = () => {
                         </div>
                         {category.sections.map((section) => (
                           <div key={section.name}>
-                            <p
+                            {/* <p
                               id={`${category.id}-${section.id}-heading-mobile`}
                               className="font-medium text-gray-900"
                             >
                               {section.name}
-                            </p>
+                            </p> */}
                             <ul
                               role="list"
                               aria-labelledby={`${category.id}-${section.id}-heading-mobile`}
