@@ -7,14 +7,24 @@ import axiosInstance from "./axiosInstance";
 
 const AuthServices = {
     login: (authInfo) => {
-        console.log(authInfo);
+        // console.log(authInfo);
         return axiosInstance.post("/account/login", authInfo);
     },
     register: (userInfo) => {
-        return axiosInstance.post("/users", userInfo);
+        return axiosInstance.post("/account", userInfo);
     },
-    verifyToken: (refreshToken) => {
-        return axiosInstance.post("/account/token", refreshToken);
+    renewToken: (
+        refreshToken /* type: obj because body in request is an Object  */
+    ) => {
+        // console.log("refreshToken: ", refreshToken);
+        return axiosInstance.post("/account/token", { refreshToken });
+    },
+    verifyToken: async () => {
+        const result = await axiosInstance.get("/account/profile");
+        if (result) {
+            console.log(result.status);
+        }
+        return result;
     },
 };
 

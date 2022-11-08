@@ -180,10 +180,15 @@ router.post("/login", async (req, res) => {
                 expiresIn: REFRESH_TIME,
             });
 
+            const userInfo = await UserController.findUserById(
+                tokenContent.user_id
+            );
             const response = {
                 msg: "Logged In",
                 token,
                 refreshToken,
+                isAuthenticated: true,
+                user: userInfo,
             };
 
             await UserController.updateById(user.id, { refreshToken });
@@ -216,12 +221,16 @@ router.post("/login", async (req, res) => {
  */
 router.get("/profile", verifyTokenMdw, async (req, res) => {
     const { user_id } = req.user;
-    const user = await UserController.findUserById(user_id);
 
-    return res.json({
-        msg: "Get user's profile successfully",
-        data: user,
-    });
+    try {
+        const user = await UserController.findUserById(user_id);
+        return res.json({
+            msg: "Get user's profile successfully",
+            data: user,
+        });
+    } catch (err) {
+        next(err);
+    }
 });
 
 /**
@@ -282,7 +291,7 @@ router.get("/token", verifyTokenMdw, (_req, res) => {
  */
 router.post("/token", async (req, res) => {
     const { refreshToken } = req.body;
-    console.log("refreshToken: ", refreshToken);
+
     if (refreshToken) {
         const user = await findUserByRefreshToken(refreshToken);
         if (!user)
@@ -301,12 +310,12 @@ router.post("/token", async (req, res) => {
                 const response = {
                     token,
                 };
-
+                console.log("new Token: ", token);
                 return res.json(response);
             }
         } catch (error) {
             return res.status(403).json({
-                msg: "Invalid token",
+                msg: "Invalid refresh token",
             });
         }
     } else {

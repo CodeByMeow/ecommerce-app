@@ -1,6 +1,7 @@
 import * as React from "react";
-import { Fragment, useState } from "react";
+import { Fragment, useState, useContext } from "react";
 import { Link } from "react-router-dom";
+import authContext from "../../contexts/AuthContext/AuthContext.js";
 import { Dialog, Popover, Tab, Transition } from "@headlessui/react";
 import {
   Bars3Icon,
@@ -65,6 +66,10 @@ function classNames(...classes) {
 }
 
 const Header = () => {
+  const {state} = useContext(authContext);
+  const {user} = state; 
+  user&& console.log(user);
+  // userInfo?. console.log(userInfo);
   const [open, setOpen] = useState(false);
 
   return (
@@ -389,12 +394,12 @@ const Header = () => {
 
               <div className="ml-auto flex items-center">
                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                  <Link
+                  {user ? (<h3 className="text-indigo-600 font-extrabold">{user.username}</h3>) : (<Link
                     to="/signin"
                     className="text-sm font-medium text-gray-800 hover:text-indigo-700"
                   >
                     Sign in
-                  </Link>
+                  </Link>)}
                   <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
                   <Link
                     to="/signup"
