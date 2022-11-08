@@ -2,13 +2,13 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
 const userShema = require("../validateSchema/userSchema.json");
+const wishlistRouter = require("./wishlist");
 
 const UserController = require("../controllers/userController");
 const { hashPassword, comparePassword } = require("../utils/pwdUtil");
 const verifyTokenMdw = require("../middlewares/verifyToken");
 const validateInputMdw = require("../middlewares/validateInput");
 const { findUserByRefreshToken } = require("../controllers/userController");
-const ACCESS_REFRESH_TOKEN_KEY = process.env.ACCESS_REFRESH_TOKEN_KEY;
 const SECRET_KEY = process.env.JWT_SECRET_KEY;
 const EXPIRY_TIME = process.env.JWT_EXPIRY_TIME;
 const REFRESH_SECRET = process.env.JWT_REFRESH_SECRET;
@@ -229,6 +229,28 @@ router.get("/profile", verifyTokenMdw, async (req, res) => {
 });
 
 /**
+ * @swagger
+ *   /account/token:
+ *       get:
+ *           tags:
+ *               - Account
+ *           summary: Check token expired.
+ *           responses:
+ *               200:
+ *                   description: Token is valid.
+ *                   content:
+ *                       application/json:
+ *                           schema:
+ *                               type: object
+ *                               properties:
+ *                                   msg:
+ *                                       type: string
+ *                                       example: Token is valid
+ *               401:
+ *                   $ref: '#/components/responses/401'
+ */
+router.get("/token", verifyTokenMdw);
+/**
  *  @swagger
  *   /account/token:
  *       post:
@@ -242,7 +264,7 @@ router.get("/profile", verifyTokenMdw, async (req, res) => {
  *                       schema:
  *                           type: object
  *                           properties:
- *                               x-refresh-token:
+ *                               refreshToken:
  *                                   type: string
  *                                   example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwidXNlcl9pZCI6IjYzNjIyZjMwYTQ4OGZlMzU0ZDQ0NGYxZiIsImlhdCI6MTY2NzU0NDgxOCwiZXhwIjoxNjc1MzIwODE4fQ.Gy1pY5rhTBDuxv9pKDT53XqSqk50yLYoAPkjCjuvDGY
  *           responses:
@@ -259,8 +281,18 @@ router.get("/profile", verifyTokenMdw, async (req, res) => {
  *
  */
 router.post("/token", async (req, res) => {
+<<<<<<< HEAD
   // console.log(req.body);
   const { refreshToken } = req.body;
+=======
+    const { refreshToken } = req.body;
+    if (refreshToken) {
+        const user = await findUserByRefreshToken(refreshToken);
+        if (!user)
+            return res.status(403).json({
+                msg: "Unauthenticated",
+            });
+>>>>>>> main
 
   if (refreshToken) {
     const user = await findUserByRefreshToken(refreshToken);
@@ -328,5 +360,7 @@ router.patch("/profile", verifyTokenMdw, async (req, res) => {
     throw new Error(error.message);
   }
 });
+
+router.use("/wishlist", wishlistRouter);
 
 module.exports = router;

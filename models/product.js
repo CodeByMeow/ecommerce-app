@@ -17,6 +17,7 @@ const paginate = require("mongoose-paginate-v2");
  *                   _id:
  *                       type: string
  *                       example: 63675ab9f17a55d423321f31
+ *                       readOnly: true
  *                   category:
  *                       type: string
  *                       example: 6361da66cac64578a1dcd8e7
@@ -73,10 +74,31 @@ const paginate = require("mongoose-paginate-v2");
  *                       type: boolean
  *                       default: false
  *                       readOnly: true
- *                   createdAt:
- *                       type: string
- *                       format: date-time
- *                       readOnly: true
+ *                   details:
+ *                       type: object
+ *                       properties:
+ *                           ram:
+ *                               type: string
+ *                               example: 6GB
+ *                           rom:
+ *                               type: string
+ *                               example: 128GB
+ *                           frontCamera:
+ *                               type: string
+ *                               example: 12MB
+ *                           backCamera:
+ *                               type: string
+ *                               example: 12MB
+ *                           chip:
+ *                               type: string
+ *                               example: Apple A15 Bionic 6 kernel
+ *                           memory:
+ *                               type: string
+ *                               example: 512GB
+ *                           screenSize:
+ *                               type: string
+ *                               example: 6.1" - 60Hz
+ *
  *
  */
 
@@ -138,6 +160,15 @@ const productSchema = new mongoose.Schema(
         isDeleted: {
             type: Boolean,
             default: false,
+        },
+        details: {
+            ram: String,
+            rom: String,
+            frontCamera: String,
+            backCamera: String,
+            chip: String,
+            memory: String,
+            screenSize: String,
         },
     },
     { timestamps: true }

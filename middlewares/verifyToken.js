@@ -14,7 +14,10 @@ module.exports = async (req, res, next) => {
     try {
         const decoded = jwt.verify(token, JWT_SECRET_KEY);
         if (decoded) {
-            req.user = decoded;
+            req.decoded = decoded;
+            res.json({
+                msg: "Token is valid.",
+            });
             next();
         }
     } catch (err) {
