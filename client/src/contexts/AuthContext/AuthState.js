@@ -1,4 +1,4 @@
-import { useEffect, useContext, useReducer } from "react";
+import { useEffect, useState, useReducer } from "react";
 import authReducer from "./AuthReducer";
 import AuthContext from "./AuthContext";
 
@@ -25,6 +25,7 @@ const AuthState = (props) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
   const { refreshToken, token } = state;
 
+
   // implement token in localStorage to Header in axiosInstance to call API POST method
   const setAuthToken = async (token) => {
     if (token) {
@@ -32,12 +33,15 @@ const AuthState = (props) => {
     }
   };
 
+
   const renewToken = async () => {
     try {
-      const authorizedRefreshToken = await AuthServices.verifyRefreshTk(
+      const authorizedRefreshToken = await AuthServices.renewToken(
         refreshToken
       );
+      // generate new accessToken => update localStorage
       dispatch(actionCreator(RENEW_TOKEN, authorizedRefreshToken.data));
+      // setAuthToken(authorizedRefreshToken.data.token);
     } catch (err) {
       err.response.data.msg
         ? console.log(err.response.data.msg)
@@ -47,18 +51,19 @@ const AuthState = (props) => {
   };
 
   /* check if refreshToken was stored in localStorage is expired or not */
+  // call API with accessToken embed to headers
   const verifyToken = async () => {
     try {
       const authorizedUser = await AuthServices.verifyToken();
-      console.log(authorizedUser);
       // if token does not expired or invalid => dispatch to global state
       dispatch(actionCreator(GET_USER_INFO, authorizedUser.data));
-    } catch (err) {
-      console.log(err.response.status);
-      if (err.response.status === 401) {
-        renewToken();
+    } catch (err) {      
+      err.response.data.msg
+        ? console.log(err.response.data.msg)
+        : console.log(err.response.data);
+       if (err.response.status === 401) {
+          renewToken();
       }
-      // err.response.data.msg ? console.log(err.response.data.msg) : console.log(err.response.data);
     }
   };
 

@@ -76,40 +76,40 @@ const REFRESH_TIME = process.env.JWT_REFRESH_TIME;
  *               description: Bad request
  */
 router.post("/", validateInputMdw(userShema), async (req, res) => {
-    const { fullname, username, email, password } = req.body;
+  const { fullname, username, email, password } = req.body;
 
-    try {
-        const emailExist = await UserController.isEmailExisted(email);
-        if (emailExist) {
-            return res.status(400).json({
-                msg: "Email already exist, please try another one!",
-            });
-        }
-
-        const usernameExist = await UserController.isUsernameExisted(username);
-        if (usernameExist) {
-            return res.status(400).json({
-                msg: "Username already exist, please try another one!",
-            });
-        }
-
-        const newUser = {
-            fullname,
-            username,
-            email,
-            password: await hashPassword(password),
-        };
-
-        const userCreated = await UserController.create(newUser);
-
-        const response = {
-            msg: "User registered successfully!",
-        };
-
-        return res.status(201).json(response);
-    } catch (error) {
-        throw new Error(error.message);
+  try {
+    const emailExist = await UserController.isEmailExisted(email);
+    if (emailExist) {
+      return res.status(400).json({
+        msg: "Email already exist, please try another one!",
+      });
     }
+
+    const usernameExist = await UserController.isUsernameExisted(username);
+    if (usernameExist) {
+      return res.status(400).json({
+        msg: "Username already exist, please try another one!",
+      });
+    }
+
+    const newUser = {
+      fullname,
+      username,
+      email,
+      password: await hashPassword(password),
+    };
+
+    const userCreated = await UserController.create(newUser);
+
+    const response = {
+      msg: "User registered successfully!",
+    };
+
+    return res.status(201).json(response);
+  } catch (error) {
+    throw new Error(error.message);
+  }
 });
 
 /**
@@ -148,54 +148,55 @@ router.post("/", validateInputMdw(userShema), async (req, res) => {
  */
 
 router.post("/login", async (req, res) => {
-    const { username, password } = req.body;
-    if (!username || !password) {
-        return res.status(400).json({
-            msg: "missing required fields",
-        });
+  const { username, password } = req.body;
+  if (!username || !password) {
+    return res.status(400).json({
+      msg: "missing required fields",
+    });
+  }
+  try {
+    const isUsernameExisted = await UserController.isUsernameExisted(username);
+    if (!isUsernameExisted) {
+      return res.status(403).json({
+        msg: "username not exist",
+      });
     }
-    try {
-        const isUsernameExisted = await UserController.isUsernameExisted(
-            username
-        );
-        if (!isUsernameExisted) {
-            return res.status(403).json({
-                msg: "username not exist",
-            });
-        }
 
-        const user = await UserController.findUserByUsername(username);
-        isPasswordMatch = await comparePassword(password, user.password);
-        if (isPasswordMatch) {
-            const tokenContent = {
-                username,
-                user_id: user._id,
-            };
-            const token = jwt.sign(tokenContent, SECRET_KEY, {
-                expiresIn: EXPIRY_TIME,
-            });
+    const user = await UserController.findUserByUsername(username);
+    isPasswordMatch = await comparePassword(password, user.password);
+    if (isPasswordMatch) {
+      const tokenContent = {
+        username,
+        user_id: user._id,
+      };
+      const token = jwt.sign(tokenContent, SECRET_KEY, {
+        expiresIn: EXPIRY_TIME,
+      });
 
-            const refreshToken = jwt.sign(tokenContent, REFRESH_SECRET, {
-                expiresIn: REFRESH_TIME,
-            });
+      const refreshToken = jwt.sign(tokenContent, REFRESH_SECRET, {
+        expiresIn: REFRESH_TIME,
+      });
 
-            const response = {
-                msg: "Logged In",
-                token,
-                refreshToken,
-            };
+      const userInfo = await UserController.findUserById(tokenContent.user_id);
+      const response = {
+        msg: "Logged In",
+        token,
+        refreshToken,
+        isAuthenticated: true,
+        user: userInfo,
+      };
 
-            await UserController.updateById(user.id, { refreshToken });
+      await UserController.updateById(user.id, { refreshToken });
 
-            return res.status(200).json(response);
-        } else {
-            return res.status(403).json({
-                msg: "Username or password invalid",
-            });
-        }
-    } catch (err) {
-        throw new Error(err.message);
+      return res.status(200).json(response);
+    } else {
+      return res.status(403).json({
+        msg: "Username or password invalid",
+      });
     }
+  } catch (err) {
+    throw new Error(err.message);
+  }
 });
 /**
  * @swagger
@@ -214,13 +215,17 @@ router.post("/login", async (req, res) => {
  *                              $ref: '#/components/schemas/UserResponse'
  */
 router.get("/profile", verifyTokenMdw, async (req, res) => {
-    const { user_id } = req.user;
-    const user = await UserController.findUserById(user_id);
+  const { user_id } = req.user;
 
+  try {
+    const user = await UserController.findUserById(user_id);
     return res.json({
-        msg: "Get user successfully",
-        data: user,
+      msg: "Get user successfully",
+      user: user,
     });
+  } catch (err) {
+    next(err);
+  }
 });
 
 /**
@@ -254,38 +259,38 @@ router.get("/profile", verifyTokenMdw, async (req, res) => {
  *
  */
 router.post("/token", async (req, res) => {
-    // console.log(req.body);
-    const {refreshToken} = req.body;
-    console.log("refreshToken: ",refreshToken);
-    if (refreshToken) {        
-        const user = await findUserByRefreshToken(refreshToken);
-        if (!user)
-            return res.status(403).json({
-                msg: "Unauthenticated",
-            });
+  // console.log(req.body);
+  const { refreshToken } = req.body;
 
-        try {
-            const decoded = jwt.verify(refreshToken, REFRESH_SECRET);
-            if (decoded) {
-                const { username, user_id } = decoded;
-                const token = jwt.sign({ username, user_id }, SECRET_KEY, {
-                    expiresIn: EXPIRY_TIME,
-                });
+  if (refreshToken) {
+    const user = await findUserByRefreshToken(refreshToken);
+    if (!user)
+      return res.status(403).json({
+        msg: "Unauthenticated",
+      });
 
-                const response = {
-                    token,
-                };
+    try {
+      const decoded = jwt.verify(refreshToken, REFRESH_SECRET);
+      if (decoded) {
+        const { username, user_id } = decoded;
+        const token = jwt.sign({ username, user_id }, SECRET_KEY, {
+          expiresIn: EXPIRY_TIME,
+        });
 
-                return res.json(response);
-            }
-        } catch (error) {
-            return res.status(403).json({
-                msg: "Invalid token",
-            });
-        }
-    } else {
-        res.status(404).send("Invalid request");
+        const response = {
+          token,
+        };
+        console.log("new Token: ", token);
+        return res.json(response);
+      }
+    } catch (error) {
+      return res.status(403).json({
+        msg: "Invalid refresh token",
+      });
     }
+  } else {
+    res.status(404).send("Invalid request");
+  }
 });
 /**
  * @swagger
@@ -310,21 +315,18 @@ router.post("/token", async (req, res) => {
  *                               $ref: '#/components/schemas/UserResponse'
  */
 router.patch("/profile", verifyTokenMdw, async (req, res) => {
-    const { user_id } = req.decoded;
-    const { role, ...fieldNeedUpdate } = req.body;
+  const { user_id } = req.decoded;
+  const { role, ...fieldNeedUpdate } = req.body;
 
-    try {
-        const updated = await UserController.updateById(
-            user_id,
-            fieldNeedUpdate
-        );
-        return res.json({
-            msg: "User updated successfully",
-            data: updated,
-        });
-    } catch (error) {
-        throw new Error(error.message);
-    }
+  try {
+    const updated = await UserController.updateById(user_id, fieldNeedUpdate);
+    return res.json({
+      msg: "User updated successfully",
+      data: updated,
+    });
+  } catch (error) {
+    throw new Error(error.message);
+  }
 });
 
 module.exports = router;
