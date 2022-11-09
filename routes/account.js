@@ -100,7 +100,7 @@ router.post("/", validateInputMdw(userShema), async (req, res) => {
             password: await hashPassword(password),
         };
 
-        const userCreated = await UserController.create(newUser);
+        await UserController.create(newUser);
 
         const response = {
             msg: "User registered successfully!",
@@ -244,7 +244,11 @@ router.get("/profile", verifyTokenMdw, async (req, res) => {
  *               401:
  *                   $ref: '#/components/responses/401'
  */
-router.get("/token", verifyTokenMdw);
+router.get("/token", verifyTokenMdw, (_req, res) => {
+    return res.json({
+        msg: "Token is valid.",
+    });
+});
 /**
  *  @swagger
  *   /account/token:
