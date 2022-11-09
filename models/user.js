@@ -52,7 +52,14 @@ const { default: mongoose } = require("mongoose");
  *               type: string
  *               descruption: The refresh token.
  *               readOnly: true
- *
+ *           createdAt:
+ *               type: string
+ *               format: date-time
+ *               readOnly: true
+ *           updatedAt:
+ *               type: string
+ *               format: date-time
+ *               readOnly: true
  */
 
 const userSchema = new mongoose.Schema(

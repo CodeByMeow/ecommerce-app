@@ -98,7 +98,14 @@ const paginate = require("mongoose-paginate-v2");
  *                           screenSize:
  *                               type: string
  *                               example: 6.1" - 60Hz
- *
+ *                   createdAt:
+ *                       type: string
+ *                       format: date-time
+ *                       readOnly: true
+ *                   updatedAt:
+ *                       type: string
+ *                       format: date-time
+ *                       readOnly: true
  *
  */
 
