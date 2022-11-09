@@ -13,6 +13,7 @@ const SECRET_KEY = process.env.JWT_SECRET_KEY;
 const EXPIRY_TIME = process.env.JWT_EXPIRY_TIME;
 const REFRESH_SECRET = process.env.JWT_REFRESH_SECRET;
 const REFRESH_TIME = process.env.JWT_REFRESH_TIME;
+const ACCESS_REFRESH_TOKEN= process.env.ACCESS_REFRESH_TOKEN;
 
 /**
  * @swagger
@@ -216,12 +217,11 @@ router.post("/login", async (req, res) => {
  */
 router.get("/profile", verifyTokenMdw, async (req, res) => {
   const { user_id } = req.user;
-
   try {
     const user = await UserController.findUserById(user_id);
     return res.json({
       msg: "Get user successfully",
-      user: user,
+      data: user,
     });
   } catch (err) {
     next(err);
@@ -285,7 +285,7 @@ router.get("/token", verifyTokenMdw, (_req, res) => {
  *
  */
 router.post("/token", async (req, res) => {
-    const refreshToken = req.body[ACCESS_REFRESH_TOKEN_KEY];
+    const refreshToken = req.body[ACCESS_REFRESH_TOKEN];
     if (refreshToken) {
         const user = await findUserByRefreshToken(refreshToken);
         if (!user)

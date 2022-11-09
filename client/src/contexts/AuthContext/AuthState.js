@@ -42,11 +42,12 @@ const AuthState = (props) => {
       // generate new accessToken => update localStorage
       dispatch(actionCreator(RENEW_TOKEN, authorizedRefreshToken.data));
       // setAuthToken(authorizedRefreshToken.data.token);
-    } catch (err) {
-      err.response.data.msg
+    } catch (err) {      
+      // dispatch(actionCreator(LOG_OUT));
+      console.log(err.response);
+      /* err.response
         ? console.log(err.response.data.msg)
-        : console.log(err.response.data);
-      dispatch(actionCreator(LOG_OUT));
+        : console.log(err.response.data); */
     }
   };
 
@@ -58,9 +59,7 @@ const AuthState = (props) => {
       // if token does not expired or invalid => dispatch to global state
       dispatch(actionCreator(GET_USER_INFO, authorizedUser.data));
     } catch (err) {      
-      err.response.data.msg
-        ? console.log(err.response.data.msg)
-        : console.log(err.response.data);
+        console.log(err.response);
        if (err.response.status === 401) {
           renewToken();
       }
