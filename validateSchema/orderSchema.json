@@ -1,0 +1,20 @@
+{
+    "type": "object",
+    "required": ["products"],
+    "properties": {
+        "products": {
+            "type": "array",
+            "items": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "type": "string"
+                        }
+                    }
+                }
+            ]
+        }
+    },
+    "additionalProperties": false
+}

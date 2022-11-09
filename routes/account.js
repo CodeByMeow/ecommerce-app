@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const router = express.Router();
 const userShema = require("../validateSchema/userSchema.json");
 const wishlistRouter = require("./wishlist");
+const orderRouter = require("./order");
 
 const UserController = require("../controllers/userController");
 const { hashPassword, comparePassword } = require("../utils/pwdUtil");
@@ -218,7 +219,7 @@ router.get("/profile", verifyTokenMdw, async (req, res) => {
     const user = await UserController.findUserById(user_id);
 
     return res.json({
-        msg: "Get user successfully",
+        msg: "Get user's profile successfully",
         data: user,
     });
 });
@@ -352,5 +353,6 @@ router.patch("/profile", verifyTokenMdw, async (req, res) => {
 });
 
 router.use("/wishlist", wishlistRouter);
+router.use("/orders", orderRouter);
 
 module.exports = router;
