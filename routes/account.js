@@ -220,7 +220,7 @@ router.post("/login", async (req, res) => {
  *                              $ref: '#/components/schemas/UserResponse'
  */
 router.get("/profile", verifyTokenMdw, async (req, res) => {
-    const { user_id } = req.user;
+    const { user_id } = req.decoded;
 
     try {
         const user = await UserController.findUserById(user_id);
@@ -229,7 +229,7 @@ router.get("/profile", verifyTokenMdw, async (req, res) => {
             data: user,
         });
     } catch (err) {
-        next(err);
+        throw new Error(err.message);
     }
 });
 
@@ -310,7 +310,7 @@ router.post("/token", async (req, res) => {
                 const response = {
                     token,
                 };
-                console.log("new Token: ", token);
+
                 return res.json(response);
             }
         } catch (error) {
