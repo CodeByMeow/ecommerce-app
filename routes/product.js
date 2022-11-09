@@ -219,6 +219,7 @@ router.patch("/", verifyUserRole, verifyToken, async (req, res) => {
         image_url,
         gallery_image,
         isDeleted,
+        details,
     } = req.body;
     if (!id) {
         return res.status(400).json({
@@ -238,6 +239,7 @@ router.patch("/", verifyUserRole, verifyToken, async (req, res) => {
         image_url,
         gallery_image,
         isDeleted,
+        details,
     });
     try {
         const productUpdated = await ProductController.updateById(
