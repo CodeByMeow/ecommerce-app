@@ -29,7 +29,7 @@ const AuthState = (props) => {
   // implement token in localStorage to Header in axiosInstance to call API POST method
   const setAuthToken = async (token) => {
     if (token) {
-      axiosInstance.defaults.headers.common["token"] = token;
+      axiosInstance.defaults.headers.common["x-token"] = token;
     }
   };
 
