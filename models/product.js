@@ -92,9 +92,6 @@ const paginate = require("mongoose-paginate-v2");
  *                           chip:
  *                               type: string
  *                               example: Apple A15 Bionic 6 kernel
- *                           memory:
- *                               type: string
- *                               example: 512GB
  *                           screenSize:
  *                               type: string
  *                               example: 6.1" - 60Hz
@@ -174,7 +171,6 @@ const productSchema = new mongoose.Schema(
             frontCamera: String,
             backCamera: String,
             chip: String,
-            memory: String,
             screenSize: String,
         },
     },
