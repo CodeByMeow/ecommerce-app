@@ -151,15 +151,15 @@ router.get("/", async (req, res) => {
     let categoryId;
     if (category) {
         const categoryRes = await categoryController.findBySlug(category);
-        if (categoryRes.length <= 0)
+        if (!categoryRes)
             return res.status(404).json({
                 msg: "Server not found any resources.",
             });
-        categoryId = categoryRes._id;
+        categoryId = categoryRes._id.toString();
     }
     let { sortBy = "price" } = req.query;
     const query = validObject({
-        categoryId,
+        category: categoryId,
         title: { $regex: title, $options: "i" },
         isDeleted: false,
     });
