@@ -34,11 +34,11 @@ const paginate = require("mongoose-paginate-v2");
  *                       type: object
  *                       properties:
  *                           quantity:
- *                               type: int32
+ *                               type: integer
  *                               default: 0
  *                               example: 10
  *                           remain:
- *                               type: int32
+ *                               type: integer
  *                               readOnly: true
  *                               default: 0
  *                               example: 5
@@ -52,14 +52,14 @@ const paginate = require("mongoose-paginate-v2");
  *                      readOnly: true
  *                      example: iPhone-14
  *                   price:
- *                      type: int32
+ *                      type: integer
  *                      default: 0
  *                      example: 400000
  *                   sale_price:
- *                      type: int32
+ *                      type: integer
  *                      default: 0
  *                   total_selling:
- *                      type: int32
+ *                      type: integer
  *                      default: 0
  *                      example: 5
  *                      readOnly: true
