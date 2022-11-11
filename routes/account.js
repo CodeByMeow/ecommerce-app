@@ -13,7 +13,7 @@ const SECRET_KEY = process.env.JWT_SECRET_KEY;
 const EXPIRY_TIME = process.env.JWT_EXPIRY_TIME;
 const REFRESH_SECRET = process.env.JWT_REFRESH_SECRET;
 const REFRESH_TIME = process.env.JWT_REFRESH_TIME;
-const ACCESS_REFRESH_TOKEN= process.env.ACCESS_REFRESH_TOKEN;
+const ACCESS_REFRESH_TOKEN = process.env.ACCESS_REFRESH_TOKEN;
 
 /**
  * @swagger
@@ -101,7 +101,7 @@ router.post("/", validateInputMdw(userShema), async (req, res) => {
       password: await hashPassword(password),
     };
 
-        await UserController.create(newUser);
+    await UserController.create(newUser);
 
     const response = {
       msg: "User registered successfully!",
@@ -215,13 +215,13 @@ router.post("/login", async (req, res) => {
  *                              type: object
  *                              $ref: '#/components/schemas/UserResponse'
  */
-router.get("/profile", verifyTokenMdw, async (req, res) => {
-  const { user_id } = req.user;
+router.get("/profile", verifyTokenMdw, async (req, res, next) => {
+  const { user_id } = req.decoded;
   try {
     const user = await UserController.findUserById(user_id);
     return res.json({
       msg: "Get user successfully",
-      data: user,
+      user: user,
     });
   } catch (err) {
     next(err);
@@ -250,9 +250,10 @@ router.get("/profile", verifyTokenMdw, async (req, res) => {
  *                   $ref: '#/components/responses/401'
  */
 router.get("/token", verifyTokenMdw, (_req, res) => {
-    return res.json({
-        msg: "Token is valid.",
-    });
+  return res.json({
+    msg: "Token is valid.",
+    expired: false,
+  });
 });
 /**
  *  @swagger
@@ -285,13 +286,14 @@ router.get("/token", verifyTokenMdw, (_req, res) => {
  *
  */
 router.post("/token", async (req, res) => {
-    const refreshToken = req.body[ACCESS_REFRESH_TOKEN];
-    if (refreshToken) {
-        const user = await findUserByRefreshToken(refreshToken);
-        if (!user)
-            return res.status(403).json({
-                msg: "Unauthenticated",
-            });
+  const refreshToken = req.body[ACCESS_REFRESH_TOKEN];
+  console.log(refreshToken);;
+  if (refreshToken) {
+    const user = await findUserByRefreshToken(refreshToken);
+    if (!user)
+      return res.status(403).json({
+        msg: "Unauthenticated",
+      });
 
     try {
       const decoded = jwt.verify(refreshToken, REFRESH_SECRET);
@@ -312,8 +314,11 @@ router.post("/token", async (req, res) => {
         msg: "Invalid refresh token",
       });
     }
-  } else {
-    res.status(404).send("Invalid request");
+  } else {       
+    // throw new Error("Request token is required");
+    return res.status(403).json({
+      msg: "Request token is required",
+    }); 
   }
 });
 /**

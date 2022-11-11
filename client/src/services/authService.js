@@ -13,17 +13,18 @@ const AuthServices = {
   register: (userInfo) => {
     return axiosInstance.post("/account", userInfo);
   },
-  renewToken: (
+  refreshToken: async (
     refreshToken /* type: obj because body in request is an Object  */
   ) => {
-    // console.log("refreshToken: ", refreshToken);
-    return axiosInstance.post("/account/token", { refreshToken });
+    const result = await axiosInstance.post("/account/token", { refreshToken });
+    return (result.data);
   },
-  verifyToken: async () => {
+  verifyToken: async () => {    
     const result = await axiosInstance.get("/account/profile");
-    if(result) {
-      console.log(result.status);
-    }
+    /* const result = await axiosInstance({
+      method: 'GET',
+      url: '/account/profile',
+    }); */
     return result;
   },
 };

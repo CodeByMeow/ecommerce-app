@@ -13,6 +13,12 @@ app.use(cors("*"));
 
 app.use("/api/v1", routes);
 
+app.get("/api/v1", (req, res) => {
+  res.json({
+    msg: "Server is running"
+  })
+});
+
 app.use((error, _req, res, _next) => {
   console.log(error.stack);
   return res.status(500).send(error);
