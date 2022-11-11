@@ -31,7 +31,7 @@ const authReducer = (state, action) => {
         user: user,
       };
     }
-    case RENEW_TOKEN: {
+    case REFRESH_TOKEN: {
       // console.log(payload);
       const { token } = payload;      
       localStorage.setItem("token", token);
