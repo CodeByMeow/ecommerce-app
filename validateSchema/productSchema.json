@@ -22,10 +22,10 @@
             "type": "string"
         },
         "price": {
-            "type": "int32"
+            "type": "number"
         },
         "sale_price": {
-            "type": "int32"
+            "type": "number"
         },
         "galary_image": {
             "type": "array",
@@ -47,9 +47,6 @@
                     "type": "string"
                 },
                 "chip": {
-                    "type": "string"
-                },
-                "memory": {
                     "type": "string"
                 },
                 "screenSize": {

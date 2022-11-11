@@ -23,15 +23,18 @@ const authReducer = (state, action) => {
         user: null,
       };
     case GET_USER_INFO: {
-      const { user } = payload;      
+      const { user } = payload;
+      console.log(payload);
       return {
         ...state,
+        // user: !state.user ? user : state.user,
         user: user,
       };
     }
-    case REFRESH_TOKEN: {
-      console.log(payload);
+    case RENEW_TOKEN: {
+      // console.log(payload);
       const { token } = payload;      
+      localStorage.setItem("token", token);
       return {
         ...state,
         token,

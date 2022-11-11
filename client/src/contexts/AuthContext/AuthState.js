@@ -1,5 +1,4 @@
 import { useEffect, useState, useReducer } from "react";
-import axios from "axios";
 import authReducer from "./AuthReducer";
 import AuthContext from "./AuthContext";
 

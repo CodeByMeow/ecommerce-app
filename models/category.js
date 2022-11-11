@@ -40,6 +40,14 @@ const slugify = require("slugify");
  *                       type: string
  *                       description: The category image.
  *                       example: https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c2Ftc3VuZ3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60
+ *                   createdAt:
+ *                       type: string
+ *                       format: date-time
+ *                       readOnly: true
+ *                   updatedAd:
+ *                       type: string
+ *                       format: date-time
+ *                       readOnly: true
  */
 const categorySchema = new mongoose.Schema(
     {
