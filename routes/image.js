@@ -17,18 +17,13 @@ const { verifyUserRole } = require("../middlewares/verifyUserRole");
  *           summary: Upload image.
  *           requestBody:
  *               content:
- *                   image/png:
+ *                   multipart/form-data:
  *                       schema:
- *                           type: string
- *                           format: binary
- *                   image/jpeg:
- *                       schema:
- *                           type: string
- *                           format: binary
- *                   image/jpg:
- *                       schema:
- *                           type: string
- *                           format: binary
+ *                           type: object
+ *                           properties:
+ *                             image:
+ *                              type: string
+ *                              format: binary
  *           responses:
  *               200:
  *                   description: Upload image successfully.
