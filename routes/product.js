@@ -210,7 +210,7 @@ router.get("/", async (req, res) => {
  *               403:
  *                   $ref: '#/components/responses/403'
  */
-router.patch("/", verifyUserRole, verifyToken, async (req, res) => {
+router.patch("/", verifyToken, verifyUserRole, async (req, res) => {
     const {
         id,
         category,
