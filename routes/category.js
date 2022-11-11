@@ -6,6 +6,7 @@ const { verifyUserRole } = require("../middlewares/verifyUserRole");
 const categorySchema = require("../validateSchema/categorySchema.json");
 const categoryController = require("../controllers/categoryController");
 const verifyToken = require("../middlewares/verifyToken");
+const { validObject } = require("../utils/object");
 
 /**
  * @swagger
@@ -103,44 +104,42 @@ router.post(
  *               403:
  *                   $ref: '#/components/responses/403'
  */
-router.patch(
-    "/",
-    verifyToken,
-    verifyUserRole,
-    validateInput(categorySchema),
-    async (req, res) => {
-        const {
-            id,
-            title,
-            sortDesc,
-            longDesc,
-            image_url,
-            isDeleted = false,
-        } = req.body;
-        if (!id) {
-            return res.status(400).json({
-                msg: "Missing category id",
-            });
-        }
-
-        try {
-            const updated = await categoryController.updateById(id, {
-                title,
-                sortDesc,
-                longDesc,
-                image_url,
-                isDeleted,
-            });
-
-            return res.json({
-                msg: "Category updated successfully",
-                data: updated,
-            });
-        } catch (error) {
-            throw new Error(error.message);
-        }
+router.patch("/", verifyToken, verifyUserRole, async (req, res) => {
+    const {
+        id,
+        title,
+        sortDesc,
+        longDesc,
+        image_url,
+        isDeleted = false,
+    } = req.body;
+    if (!id) {
+        return res.status(400).json({
+            msg: "Missing category id",
+        });
     }
-);
+    const fieldNeedUpdate = validObject({
+        title,
+        sortDesc,
+        longDesc,
+        image_url,
+        isDeleted,
+    });
+
+    try {
+        const updated = await categoryController.updateById(
+            id,
+            fieldNeedUpdate
+        );
+
+        return res.json({
+            msg: "Category updated successfully",
+            data: updated,
+        });
+    } catch (error) {
+        throw new Error(error.message);
+    }
+});
 /**
  * @swagger
  *   /category:
@@ -158,7 +157,7 @@ router.patch(
  *                                      $ref: '#/components/schemas/Category'
  */
 router.get("/", async (_req, res) => {
-    const categoryList = await categoryController.getAll();
+    const categoryList = await categoryController.getAll({ isDeleted: false });
 
     return res.json({
         msg: "Get categories list successfully!",
