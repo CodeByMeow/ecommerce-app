@@ -28,6 +28,11 @@ const REFRESH_TIME = process.env.JWT_REFRESH_TIME;
  *                  type: string
  *              refreshToken:
  *                  type: string
+ *              isAuthenticated:
+ *                   type: boolean
+ *                   example: true
+ *              user:
+ *                   $ref: '#/components/schemas/UserResponse'
  *      UserResponse:
  *          type: object
  *          properties:
@@ -142,7 +147,7 @@ router.post("/", validateInputMdw(userShema), async (req, res) => {
  *                       application/json:
  *                           schema:
  *                               type: object
- *                               $ref: '#/components/schemas/UserResponse'
+ *                               $ref: '#/components/schemas/TokenResponse'
  *               400:
  *                   description: Bad request
  *
@@ -251,12 +256,16 @@ router.get("/profile", verifyTokenMdw, async (req, res) => {
  *                                   msg:
  *                                       type: string
  *                                       example: Token is valid
+ *                                   isAuthenticated:
+ *                                       type: boolean
+ *                                       example: true
  *               401:
  *                   $ref: '#/components/responses/401'
  */
 router.get("/token", verifyTokenMdw, (_req, res) => {
     return res.json({
         msg: "Token is valid.",
+        isAuthenticated: true,
     });
 });
 /**
@@ -278,7 +287,7 @@ router.get("/token", verifyTokenMdw, (_req, res) => {
  *                                   example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwidXNlcl9pZCI6IjYzNjIyZjMwYTQ4OGZlMzU0ZDQ0NGYxZiIsImlhdCI6MTY2NzU0NDgxOCwiZXhwIjoxNjc1MzIwODE4fQ.Gy1pY5rhTBDuxv9pKDT53XqSqk50yLYoAPkjCjuvDGY
  *           responses:
  *               200:
- *                   description: Refersh token successfully.
+ *                   description: Refresh token successfully.
  *                   content:
  *                       application/json:
  *                           schema:

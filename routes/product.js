@@ -192,7 +192,12 @@ router.get("/", async (req, res) => {
  *               content:
  *                   application/json:
  *                       schema:
- *                           $ref: '#components/schemas/Product'
+ *                           allOf:
+ *                              - type: object
+ *                                properties:
+ *                                       id:
+ *                                           type: string
+ *                              - $ref: '#components/schemas/Product'
  *           responses:
  *               200:
  *                   description: Product was updated successfully.
