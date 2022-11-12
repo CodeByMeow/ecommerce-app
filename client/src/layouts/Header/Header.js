@@ -66,9 +66,9 @@ function classNames(...classes) {
 }
 
 const Header = () => {
-  const {state} = useContext(authContext);
-  const {user} = state; 
-  user&& console.log(user);
+  const { state } = useContext(authContext);
+  const { user } = state;
+  user && console.log(user);
   // userInfo?. console.log(userInfo);
   const [open, setOpen] = useState(false);
 
@@ -213,12 +213,18 @@ const Header = () => {
 
                 <div className="space-y-6 border-t border-gray-200 py-6 px-4">
                   <div className="flow-root">
-                    <Link
-                      to="/signin"
-                      className="-m-2 block p-2 font-medium text-gray-900"
-                    >
-                      Sign in
-                    </Link>
+                    {user ? (
+                      <h3 className="text-indigo-600 font-extrabold">
+                        {user.username}
+                      </h3>
+                    ) : (
+                      <Link
+                        to="/signin"
+                        className="text-sm font-medium text-gray-800 hover:text-indigo-700"
+                      >
+                        Sign in
+                      </Link>
+                    )}
                   </div>
                   <div className="flow-root">
                     <Link
@@ -394,12 +400,18 @@ const Header = () => {
 
               <div className="ml-auto flex items-center">
                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                  {user ? (<h3 className="text-indigo-600 font-extrabold">{user.username}</h3>) : (<Link
-                    to="/signin"
-                    className="text-sm font-medium text-gray-800 hover:text-indigo-700"
-                  >
-                    Sign in
-                  </Link>)}
+                  {user ? (
+                    <h3 className="text-indigo-600 font-extrabold">
+                      {user.username}
+                    </h3>
+                  ) : (
+                    <Link
+                      to="/signin"
+                      className="text-sm font-medium text-gray-800 hover:text-indigo-700"
+                    >
+                      Sign in
+                    </Link>
+                  )}
                   <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
                   <Link
                     to="/signup"

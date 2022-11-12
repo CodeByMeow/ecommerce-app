@@ -10,14 +10,17 @@ import "./ItemDetailPage.css";
 import "animate.css";
 
 const ItemDetailPage = (props) => {
-  const { itemId } = useParams();
+  const { slug } = useParams();
   const { products } = useStoreContext();
   const [showDetail, setShowDetail] = useState(false);
-  // console.log("Item id:", itemId);
+  // console.log("Item id:", slug);
   // console.log(products);
   const selectedItem = products.find((product) => {
-    return product.id === Number(itemId);
+    return product.slug === slug;
   });
+
+  console.log(selectedItem);
+
   const {
     id,
     category,
@@ -48,21 +51,21 @@ const ItemDetailPage = (props) => {
             </div>
           </div>
 
-          <div className="item-info w-full flex flex-col gap-4 md:gap-2 space-y-0 md:space-y-4">
-            <h3 className="text-gray-800 text-2xl sm:text-3xl md:text-4xl detail-title">
+          <div className="item-info w-full flex flex-col gap-4 md:gap-2 space-y-0 md:space-y-2">
+            <h3 className="text-gray-800 text-2xl sm:text-3xl md:text-4xl font-bold">
               {title}
             </h3>
-            <h2 className="text-indigo-600 text-base sm:text-xl md:text-2xl font-extrabold">
+            <h2 className="text-indigo-600 text-base sm:text-xl md:text-3xl">
               {storeService.convertCurrency(price, "VND")}&nbsp;
-              <span className="text-slate-400 line-through">
+              <span className={`${sale_price ? "text-slate-400 line-through" : "hidden"}`}>
                 {storeService.convertCurrency(sale_price, "VND")}
               </span>
             </h2>
-            <p className="my-8 text-sm sm:text-base">{shortDesc}</p>
-            <p className="my-8 text-sm sm:text-base">Stock: {isAvailable}</p>
+            <p className="my-8 text-sm sm:text-base md:text-lg">{shortDesc}</p>
+            <p className="my-8 text-sm sm:text-base md:text-lg">Stock: {isAvailable}</p>
 
             <div className="w-full flex flex-col sm:flex-row gap-6">
-              <div className="w-full sm:w-1/3 lg:w-1/4 flex flex-wrap border-b border-indigo-600 justify-between items-end text-lg lg:text-xl">
+              <div className="w-full sm:w-1/3 lg:w-1/4 flex flex-wrap border-b border-indigo-600 justify-between items-end text-lg lg:text-2xl">
                 <button>-</button>
                 <input
                   type="text"

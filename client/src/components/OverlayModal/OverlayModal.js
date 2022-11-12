@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-import { HiShoppingCart, HiOutlineHeart, HiHeart } from "react-icons/hi";
+import { HiShoppingCart, HiHeart } from "react-icons/hi";
 
 // animation style
 import "animate.css";
@@ -21,7 +21,7 @@ const OverlayModal = (props) => {
         >
             <div className="w-full h-full bg-black rounded-lg top-0 left-0 opacity-50 overlay transition-opacity"></div>
             <div
-                className={`w-full h-full flex flex-wrap gap-6 justify-center items-center my-auto absolute top-0 left-0 px-3 animate__animated ${
+                className={`w-full h-full flex md:flex-col xl:flex-row gap-6 justify-center items-center my-auto absolute top-0 left-0 px-3 animate__animated ${
                     isShowModal ? "animate__zoomIn" : "animate__zoomOut"
                 } animate__faster`}
             >

@@ -14,7 +14,7 @@ const HomePage = () => {
     return (
         <PageContainer title="Mobile Shopping Store">
             <Slider contentSlides={contentSlides} />
-            <h2 className="text-center text-2xl md:text-3xl font-bold tracking-tight text-indigo-500 pt-10">
+            <h2 className="text-center capitalize text-2xl md:text-4xl font-semibold tracking-tight text-indigo-500 pt-10">
                 Popular products
             </h2>
             <ProductList />
@@ -24,7 +24,7 @@ const HomePage = () => {
                 </div>
                 <div className="w-full h-full flex flex-col gap-4">
                     <h3 className="text-xl md:text-2xl">About Us</h3>
-                    <h2 className="introduction-title text-uppercase text-3xl md:text-5xl text-indigo-600">
+                    <h2 className="introduction-title capitalize text-3xl md:text-5xl text-indigo-600">
                         Mollyjogger Story
                     </h2>
                     <p>

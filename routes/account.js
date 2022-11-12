@@ -230,7 +230,7 @@ router.get("/profile", verifyTokenMdw, async (req, res) => {
         const user = await UserController.findUserById(user_id);
         return res.json({
             msg: "Get user's profile successfully",
-            data: user,
+            user: user,
         });
     } catch (err) {
         throw new Error(err.message);
