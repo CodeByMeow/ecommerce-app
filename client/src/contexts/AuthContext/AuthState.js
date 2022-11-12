@@ -25,21 +25,8 @@ const AuthState = (props) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
   const { refreshToken, token } = state;
 
-<<<<<<< HEAD
-
-  // implement token in localStorage to Header in axiosInstance to call API POST method
-  const setAuthToken = async (token) => {
-    if (token) {
-      axiosInstance.defaults.headers.common["x-token"] = token;
-    }
-  };
-
-
-  const renewToken = async () => {
-=======
   
   const verifyRefreshToken = async () => {
->>>>>>> 445af42aa6c72a9bcf06c6932edc2cbb107e6001
     try {
       const response = await AuthServices.refreshToken(refreshToken);
       // if token does not expired or invalid => dispatch to global state
