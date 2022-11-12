@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import ProductService from "../services/productService";
 
-const useFetchProducts = (query) => {
+const useFetchProducts = (query = {}) => {
     const [state, setState] = useState();
 
     useEffect(() => {

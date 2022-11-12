@@ -1,23 +1,30 @@
-import React from "react";
+import React, { useContext } from "react";
 import PageContainer from "../../layouts/PageContainer/PageContainer";
 import Slider from "../../components/Slider/Slider";
 import ProductList from "../../components/ProductList/ProductList";
 
 import "./HomePage.css";
+import { useStoreContext } from "../../contexts/StoreContext";
 
-const HomePage = () => {
+const HomePage = ({ loading }) => {
     const contentSlides = [
         "/assets/banner/apple_banner.jpeg",
         "/assets/banner/oppo_banner.jpeg",
         "/assets/banner/samsung_zflip3_carousel_colorcombokv_ex_pc.jpeg",
     ];
+    const { products } = useStoreContext();
+
     return (
         <PageContainer title="Mobile Shopping Store">
             <Slider contentSlides={contentSlides} />
             <h2 className="text-center text-2xl md:text-3xl font-bold tracking-tight text-indigo-500 pt-10">
                 Popular products
             </h2>
-            <ProductList />
+            {loading ? (
+                <div className="text-center py-10">Loading...</div>
+            ) : (
+                <ProductList products={products} />
+            )}
             <div className="container mx-auto py-6 px-6 md:px-16 columns-1 md:columns-2">
                 <div className="w-full">
                     <img src="/assets/cols-2-left-img.jpg"></img>

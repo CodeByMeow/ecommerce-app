@@ -1,11 +1,10 @@
-import React, { useContext } from "react";
+import React from "react";
 import ProductItem from "../ProductItem/ProductItem";
-import { useStoreContext } from "../../contexts/StoreContext";
 import "./ProductList.css";
 
 const ProductList = (props) => {
-    let { products } = useStoreContext();
-    if (props.products) products = props.products.itemsList;
+    const { products } = props;
+
     return (
         <div className="bg-white">
             <div className="mx-auto max-w-2xl py-10 md:py-16 px-4 md:px-6 lg:max-w-7xl lg:px-8">
@@ -19,6 +18,11 @@ const ProductList = (props) => {
                                 />
                             );
                         })}
+                    {!products && (
+                        <div className="text-center text-gray-500 w-full">
+                            Không có sản phẩm nào.
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

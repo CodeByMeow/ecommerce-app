@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import PageContainer from "../../layouts/PageContainer/PageContainer";
 import ProductList from "../../components/ProductList/ProductList";
 import useSearch from "../../hooks/useSearch";
@@ -10,7 +10,7 @@ const SearchPage = () => {
 
     return (
         <PageContainer title="Tìm kiếm sản phẩm">
-            <ProductList products={products} />
+            <ProductList products={products?.itemsList} />
         </PageContainer>
     );
 };
