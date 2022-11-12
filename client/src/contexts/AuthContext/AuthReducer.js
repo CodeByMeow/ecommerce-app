@@ -24,7 +24,7 @@ const authReducer = (state, action) => {
       };
     case GET_USER_INFO: {
       const { user } = payload;
-      console.log(user);
+      console.log(payload);
       return {
         ...state,
         // user: !state.user ? user : state.user,

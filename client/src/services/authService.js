@@ -21,9 +21,7 @@ const AuthServices = {
   },
   verifyToken: async () => {
     const result = await axiosInstance.get("/account/profile");
-    if(result) {
-      console.log(result.status);
-    }
+    
     return result;
   },
 };

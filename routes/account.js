@@ -214,8 +214,8 @@ router.post("/login", async (req, res) => {
  *                              type: object
  *                              $ref: '#/components/schemas/UserResponse'
  */
-router.get("/profile", verifyTokenMdw, async (req, res) => {
-  const { user_id } = req.user;
+router.get("/profile", verifyTokenMdw, async (req, res, next) => {
+  const { user_id } = req.decoded;
 
   try {
     const user = await UserController.findUserById(user_id);
@@ -281,18 +281,8 @@ router.get("/token", verifyTokenMdw);
  *
  */
 router.post("/token", async (req, res) => {
-<<<<<<< HEAD
   // console.log(req.body);
   const { refreshToken } = req.body;
-=======
-    const { refreshToken } = req.body;
-    if (refreshToken) {
-        const user = await findUserByRefreshToken(refreshToken);
-        if (!user)
-            return res.status(403).json({
-                msg: "Unauthenticated",
-            });
->>>>>>> main
 
   if (refreshToken) {
     const user = await findUserByRefreshToken(refreshToken);

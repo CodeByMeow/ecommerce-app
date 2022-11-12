@@ -29,7 +29,7 @@ const AuthState = (props) => {
   // implement token in localStorage to Header in axiosInstance to call API POST method
   const setAuthToken = async (token) => {
     if (token) {
-      axiosInstance.defaults.headers.common["token"] = token;
+      axiosInstance.defaults.headers.common["x-token"] = token;
     }
   };
 
@@ -55,6 +55,7 @@ const AuthState = (props) => {
   const verifyToken = async () => {
     try {
       const authorizedUser = await AuthServices.verifyToken();
+      console.log(authorizedUser);
       // if token does not expired or invalid => dispatch to global state
       dispatch(actionCreator(GET_USER_INFO, authorizedUser.data));
     } catch (err) {      
