@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const router = express.Router();
 const userShema = require("../validateSchema/userSchema.json");
 const wishlistRouter = require("./wishlist");
+const orderRouter = require("./order");
 
 const UserController = require("../controllers/userController");
 const { hashPassword, comparePassword } = require("../utils/pwdUtil");
@@ -13,6 +14,7 @@ const SECRET_KEY = process.env.JWT_SECRET_KEY;
 const EXPIRY_TIME = process.env.JWT_EXPIRY_TIME;
 const REFRESH_SECRET = process.env.JWT_REFRESH_SECRET;
 const REFRESH_TIME = process.env.JWT_REFRESH_TIME;
+const ACCESS_REFRESH_TOKEN = process.env.ACCESS_REFRESH_TOKEN;
 
 /**
  * @swagger
@@ -27,6 +29,11 @@ const REFRESH_TIME = process.env.JWT_REFRESH_TIME;
  *                  type: string
  *              refreshToken:
  *                  type: string
+ *              isAuthenticated:
+ *                   type: boolean
+ *                   example: true
+ *              user:
+ *                   $ref: '#/components/schemas/UserResponse'
  *      UserResponse:
  *          type: object
  *          properties:
@@ -100,7 +107,7 @@ router.post("/", validateInputMdw(userShema), async (req, res) => {
       password: await hashPassword(password),
     };
 
-    const userCreated = await UserController.create(newUser);
+    await UserController.create(newUser);
 
     const response = {
       msg: "User registered successfully!",
@@ -141,7 +148,7 @@ router.post("/", validateInputMdw(userShema), async (req, res) => {
  *                       application/json:
  *                           schema:
  *                               type: object
- *                               $ref: '#/components/schemas/UserResponse'
+ *                               $ref: '#/components/schemas/TokenResponse'
  *               400:
  *                   description: Bad request
  *
@@ -177,14 +184,16 @@ router.post("/login", async (req, res) => {
         expiresIn: REFRESH_TIME,
       });
 
-      const userInfo = await UserController.findUserById(tokenContent.user_id);
-      const response = {
-        msg: "Logged In",
-        token,
-        refreshToken,
-        isAuthenticated: true,
-        user: userInfo,
-      };
+            const userInfo = await UserController.findUserById(
+                tokenContent.user_id
+            );
+            const response = {
+                msg: "Logged In",
+                token,
+                refreshToken,
+                isAuthenticated: true,
+                user: userInfo,
+            };
 
       await UserController.updateById(user.id, { refreshToken });
 
@@ -214,18 +223,18 @@ router.post("/login", async (req, res) => {
  *                              type: object
  *                              $ref: '#/components/schemas/UserResponse'
  */
-router.get("/profile", verifyTokenMdw, async (req, res, next) => {
-  const { user_id } = req.decoded;
+router.get("/profile", verifyTokenMdw, async (req, res) => {
+    const { user_id } = req.decoded;
 
-  try {
-    const user = await UserController.findUserById(user_id);
-    return res.json({
-      msg: "Get user successfully",
-      user: user,
-    });
-  } catch (err) {
-    next(err);
-  }
+    try {
+        const user = await UserController.findUserById(user_id);
+        return res.json({
+            msg: "Get user's profile successfully",
+            data: user,
+        });
+    } catch (err) {
+        throw new Error(err.message);
+    }
 });
 
 /**
@@ -246,10 +255,18 @@ router.get("/profile", verifyTokenMdw, async (req, res, next) => {
  *                                   msg:
  *                                       type: string
  *                                       example: Token is valid
+ *                                   isAuthenticated:
+ *                                       type: boolean
+ *                                       example: true
  *               401:
  *                   $ref: '#/components/responses/401'
  */
-router.get("/token", verifyTokenMdw);
+router.get("/token", verifyTokenMdw, (_req, res) => {
+    return res.json({
+        msg: "Token is valid.",
+        isAuthenticated: true,
+    });
+});
 /**
  *  @swagger
  *   /account/token:
@@ -269,7 +286,7 @@ router.get("/token", verifyTokenMdw);
  *                                   example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwidXNlcl9pZCI6IjYzNjIyZjMwYTQ4OGZlMzU0ZDQ0NGYxZiIsImlhdCI6MTY2NzU0NDgxOCwiZXhwIjoxNjc1MzIwODE4fQ.Gy1pY5rhTBDuxv9pKDT53XqSqk50yLYoAPkjCjuvDGY
  *           responses:
  *               200:
- *                   description: Refersh token successfully.
+ *                   description: Refresh token successfully.
  *                   content:
  *                       application/json:
  *                           schema:
@@ -281,15 +298,14 @@ router.get("/token", verifyTokenMdw);
  *
  */
 router.post("/token", async (req, res) => {
-  // console.log(req.body);
-  const { refreshToken } = req.body;
+    const { refreshToken } = req.body;
 
-  if (refreshToken) {
-    const user = await findUserByRefreshToken(refreshToken);
-    if (!user)
-      return res.status(403).json({
-        msg: "Unauthenticated",
-      });
+    if (refreshToken) {
+        const user = await findUserByRefreshToken(refreshToken);
+        if (!user)
+            return res.status(403).json({
+                msg: "Unauthenticated",
+            });
 
     try {
       const decoded = jwt.verify(refreshToken, REFRESH_SECRET);
@@ -310,8 +326,11 @@ router.post("/token", async (req, res) => {
         msg: "Invalid refresh token",
       });
     }
-  } else {
-    res.status(404).send("Invalid request");
+  } else {       
+    // throw new Error("Request token is required");
+    return res.status(403).json({
+      msg: "Request token is required",
+    }); 
   }
 });
 /**
@@ -352,5 +371,6 @@ router.patch("/profile", verifyTokenMdw, async (req, res) => {
 });
 
 router.use("/wishlist", wishlistRouter);
+router.use("/orders", orderRouter);
 
 module.exports = router;

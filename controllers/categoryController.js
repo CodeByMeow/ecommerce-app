@@ -38,7 +38,7 @@ const updateById = async (id, fields) => {
 };
 
 const findBySlug = (slug) => {
-    return getAll({ slug });
+    return CategoryModel.findOne({ slug });
 };
 
 module.exports = {

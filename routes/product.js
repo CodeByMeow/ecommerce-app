@@ -151,15 +151,15 @@ router.get("/", async (req, res) => {
     let categoryId;
     if (category) {
         const categoryRes = await categoryController.findBySlug(category);
-        if (categoryRes.length <= 0)
+        if (!categoryRes)
             return res.status(404).json({
                 msg: "Server not found any resources.",
             });
-        categoryId = categoryRes._id;
+        categoryId = categoryRes._id.toString();
     }
     let { sortBy = "price" } = req.query;
     const query = validObject({
-        categoryId,
+        category: categoryId,
         title: { $regex: title, $options: "i" },
         isDeleted: false,
     });
@@ -192,7 +192,12 @@ router.get("/", async (req, res) => {
  *               content:
  *                   application/json:
  *                       schema:
- *                           $ref: '#components/schemas/Product'
+ *                           allOf:
+ *                              - type: object
+ *                                properties:
+ *                                       id:
+ *                                           type: string
+ *                              - $ref: '#components/schemas/Product'
  *           responses:
  *               200:
  *                   description: Product was updated successfully.
@@ -205,7 +210,7 @@ router.get("/", async (req, res) => {
  *               403:
  *                   $ref: '#/components/responses/403'
  */
-router.patch("/", verifyUserRole, verifyToken, async (req, res) => {
+router.patch("/", verifyToken, verifyUserRole, async (req, res) => {
     const {
         id,
         category,

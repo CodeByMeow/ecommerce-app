@@ -2,8 +2,6 @@ const { Types } = require("mongoose");
 const ProductModel = require("../models/product");
 const { generalSlug, addTailSlug } = require("../utils/url");
 const { paginateOptions } = require("../utils/pagination");
-const product = require("../models/product");
-const { updateOne } = require("../models/user");
 
 const getAll = (param) => {
     return ProductModel.find(param);
@@ -28,7 +26,7 @@ const create = async (product) => {
 
     return newProduct.save();
 };
-const getList = async (query = {}, options) => {
+const getList = async (query = {}, options = {}) => {
     return await ProductModel.paginate(query, {
         ...paginateOptions,
         ...options,
@@ -50,6 +48,7 @@ const updateById = async (productId, field) => {
 const findBySlug = (slug) => {
     return ProductModel.findOne({ slug, isDeleted: false });
 };
+
 module.exports = {
     create,
     getList,

@@ -34,11 +34,11 @@ const paginate = require("mongoose-paginate-v2");
  *                       type: object
  *                       properties:
  *                           quantity:
- *                               type: int32
+ *                               type: integer
  *                               default: 0
  *                               example: 10
  *                           remain:
- *                               type: int32
+ *                               type: integer
  *                               readOnly: true
  *                               default: 0
  *                               example: 5
@@ -52,14 +52,14 @@ const paginate = require("mongoose-paginate-v2");
  *                      readOnly: true
  *                      example: iPhone-14
  *                   price:
- *                      type: int32
+ *                      type: integer
  *                      default: 0
  *                      example: 400000
  *                   sale_price:
- *                      type: int32
+ *                      type: integer
  *                      default: 0
  *                   total_selling:
- *                      type: int32
+ *                      type: integer
  *                      default: 0
  *                      example: 5
  *                      readOnly: true
@@ -92,13 +92,17 @@ const paginate = require("mongoose-paginate-v2");
  *                           chip:
  *                               type: string
  *                               example: Apple A15 Bionic 6 kernel
- *                           memory:
- *                               type: string
- *                               example: 512GB
  *                           screenSize:
  *                               type: string
  *                               example: 6.1" - 60Hz
- *
+ *                   createdAt:
+ *                       type: string
+ *                       format: date-time
+ *                       readOnly: true
+ *                   updatedAt:
+ *                       type: string
+ *                       format: date-time
+ *                       readOnly: true
  *
  */
 
@@ -167,7 +171,6 @@ const productSchema = new mongoose.Schema(
             frontCamera: String,
             backCamera: String,
             chip: String,
-            memory: String,
             screenSize: String,
         },
     },

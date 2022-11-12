@@ -6,7 +6,7 @@ import {
   SIGN_IN,
   GET_USER_INFO,
   LOG_OUT,
-  RENEW_TOKEN,
+  REFRESH_TOKEN,
 } from "../../contexts/types.js";
 import actionCreator from "../../utils/actionCreator.js";
 import AuthServices from "../../services/authService.js";
@@ -25,6 +25,7 @@ const AuthState = (props) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
   const { refreshToken, token } = state;
 
+<<<<<<< HEAD
 
   // implement token in localStorage to Header in axiosInstance to call API POST method
   const setAuthToken = async (token) => {
@@ -35,18 +36,16 @@ const AuthState = (props) => {
 
 
   const renewToken = async () => {
+=======
+  
+  const verifyRefreshToken = async () => {
+>>>>>>> 445af42aa6c72a9bcf06c6932edc2cbb107e6001
     try {
-      const authorizedRefreshToken = await AuthServices.renewToken(
-        refreshToken
-      );
-      // generate new accessToken => update localStorage
-      dispatch(actionCreator(RENEW_TOKEN, authorizedRefreshToken.data));
-      // setAuthToken(authorizedRefreshToken.data.token);
+      const response = await AuthServices.refreshToken(refreshToken);
+      // if token does not expired or invalid => dispatch to global state
+      response && dispatch(actionCreator(REFRESH_TOKEN, response));
     } catch (err) {
-      err.response.data.msg
-        ? console.log(err.response.data.msg)
-        : console.log(err.response.data);
-      dispatch(actionCreator(LOG_OUT));
+      console.log(err.response.data.msg);
     }
   };
 
@@ -57,19 +56,15 @@ const AuthState = (props) => {
       const authorizedUser = await AuthServices.verifyToken();
       console.log(authorizedUser);
       // if token does not expired or invalid => dispatch to global state
-      dispatch(actionCreator(GET_USER_INFO, authorizedUser.data));
-    } catch (err) {      
-      err.response.data.msg
-        ? console.log(err.response.data.msg)
-        : console.log(err.response.data);
-       if (err.response.status === 401) {
-          renewToken();
-      }
+      authorizedUser && dispatch(actionCreator(GET_USER_INFO, authorizedUser.data));
+      // console.log(authorizedUser.data);
+    } catch (err) {
+      console.log(err.message);
     }
   };
 
   useEffect(() => {
-    setAuthToken(token);
+    verifyRefreshToken();
     verifyToken();
   }, []);
 
