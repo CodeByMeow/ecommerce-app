@@ -25,6 +25,21 @@ const options = {
                     name: "x-token",
                 },
             },
+            responses: {
+                404: {
+                    description: "Not found.",
+                    contents: "application/json",
+                },
+                401: {
+                    description: "Unauthorized.",
+                    contents: "application/json",
+                },
+                403: {
+                    description:
+                        "You don't have permission to do those action.",
+                    contents: "application/json",
+                },
+            },
         },
         security: [{ ApiKeyAuth: [] }],
     },

@@ -24,7 +24,7 @@ const isUsernameExisted = async (username) => {
 };
 
 const findUserById = (userId) => {
-    return UserModel.findById(userId).select("-password");
+    return UserModel.findById(userId).select("-password -refreshToken");
 };
 
 const updateById = async (id, fields) => {
@@ -40,6 +40,14 @@ const findUserByUsername = (username) => {
     return findOne({ username });
 };
 
+const findUserByRefreshToken = (refreshToken) => {
+    return findOne({ refreshToken });
+};
+
+const getUserRole = (userId) => {
+    return findOne({ _id: userId }).select("role");
+};
+
 const UserController = {
     create,
     updateById,
@@ -47,6 +55,8 @@ const UserController = {
     isUsernameExisted,
     findUserById,
     findUserByUsername,
+    findUserByRefreshToken,
+    getUserRole,
 };
 
 module.exports = UserController;

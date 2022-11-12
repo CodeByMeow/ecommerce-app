@@ -1,0 +1,12 @@
+.form-container {
+  background-image: url("../../../public/assets/background/login-bg.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+@media screen and (max-width: 768px) {
+  .form-container {
+    background-position-x: right;
+  }
+}

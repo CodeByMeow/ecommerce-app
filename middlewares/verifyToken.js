@@ -5,7 +5,11 @@ const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 
 module.exports = async (req, res, next) => {
     const token = req.headers[ACCESS_TOKEN_KEY];
-
+    if (!token) {
+        return res.status(400).json({
+            msg: "Access token is required",
+        });
+    }
     try {
         const decoded = jwt.verify(token, JWT_SECRET_KEY);
         if (decoded) {
@@ -13,6 +17,6 @@ module.exports = async (req, res, next) => {
             next();
         }
     } catch (err) {
-        res.status(401).send("Invalid token");
+        res.status(401).send(err.message);
     }
 };

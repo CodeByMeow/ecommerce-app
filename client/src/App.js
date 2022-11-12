@@ -1,36 +1,54 @@
+import React, { useState, useContext } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 
 import HomePage from "./pages/HomePage/HomePage";
-import Signin from "./pages/Signin/Signin";
-import Signup from "./pages/Signup/Signup";
+import SigninPage from "./pages/SigninPage/SigninPage";
+import SignupPage from "./pages/SignupPage/SignupPage";
 import SearchPage from "./pages/SearchPage/SearchPage";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
-import AboutPage from "./pages/AboutPage/About";
+import ItemDetailPage from "./pages/ItemDetailPage/ItemDetailPage";
+import CartPage from "./pages/CartPage/CartPage";
+import AboutPage from "./pages/AboutPage/AboutPage";
 
+import PrivateRoute from "./components//PrivateRoute/PrivateRoute";
 import AuthState from "./contexts/AuthContext/AuthState";
+import { StoreContext } from "./contexts/StoreContext";
 
+//styles
 import "./App.css";
-import CartProduct from "./pages/CartProduct/CartProduct";
+
+// data
+import { products } from "./utils/data.js";
+
 const App = () => {
-  return (
-    <HelmetProvider>
-      <AuthState>
-        <Router>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/signin" element={<Signin />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/search" element={<SearchPage />} />
-            <Route path="/about-us" element={<AboutPage />} />
-            <Route path="/cart" element={<CartProduct />}></Route>
-            <Route path="/products:/id"></Route>
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
-        </Router>
-      </AuthState>
-    </HelmetProvider>
-  );
+    return (
+        <HelmetProvider>
+            <AuthState>
+                <StoreContext.Provider
+                    value={{
+                        products,
+                    }}
+                >
+                    <Router>
+                        <Routes>
+                            <Route path="/" element={<HomePage />} />
+                            <Route path="/signin" element={<SigninPage />} />
+                            <Route path="/signup" element={<SignupPage />} />
+                            <Route path="/search" element={<SearchPage />} />
+                            <Route path="/products/:itemId" element={<ItemDetailPage />} />
+                            <Route path="/about-us" element={<AboutPage />} />
+                            <Route
+                                path="/cart"
+                                element={<PrivateRoute component={CartPage} />}
+                            />
+                            <Route path="*" element={<NotFoundPage />} />
+                        </Routes>
+                    </Router>
+                </StoreContext.Provider>
+            </AuthState>
+        </HelmetProvider>
+    );
 };
 
 export default App;

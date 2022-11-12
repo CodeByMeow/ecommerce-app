@@ -12,6 +12,10 @@ const { default: mongoose } = require("mongoose");
  *           - password
  *           - email
  *        properties:
+ *           _id:
+ *               type: string
+ *               example: 63675ab9f17a55d423321f31
+ *               readOnly: true
  *           fullname:
  *               type: string
  *               description: The user's full name.
@@ -22,6 +26,7 @@ const { default: mongoose } = require("mongoose");
  *               example: admin
  *           email:
  *               type: string
+ *               format: email
  *               description: Email
  *               example: admin@example.com
  *           password:
@@ -34,63 +39,80 @@ const { default: mongoose } = require("mongoose");
  *               example: Ho Chi Minh City
  *           role:
  *               type: string
- *               description: admin | user | customer
+ *               enum: [admin, user, customer]
+ *               readOnly: true
  *               default: customer
  *           orders:
  *               type: array
+ *               items:
+ *                   type: object
  *               description: The list user's orders.
- *               example: [{_id: e121223412341234e32423}, {_id: q234234123424324123434} ]
+ *               readOnly: true
+ *           refreshToken:
+ *               type: string
+ *               descruption: The refresh token.
+ *               readOnly: true
+ *           createdAt:
+ *               type: string
+ *               format: date-time
+ *               readOnly: true
+ *           updatedAt:
+ *               type: string
+ *               format: date-time
+ *               readOnly: true
  */
 
-const userSchema = new mongoose.Schema({
-    fullname: {
-        require: true,
-        type: String,
-    },
-    username: {
-        type: String,
-        unique: true,
-        require: true,
-    },
-    email: {
-        requrie: true,
-        unique: true,
-        type: String,
-    },
-    password: {
-        require: true,
-        type: String,
-    },
-    role: {
-        type: String,
-        enum: ["admin", "customer", "user"],
-        default: "customer",
-    },
-    address: {
-        require: true,
-        type: String,
-    },
-    orders: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "orders",
+const userSchema = new mongoose.Schema(
+    {
+        fullname: {
+            require: true,
+            type: String,
         },
-    ],
-    createdDate: {
-        type: Date,
-        default: Date.now(),
+        username: {
+            type: String,
+            unique: true,
+            require: true,
+        },
+        email: {
+            requrie: true,
+            unique: true,
+            type: String,
+        },
+        password: {
+            require: true,
+            type: String,
+        },
+        role: {
+            type: String,
+            enum: ["admin", "customer", "user"],
+            default: "customer",
+        },
+        address: {
+            require: true,
+            type: String,
+        },
+        orders: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "orders",
+            },
+        ],
+        modifiedDate: {
+            type: Date,
+        },
+        isDeleted: {
+            type: Boolean,
+            default: false,
+        },
+        isActive: {
+            type: Boolean,
+            default: true,
+        },
+        refreshToken: {
+            type: String,
+        },
     },
-    modifiedDate: {
-        type: Date,
-    },
-    isDeleted: {
-        type: Boolean,
-        default: false,
-    },
-    isActive: {
-        type: Boolean,
-        default: true,
-    },
-});
+    { timestamp: true }
+);
 
 module.exports = mongoose.model("user", userSchema);

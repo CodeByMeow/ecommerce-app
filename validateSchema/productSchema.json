@@ -11,11 +11,48 @@
         "sortDesc": {
             "type": "string"
         },
-        "color": {
+        "longDesc": {
             "type": "string"
+        },
+        "color": {
+            "type": "array",
+            "items": [{ "type": "string" }]
         },
         "image_url": {
             "type": "string"
+        },
+        "price": {
+            "type": "number"
+        },
+        "sale_price": {
+            "type": "number"
+        },
+        "galary_image": {
+            "type": "array",
+            "items": [{ "type": "string" }]
+        },
+        "details": {
+            "type": "object",
+            "properties": {
+                "ram": {
+                    "type": "string"
+                },
+                "rom": {
+                    "type": "string"
+                },
+                "frontCamera": {
+                    "type": "string"
+                },
+                "backCamera": {
+                    "type": "string"
+                },
+                "chip": {
+                    "type": "string"
+                },
+                "screenSize": {
+                    "type": "string"
+                }
+            }
         }
     },
     "additionalProperties": true

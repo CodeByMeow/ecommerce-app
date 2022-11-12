@@ -1,0 +1,53 @@
+@font-face {
+  font-family: "Garet Regular";
+  src: url("./fonts/Garet/Garet-Book.woff") format("woff"),
+    url("./fonts/Garet/Garet-Book.otf") format("opentype"),
+    url("./fonts/Garet/Garet-Book.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Garet Heavy";
+  src: url("./fonts/Garet/Garet-Heavy.woff") format("woff"),
+    url("./fonts/Garet/Garet-Heavy.otf") format("opentype"),
+    url("./fonts/Garet/Garet-Heavy.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+button,
+a,
+input,
+select,
+textarea {
+  outline: none;
+}
+
+:is(button, a, input, select, textarea):hover {
+  outline: none;
+}
+
+.btn-grad {
+  background-image: linear-gradient(
+    to right,
+    #4f46e5 0%,
+    #ad8be7 51%,
+    #4f46e5 100%
+  ) !important;
+
+  padding: 15px 45px;
+  text-align: center;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: white;
+  box-shadow: 0 0 20px #eee;
+  border-radius: 10px;
+  display: block;
+}
+
+.btn-grad:hover {
+  background-position: right center; /* change the direction of the change here */
+  color: #fff;
+  text-decoration: none;
+}

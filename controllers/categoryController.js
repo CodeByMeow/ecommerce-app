@@ -37,11 +37,16 @@ const updateById = async (id, fields) => {
     return updated;
 };
 
+const findBySlug = (slug) => {
+    return CategoryModel.findOne({ slug });
+};
+
 module.exports = {
     getById,
     getAll,
     findOne,
     create,
-    findBySlug: countSameSlug,
+    countSameSlug,
     updateById,
+    findBySlug,
 };

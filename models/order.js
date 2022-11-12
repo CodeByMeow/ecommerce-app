@@ -1,22 +1,50 @@
 const mongoose = require("mongoose");
+const paginate = require("mongoose-paginate-v2");
 
-const ordersScheme = new mongoose.Schema({
-    userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "users",
-    },
-    products: [
-        {
+/**
+ * @swagger
+ *   components:
+ *       schemas:
+ *           Order:
+ *               type: object
+ *               required:
+ *                   - userId
+ *                   - products
+ *               properties:
+ *                   userId:
+ *                       type: string
+ *                   products:
+ *                       type: array
+ *                       items:
+ *                           type: string
+ *                   createdAt:
+ *                       type: string
+ *                       format: date-time
+ *                       readOnly: true
+ *                   updatedAt:
+ *                       type: string
+ *                       format: date-time
+ *                       readOnly: true
+ */
+const ordersScheme = new mongoose.Schema(
+    {
+        userId: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "products",
+            ref: "users",
         },
-    ],
-    createdDate: {
-        type: Date,
-        default: Date.now(),
+        products: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "products",
+            },
+        ],
+        status: {
+            type: String,
+            enum: ["Processing", "Completed", "Canceled", "Pendding"],
+            default: "Processing",
+        },
     },
-    status: {
-        type: String,
-        enum: ["Processing", "Completed", "Canceled", "Pendding"],
-    },
-});
+    { timestamps: true }
+);
+ordersScheme.plugin(paginate);
+module.exports = mongoose.model("order", ordersScheme);

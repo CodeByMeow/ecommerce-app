@@ -1,7 +1,11 @@
 const { default: slugify } = require("slugify");
 
 const generalSlug = (title) => {
-    return slugify(title);
+    const options = {
+        lower: true,
+    };
+
+    return slugify(title, options);
 };
 
 const addTailSlug = (slug, tail) => {
