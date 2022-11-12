@@ -9,7 +9,7 @@ const SearchPage = () => {
     const products = useFetchProducts(params);
 
     return (
-        <PageContainer title="Tìm kiếm sản phẩm">
+        <PageContainer title="Sản phẩm">
             <ProductList products={products?.itemsList} />
         </PageContainer>
     );
