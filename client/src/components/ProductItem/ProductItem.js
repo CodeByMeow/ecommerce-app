@@ -4,8 +4,6 @@ import { Link } from "react-router-dom";
 import storeService from "../../services/storeService";
 import OverlayModal from "../OverlayModal/OverlayModal";
 
-// import "./ProductItem.css";
-
 const ProductItem = (props) => {
   const [isShowModal, setShowModal] = useState(false);
 
@@ -36,10 +34,10 @@ const ProductItem = (props) => {
           />
         </Link>
       </div>
-      <h3 className="text-lg xl:text-2xl leading-6 text-gray-900 font-semibold mt-4 line-clamp-2 item-title">
+      <h3 className="text-lg xl:text-2xl leading-6 text-gray-900 font-semibold mt-4 line-clamp-none md:line-clamp-2 item-title">
         <Link to={slug}>{title}</Link>
       </h3>
-      <div className="sm:mt-2 gap-2">
+      <div className="mt-2 md:mt-0 gap-2">
         {price && (
           <p className="text-base xl:text-xl item-price text-indigo-500">
             {storeService.convertCurrency(price, "VND")}

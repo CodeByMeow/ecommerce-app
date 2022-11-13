@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import {Link} from "react-router-dom";
-import { signupFields } from "../../utils/contanst.js";
+import { signupFields } from "../../utils/inputField.js";
 
 import SubmitLoading from "../Loading/SubmitLoading";
 import Input from "../Input.js";

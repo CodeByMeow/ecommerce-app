@@ -12,6 +12,7 @@ import {
 
 // style
 import "./Header.css";
+import SearchBar from "../../components/SearchBar/SearchBar.js";
 
 const navigation = {
   categories: [
@@ -66,9 +67,9 @@ function classNames(...classes) {
 }
 
 const Header = () => {
-  const { state } = useContext(authContext);
-  const { user } = state;
-  user && console.log(user);
+  const {state} = useContext(authContext);
+  const {user} = state; 
+  // user&& console.log(user);
   // userInfo?. console.log(userInfo);
   const [open, setOpen] = useState(false);
 
@@ -213,18 +214,12 @@ const Header = () => {
 
                 <div className="space-y-6 border-t border-gray-200 py-6 px-4">
                   <div className="flow-root">
-                    {user ? (
-                      <h3 className="text-indigo-600 font-extrabold">
-                        {user.username}
-                      </h3>
-                    ) : (
-                      <Link
-                        to="/signin"
-                        className="text-sm font-medium text-gray-800 hover:text-indigo-700"
-                      >
-                        Sign in
-                      </Link>
-                    )}
+                  {user ? (<h3 className="text-indigo-600 font-semibold capitalize">{user.username}</h3>) : (<Link
+                    to="/signin"
+                    className="text-sm font-medium text-gray-800 hover:text-indigo-700"
+                  >
+                    Sign in
+                  </Link>)}
                   </div>
                   <div className="flow-root">
                     <Link
@@ -400,25 +395,20 @@ const Header = () => {
 
               <div className="ml-auto flex items-center">
                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                  {user ? (
-                    <h3 className="text-indigo-600 font-extrabold">
-                      {user.username}
-                    </h3>
-                  ) : (
-                    <Link
-                      to="/signin"
-                      className="text-sm font-medium text-gray-800 hover:text-indigo-700"
-                    >
-                      Sign in
-                    </Link>
-                  )}
+                  {user ? (<h3 className="text-indigo-600 font-semibold capitalize">{user.username}</h3>) : (<Link
+                    to="/signin"
+                    className="text-sm font-medium text-gray-800 hover:text-indigo-700"
+                  >
+                    Sign in
+                  </Link>)}
                   <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
-                  <Link
+                  {user ? ("") : (<Link
                     to="/signup"
                     className="text-sm font-medium text-gray-800 hover:text-indigo-700"
                   >
                     Create account
-                  </Link>
+                  </Link>)}
+                  
                 </div>
 
                 <div className="hidden lg:ml-8 lg:flex">
@@ -437,18 +427,7 @@ const Header = () => {
                 </div>
 
                 {/* Search */}
-                <div className="flex lg:ml-6">
-                  <Link
-                    to="/search"
-                    className="p-2 text-gray-400 hover:text-gray-500"
-                  >
-                    <span className="sr-only">Search</span>
-                    <MagnifyingGlassIcon
-                      className="h-6 w-6"
-                      aria-hidden="true"
-                    />
-                  </Link>
-                </div>
+                <SearchBar />
 
                 {/* Cart */}
                 <div className="ml-4 flow-root lg:ml-6">
@@ -457,7 +436,7 @@ const Header = () => {
                       className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
                       aria-hidden="true"
                     />
-                    <span className="ml-2 text-sm font-medium text-gray-800 group-hover:text-indigo-700">
+                    <span className="ml-2 text-base font-medium text-gray-800 group-hover:text-indigo-700">
                       0
                     </span>
                     <span className="sr-only">items in cart, view bag</span>

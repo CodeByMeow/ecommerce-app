@@ -5,44 +5,44 @@ const Footer = () => {
   return (
     <>
       <footer className="w-full bg-white absolute">
-        <div className="max-w-screen-xl py-6 md:py-12 md:px-6 lg:px-8 mx-auto overflow-hidden">
-          <nav className="flex flex-wrap justify-center -mx-5">
-            <div className="px-5 py-2">
+        <div className="max-w-screen-xl py-6 md:py-12 px-2 md:px-6 lg:px-8 mx-auto overflow-hidden">
+          <nav className="flex flex-wrap justify-around md:justify-center">
+            <div className="px-0 md:px-5 py-2">
               <Link
                 to="/"
-                className="text-base leading-6 text-gray-500 hover:text-gray-900"
+                className="text-xs md:text-base xl:text-lg leading-6 text-gray-500 hover:text-gray-900"
               >
                 About us
               </Link>
             </div>
 
-            <div className="px-5 py-2">
+            <div className="px-0 md:px-5 py-2">
               <Link
                 to="/"
-                className="text-base leading-6 text-gray-500 hover:text-gray-900"
+                className="text-xs md:text-base xl:text-lg leading-6 text-gray-500 hover:text-gray-900"
               >
                 Shopping
               </Link>
             </div>
 
-            <div className="px-5 py-2">
+            <div className="px-0 md:px-5 py-2">
               <Link
                 to="/"
-                className="text-base leading-6 text-gray-500 hover:text-gray-900"
+                className="text-xs md:text-base xl:text-lg leading-6 text-gray-500 hover:text-gray-900"
               >
                 Contact
               </Link>
             </div>
-            <div className="px-5 py-2">
+            <div className="px-0 md:px-5 py-2">
               <Link
                 to="/"
-                className="text-base leading-6 text-gray-500 hover:text-gray-900"
+                className="text-xs md:text-base xl:text-lg leading-6 text-gray-500 hover:text-gray-900"
               >
                 Terms
               </Link>
             </div>
           </nav>
-          <div className="flex justify-center mt-2 space-x-6 ">
+          <div className="flex justify-center mt-0 space-x-6 ">
             <Link to="/" className="text-gray-400 hover:text-gray-500">
               <span className="sr-only">Facebook</span>
               <svg
@@ -115,7 +115,7 @@ const Footer = () => {
               </svg>
             </Link>
           </div>
-          <p className="mt-8 text-base leading-6 text-center text-gray-400">
+          <p className="mt-4 text-xs md:text-base xl:text-lg leading-6 text-center text-gray-400">
             © 2022 Company, Inc. All rights reserved.
           </p>
         </div>

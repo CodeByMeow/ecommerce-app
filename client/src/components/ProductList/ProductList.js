@@ -1,11 +1,15 @@
-import React, { useContext } from "react";
+import React, { useContext,  useState, useEffect } from "react";
 import ProductItem from "../ProductItem/ProductItem";
 import { useStoreContext } from "../../contexts/StoreContext";
 import "./ProductList.css";
 
 const ProductList = (props) => {
-    let { products } = useStoreContext();
-    if (props.products) products = props.products.itemsList;
+    const { products } = useStoreContext();
+
+    useEffect(() => {
+
+    }, []);
+
     return (
         <div className="bg-white">
             <div className="mx-auto max-w-2xl py-10 md:py-16 px-4 md:px-6 lg:max-w-7xl lg:px-8">
