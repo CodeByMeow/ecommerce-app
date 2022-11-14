@@ -6,7 +6,7 @@ const useFetchProducts = (query) => {
 
     useEffect(() => {
         ProductService.getList(query).then((res) => {
-            setState(res.data.data);
+            setState(res.data.data.itemsList);
         });
     }, []);
 

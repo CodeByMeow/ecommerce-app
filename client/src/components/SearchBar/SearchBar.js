@@ -8,11 +8,21 @@ import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import "./SearchBar.css";
 
 const SearchBar = () => {
-  const { products, onSearchProductHanlder } = useStoreContext();
-  const [searchedProducts, setSearchedProducts] = useState(products);
+  const { products, onSearchProductHandler } = useStoreContext();
+  const [isShowInput, setShowInput] = useState(false);
   const [searchVal, setSearchVal] = useState({
     search: "",
   });
+
+  const navigate = useNavigate();
+
+  const onSubmitValue = () => {
+    setShowInput(!isShowInput);
+    const { search } = searchVal;
+    onSearchProductHandler(search);
+    navigate(`/products?title=${search}`);
+    setSearchVal({ search: "" });
+  }
 
   const onHandleInputChange = (e) => {
     const { name, value } = e.target;
@@ -20,14 +30,16 @@ const SearchBar = () => {
     setSearchVal({ ...searchVal, [name]: value });
   };
 
-  const navigate = useNavigate();
+  // submit value when press enter
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      console.log("Enter key pressed ✅");
+      onSubmitValue();
+    }
+  };
 
-  const onSearchHandler = (events) => {
-    // events.preventDefault();
-    const { search } = searchVal;
-    onSearchProductHanlder(search);
-    navigate("/products");
-    setSearchVal({search: ""})
+  const onSearchHandler = (e) => {
+    onSubmitValue();
   };
 
   return (
@@ -41,24 +53,26 @@ const SearchBar = () => {
           placeholder="Search"
           autoComplete="off"
           onChange={onHandleInputChange}
+          onKeyDown={handleKeyDown}
         />
-        {/*  {isShowInput ? (<input
-          className="searchInput text-sm focus:text-white"
+        {/* <input
+          className= {`searchInput text-sm focus:text-white ${isShowInput  ? "w-60" : "w-0" }`}
           type="text"
           name="search"
           value={searchVal.search}
           placeholder="Search"
           onChange={onHandleInputChange}
-        />) : ""} */}
+        /> */}
 
         <span className="sr-only">Search</span>
-        <MagnifyingGlassIcon
+        <button
           className="h-6 w-6 searchButton"
-          aria-hidden="true"
           onClick={() => {
             onSearchHandler();
           }}
-        />
+        >
+          <MagnifyingGlassIcon aria-hidden="true" />
+        </button>
       </div>
     </div>
   );

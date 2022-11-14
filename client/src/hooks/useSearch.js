@@ -5,6 +5,7 @@ const useSearch = () => {
     const params = {};
     for (const [key, value] of searchParams.entries()) {
         params[key] = value;
+        // console.log("Search value: ", value);
     }
 
     return params;

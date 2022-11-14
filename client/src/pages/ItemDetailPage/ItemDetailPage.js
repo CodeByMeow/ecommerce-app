@@ -12,14 +12,13 @@ import "animate.css";
 const ItemDetailPage = (props) => {
   const { slug } = useParams();
   const { products } = useStoreContext();
-  const [showDetail, setShowDetail] = useState(false);
   // console.log("Item id:", slug);
   // console.log(products);
-  const selectedItem = products.find((product) => {
+  const selectedItem = products.length > 0 && products.find((product) => {
     return product.slug === slug;
   });
 
-  console.log(selectedItem);
+  selectedItem &&  console.log(selectedItem);
 
   const {
     id,
@@ -32,7 +31,7 @@ const ItemDetailPage = (props) => {
     sale_price,
     price,
     image_url,
-  } = selectedItem;
+  } = selectedItem && selectedItem;
 
   const isAvailable =
     stock.remain > 0 ? (

@@ -27,8 +27,7 @@ const App = () => {
   const [products, setProduct] = useState(null);
   const [searchValue, setSearchValue] = useState("");
 
-  const onSearchProductHanlder = (value) => {
-    console.log(value)
+  const onSearchProductHandler = (value) => {
     setSearchValue(value);
   };
 
@@ -51,7 +50,7 @@ const App = () => {
         <StoreContext.Provider
           value={{
             products,
-            onSearchProductHanlder,
+            onSearchProductHandler,
           }}
         >
           <Router>
