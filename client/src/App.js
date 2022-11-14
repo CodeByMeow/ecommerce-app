@@ -17,10 +17,7 @@ import AuthState from "./contexts/AuthContext/AuthState";
 import { StoreContext } from "./contexts/StoreContext";
 //styles
 import "./App.css";
-<<<<<<< HEAD
-=======
 import productService from "./services/productService";
->>>>>>> 04848d986b15e3f6e96a742d7d8f750a9accdc6b
 
 // data
 // import { products } from "./utils/data.js";
