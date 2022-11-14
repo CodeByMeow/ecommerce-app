@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 
@@ -18,7 +18,6 @@ import { StoreContext } from "./contexts/StoreContext";
 import ProductService from "./services/productService";
 //styles
 import "./App.css";
-import useFetchProducts from "./hooks/useFetchProducts";
 
 // data
 // import { products } from "./utils/data.js";

@@ -5,7 +5,8 @@ import "./ProductList.css";
 
 const ProductList = (props) => {
     let { products } = useStoreContext();
-    if (props.products) products = props.products.itemsList;
+    if (props.products) products = props.products;
+
     return (
         <div className="bg-white">
             <div className="mx-auto max-w-2xl py-10 md:py-16 px-4 md:px-6 lg:max-w-7xl lg:px-8">
