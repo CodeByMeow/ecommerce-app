@@ -1,11 +1,10 @@
-import React, { useContext } from "react";
+import React from "react";
 import PageContainer from "../../layouts/PageContainer/PageContainer";
 import Slider from "../../components/Slider/Slider";
 import ProductList from "../../components/ProductList/ProductList";
 import { useStoreContext } from "../../contexts/StoreContext";
 
 import "./HomePage.css";
-import { useStoreContext } from "../../contexts/StoreContext";
 
 const HomePage = () => {
     const { products } = useStoreContext();
@@ -14,7 +13,6 @@ const HomePage = () => {
         "/assets/banner/oppo_banner.jpeg",
         "/assets/banner/samsung_zflip3_carousel_colorcombokv_ex_pc.jpeg",
     ];
-    const { products } = useStoreContext();
 
     return (
         <PageContainer title="Mobile Shopping Store">

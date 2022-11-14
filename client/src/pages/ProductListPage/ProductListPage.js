@@ -27,13 +27,17 @@ const SearchPage = () => {
         setCurrentPage(event.selected + 1);
     };
 
+    const notFoundProduct = (
+        <div className="h-60 flex items-center justify-center">
+            <h3 className="text-center text-xl text-indigo-600">
+                Không có sản phẩm được tìm thấy
+            </h3>
+        </div>
+    );
+
     return (
         <PageContainer title="Sản phẩm">
-            {error && (
-                <div>
-                    <h3>Not found</h3>
-                </div>
-            )}
+            {error && notFoundProduct}
             {products && <ProductList products={products?.itemsList} />}
             {products?.paginator.pageCount > 1 && (
                 <Pagination

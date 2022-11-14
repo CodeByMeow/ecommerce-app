@@ -17,7 +17,7 @@ import AuthState from "./contexts/AuthContext/AuthState";
 import { StoreContext } from "./contexts/StoreContext";
 //styles
 import "./App.css";
-import productService from "./services/productService";
+import ProductService from "./services/productService";
 
 // data
 // import { products } from "./utils/data.js";
@@ -31,7 +31,7 @@ const App = () => {
     };
 
     useEffect(() => {
-        ProductService.getList().then((res) => {
+        ProductService.getList({ perpage: 4 }).then((res) => {
             setProduct(res.data.data.itemsList);
         });
     }, []);
