@@ -4,7 +4,8 @@ import { useStoreContext } from "../../contexts/StoreContext";
 import "./ProductList.css";
 
 const ProductList = (props) => {
-    const { products } = useStoreContext();
+    // const { products } = useStoreContext();
+    const {products} = props;
 
     useEffect(() => {
 

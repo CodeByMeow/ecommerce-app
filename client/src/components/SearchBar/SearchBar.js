@@ -33,7 +33,7 @@ const SearchBar = () => {
   // submit value when press enter
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
-      console.log("Enter key pressed ✅");
+      // console.log("Enter key pressed ✅");
       onSubmitValue();
     }
   };

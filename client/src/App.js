@@ -38,11 +38,11 @@ const App = () => {
     });
   }, []);
 
-  useEffect(() => {
+  /* useEffect(() => {
     ProductService.getSearchList(searchValue).then((res) => {
       setProduct(res.itemsList);
     });
-  }, [searchValue]);
+  }, [searchValue]); */
 
   return (
     <HelmetProvider>
@@ -59,7 +59,7 @@ const App = () => {
               <Route path="/signin" element={<SigninPage />} />
               <Route path="/signup" element={<SignupPage />} />
               {/* <Route path="/search" element={<SearchPage />} /> */}
-              <Route path="/products" element={<ProductListPage products={products} />} />
+              <Route path="/products" element={<ProductListPage/>} />
               <Route path="/products/:slug" element={<ItemDetailPage />} />
               <Route path="/about-us" element={<AboutPage />} />
               <Route
