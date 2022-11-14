@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useStoreContext } from "../../contexts/StoreContext.js";
 
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 import "./SearchBar.css";
+import useNavigateSearch from "../../hooks/useNagivateSearch.js";
+import { PRODUCTS_ENDPOINT } from "../../config/domain.js";
 
 const SearchBar = () => {
     const { products, onSearchProductHandler } = useStoreContext();
@@ -13,14 +14,14 @@ const SearchBar = () => {
         search: "",
     });
 
-    const navigate = useNavigate();
+    const navigate = useNavigateSearch();
 
     const onSubmitValue = () => {
         setShowInput(!isShowInput);
         const { search } = searchVal;
         if (!search) return;
         onSearchProductHandler(search);
-        navigate(`/products?title=${search}`);
+        navigate(PRODUCTS_ENDPOINT, { title: search });
         setSearchVal({ search: "" });
     };
 
