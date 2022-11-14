@@ -1,11 +1,9 @@
-import React, { useContext } from "react";
+import React from "react";
 import ProductItem from "../ProductItem/ProductItem";
-import { useStoreContext } from "../../contexts/StoreContext";
 import "./ProductList.css";
 
 const ProductList = (props) => {
-    let { products } = useStoreContext();
-    if (props.products) products = props.products;
+    const { products } = props;
 
     return (
         <div className="bg-white">
@@ -20,6 +18,11 @@ const ProductList = (props) => {
                                 />
                             );
                         })}
+                    {!products && (
+                        <div className="text-center text-gray-500 w-full">
+                            Không có sản phẩm nào.
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

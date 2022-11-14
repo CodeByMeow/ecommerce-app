@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { useEffect, useState } from "react";
+=======
+import React from "react";
+>>>>>>> 04848d986b15e3f6e96a742d7d8f750a9accdc6b
 import PageContainer from "../../layouts/PageContainer/PageContainer";
 import ProductList from "../../components/ProductList/ProductList";
 import useSearch from "../../hooks/useSearch";
@@ -28,6 +32,7 @@ const SearchPage = () => {
     };
 
     return (
+<<<<<<< HEAD
         <PageContainer title="Tìm kiếm sản phẩm">
             {error && (
                 <div>
@@ -41,8 +46,12 @@ const SearchPage = () => {
                     handlePageClick={handlePageClick}
                 />
             )}
-        </PageContainer>
-    );
+=======
+        <PageContainer title="Sản phẩm">
+                <ProductList products={products?.itemsList} />
+>>>>>>> 04848d986b15e3f6e96a742d7d8f750a9accdc6b
+            </PageContainer>
+            );
 };
 
-export default SearchPage;
+            export default SearchPage;

@@ -18,9 +18,9 @@ const slugify = require("slugify");
  *                       type: string
  *                       description: The category title.
  *                       example: Samsung
- *                   sortDesc:
+ *                   shortDesc:
  *                       type: string
- *                       description: The category's sort description.
+ *                       description: The category's short description.
  *                       example: The brands of Korean
  *                   longDesc:
  *                       type: string
@@ -55,7 +55,7 @@ const categorySchema = new mongoose.Schema(
             type: String,
             require: true,
         },
-        sortDesc: {
+        shortDesc: {
             type: String,
         },
         longDesc: {
@@ -67,7 +67,7 @@ const categorySchema = new mongoose.Schema(
         },
         slug: {
             type: String,
-            default: function () {
+            default: function() {
                 return slugify(this.title, { lower: true });
             },
         },

@@ -15,20 +15,27 @@ import ProductListPage from "./pages/ProductListPage/ProductListPage";
 import PrivateRoute from "./components//PrivateRoute/PrivateRoute";
 import AuthState from "./contexts/AuthContext/AuthState";
 import { StoreContext } from "./contexts/StoreContext";
-import ProductService from "./services/productService";
 //styles
 import "./App.css";
+<<<<<<< HEAD
+=======
+import productService from "./services/productService";
+>>>>>>> 04848d986b15e3f6e96a742d7d8f750a9accdc6b
 
 // data
 // import { products } from "./utils/data.js";
 
 const App = () => {
-    const [products, setProduct] = useState(null);
+    const [products, setProducts] = useState();
+    const [loading, setLoading] = useState();
     useEffect(() => {
-        ProductService.getList().then((res) => {
-            setProduct(res.data.data.itemsList);
+        setLoading(true);
+        productService.getList({ perpage: 4 }).then((res) => {
+            setLoading(false);
+            setProducts(res.data.data.itemsList);
         });
     }, []);
+
     return (
         <HelmetProvider>
             <AuthState>
@@ -39,7 +46,10 @@ const App = () => {
                 >
                     <Router>
                         <Routes>
-                            <Route path="/" element={<HomePage />} />
+                            <Route
+                                path="/"
+                                element={<HomePage loading={loading} />}
+                            />
                             <Route path="/signin" element={<SigninPage />} />
                             <Route path="/signup" element={<SignupPage />} />
                             <Route path="/search" element={<SearchPage />} />

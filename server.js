@@ -12,10 +12,10 @@ app.use(express.json({ extended: false }));
 app.use(cors("*"));
 app.use("/api/v1", routes);
 
-app.get("/api/v1", (req, res) => {
-  res.json({
-    msg: "Server is running"
-  })
+app.get("/api/v1", (_req, res) => {
+    res.json({
+        msg: "Server is running",
+    });
 });
 
 app.use((error, _req, res, _next) => {

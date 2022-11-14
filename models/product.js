@@ -11,7 +11,7 @@ const paginate = require("mongoose-paginate-v2");
  *             required:
  *               - category
  *               - title
- *               - sortDesc
+ *               - shortDesc
  *               - image_url
  *             properties:
  *                   _id:
@@ -24,7 +24,7 @@ const paginate = require("mongoose-paginate-v2");
  *                   title:
  *                       type: string
  *                       example: iPhone 14
- *                   sortDesc:
+ *                   shortDesc:
  *                       type: string
  *                       example: Ceramic Shield front Glass back and aluminum design
  *                   longDesc:
@@ -116,7 +116,7 @@ const productSchema = new mongoose.Schema(
             type: String,
             require: true,
         },
-        sortDesc: {
+        shortDesc: {
             type: String,
             require: true,
         },
@@ -141,7 +141,7 @@ const productSchema = new mongoose.Schema(
         ],
         slug: {
             type: String,
-            default: function () {
+            default: function() {
                 return slugify(this.title, { lower: true });
             },
         },
