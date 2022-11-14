@@ -7,7 +7,7 @@ import productService from "../../services/productService";
 import useNavigateSearch from "../../hooks/useNagivateSearch";
 import { PRODUCTS_ENDPOINT } from "../../config/domain";
 
-const SearchPage = () => {
+const ProductListPage = () => {
     const params = useSearch();
     const [products, setProducts] = useState();
     const [currentPage, setCurrentPage] = useState();
@@ -21,7 +21,7 @@ const SearchPage = () => {
             .getList({ ...params, page: currentPage })
             .then((res) => setProducts(res.data.data))
             .catch(() => setError(true));
-    }, [currentPage]);
+    }, [currentPage, params.title]);
 
     const handlePageClick = (event) => {
         setCurrentPage(event.selected + 1);
@@ -37,7 +37,7 @@ const SearchPage = () => {
 
     return (
         <PageContainer title="Sản phẩm">
-            {error && notFoundProduct}
+            {(error || products?.itemsList.length === 0) && notFoundProduct}
             {products && <ProductList products={products?.itemsList} />}
             {products?.paginator.pageCount > 1 && (
                 <Pagination
@@ -49,4 +49,4 @@ const SearchPage = () => {
     );
 };
 
-export default SearchPage;
+export default ProductListPage;

@@ -18,6 +18,7 @@ const SearchBar = () => {
     const onSubmitValue = () => {
         setShowInput(!isShowInput);
         const { search } = searchVal;
+        if (!search) return;
         onSearchProductHandler(search);
         navigate(`/products?title=${search}`);
         setSearchVal({ search: "" });
