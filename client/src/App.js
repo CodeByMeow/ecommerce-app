@@ -5,7 +5,7 @@ import { HelmetProvider } from "react-helmet-async";
 import HomePage from "./pages/HomePage/HomePage";
 import SigninPage from "./pages/SigninPage/SigninPage";
 import SignupPage from "./pages/SignupPage/SignupPage";
-import SearchPage from "./pages/SearchPage/SearchPage";
+// import SearchPage from "./pages/SearchPage/SearchPage";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 import ItemDetailPage from "./pages/ItemDetailPage/ItemDetailPage";
 import CartPage from "./pages/CartPage/CartPage";
@@ -23,15 +23,24 @@ import productService from "./services/productService";
 // import { products } from "./utils/data.js";
 
 const App = () => {
-    const [products, setProducts] = useState();
-    const [loading, setLoading] = useState();
+    const [products, setProduct] = useState(null);
+    const [searchValue, setSearchValue] = useState("");
+
+    const onSearchProductHandler = (value) => {
+        setSearchValue(value);
+    };
+
     useEffect(() => {
-        setLoading(true);
-        productService.getList({ perpage: 4 }).then((res) => {
-            setLoading(false);
-            setProducts(res.data.data.itemsList);
+        ProductService.getList().then((res) => {
+            setProduct(res.data.data.itemsList);
         });
     }, []);
+
+    /* useEffect(() => {
+      ProductService.getSearchList(searchValue).then((res) => {
+        setProduct(res.itemsList);
+      });
+    }, [searchValue]); */
 
     return (
         <HelmetProvider>
@@ -39,23 +48,21 @@ const App = () => {
                 <StoreContext.Provider
                     value={{
                         products,
+                        onSearchProductHandler,
                     }}
                 >
                     <Router>
                         <Routes>
-                            <Route
-                                path="/"
-                                element={<HomePage loading={loading} />}
-                            />
+                            <Route path="/" element={<HomePage />} />
                             <Route path="/signin" element={<SigninPage />} />
                             <Route path="/signup" element={<SignupPage />} />
-                            <Route path="/search" element={<SearchPage />} />
+                            {/* <Route path="/search" element={<SearchPage />} /> */}
                             <Route
                                 path="/products"
                                 element={<ProductListPage />}
                             />
                             <Route
-                                path="/products/:itemId"
+                                path="/products/:slug"
                                 element={<ItemDetailPage />}
                             />
                             <Route path="/about-us" element={<AboutPage />} />

@@ -10,14 +10,16 @@ import "./ItemDetailPage.css";
 import "animate.css";
 
 const ItemDetailPage = (props) => {
-  const { itemId } = useParams();
+  const { slug } = useParams();
   const { products } = useStoreContext();
-  const [showDetail, setShowDetail] = useState(false);
-  // console.log("Item id:", itemId);
+  // console.log("Item id:", slug);
   // console.log(products);
-  const selectedItem = products.find((product) => {
-    return product.id === Number(itemId);
+  const selectedItem = products.length > 0 && products.find((product) => {
+    return product.slug === slug;
   });
+
+  selectedItem &&  console.log(selectedItem);
+
   const {
     id,
     category,
@@ -29,7 +31,7 @@ const ItemDetailPage = (props) => {
     sale_price,
     price,
     image_url,
-  } = selectedItem;
+  } = selectedItem && selectedItem;
 
   const isAvailable =
     stock.remain > 0 ? (
@@ -39,30 +41,31 @@ const ItemDetailPage = (props) => {
     );
 
   return (
-    <PageContainer>
-      <div className="container h-full gap-4 pt-8 md:pt-16 lg:pt-20 pb-6 md:pb-12 px-6 md:px-12">
-        <div className="w-full grid grid-cols-1 md:grid-cols-2 ">
-          <div className="flex justify-center md:justify-end">
-            <div className="max-w-full max-h-full img-container">
+    <PageContainer title="Product detail">
+      <div className="container h-full gap-4 pt-8 md:pt-16 lg:pt-20 pb-6 md:pb-12 px-6 md:px-10">
+        {/* <div className="w-full grid grid-cols-1 lg:grid-cols-2"> */}
+        <div className="w-full grid grid-cols-1 lg:flex lg:flex-row">
+          <div className="flex justify-center md:justify-end items-center basis-full lg:basis-1/3">
+            <div className="max-w-full max-h-full md:w-2/3 lg:w-full mx-auto">
               <img src={image_url} alt={title} className="w-full" />
             </div>
           </div>
 
-          <div className="item-info w-full flex flex-col gap-4 md:gap-2 space-y-0 md:space-y-4">
-            <h3 className="text-gray-800 text-2xl sm:text-3xl md:text-4xl detail-title">
+          <div className="item-info w-full flex flex-col gap-3 md:gap-2 space-y-0 md:space-y-2 basis-full lg:basis-2/3">
+            <h2 className="text-gray-800 text-2xl md:text-3xl font-bold mt-2 lg:mt-0">
               {title}
-            </h3>
-            <h2 className="text-indigo-600 text-base sm:text-xl md:text-2xl font-extrabold">
+            </h2>
+            <h3 className="text-indigo-600 text-xl md:text-2xl">
               {storeService.convertCurrency(price, "VND")}&nbsp;
-              <span className="text-slate-400 line-through">
+              <span className={`${sale_price ? "text-slate-400 line-through" : "hidden"}`}>
                 {storeService.convertCurrency(sale_price, "VND")}
               </span>
-            </h2>
-            <p className="my-8 text-sm sm:text-base">{shortDesc}</p>
-            <p className="my-8 text-sm sm:text-base">Stock: {isAvailable}</p>
+            </h3>
+            <p className="my-8 text-sm md:text-base">{shortDesc}</p>
+            <p className="my-8 text-sm md:text-base">Stock: {isAvailable}</p>
 
             <div className="w-full flex flex-col sm:flex-row gap-6">
-              <div className="w-full sm:w-1/3 lg:w-1/4 flex flex-wrap border-b border-indigo-600 justify-between items-end text-lg lg:text-xl">
+              <div className="w-full sm:w-1/3 lg:w-1/4 flex flex-wrap border-b border-indigo-600 justify-between items-end text-lg lg:text-2xl">
                 <button>-</button>
                 <input
                   type="text"

@@ -41,6 +41,7 @@ const AuthState = (props) => {
   const verifyToken = async () => {
     try {
       const authorizedUser = await AuthServices.verifyToken();
+      console.log(authorizedUser);
       // if token does not expired or invalid => dispatch to global state
       authorizedUser && dispatch(actionCreator(GET_USER_INFO, authorizedUser.data));
       // console.log(authorizedUser.data);
