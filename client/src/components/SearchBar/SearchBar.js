@@ -8,7 +8,7 @@ import useNavigateSearch from "../../hooks/useNagivateSearch.js";
 import { PRODUCTS_ENDPOINT } from "../../config/domain.js";
 
 const SearchBar = () => {
-    const { products, onSearchProductHandler } = useStoreContext();
+    const { onSearchProductHandler } = useStoreContext();
     const [isShowInput, setShowInput] = useState(false);
     const [searchVal, setSearchVal] = useState({
         search: "",

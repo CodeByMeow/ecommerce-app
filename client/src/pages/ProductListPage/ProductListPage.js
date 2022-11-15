@@ -8,20 +8,27 @@ import useNavigateSearch from "../../hooks/useNagivateSearch";
 import { PRODUCTS_ENDPOINT } from "../../config/domain";
 
 const ProductListPage = () => {
-    const params = useSearch();
+    let params = useSearch();
     const [products, setProducts] = useState();
     const [currentPage, setCurrentPage] = useState(params?.page);
     const [error, setError] = useState(false);
     const navigate = useNavigateSearch();
 
     useEffect(() => {
-        if (currentPage)
-            navigate(PRODUCTS_ENDPOINT, { ...params, page: currentPage });
+        if (currentPage) navigate(PRODUCTS_ENDPOINT, { page: currentPage });
         productService
             .getList({ ...params, page: currentPage })
             .then((res) => setProducts(res.data.data))
             .catch(() => setError(true));
-    }, [currentPage, params.title]);
+    }, [currentPage]);
+
+    useEffect(() => {
+        console.log(params);
+        productService
+            .getList(params)
+            .then((res) => setProducts(res.data.data))
+            .catch(() => setError(true));
+    }, [params.title]);
 
     const handlePageClick = (event) => {
         setCurrentPage(event.selected + 1);
