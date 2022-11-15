@@ -8,75 +8,67 @@ import useNavigateSearch from "../../hooks/useNagivateSearch.js";
 import { PRODUCTS_ENDPOINT } from "../../config/domain.js";
 
 const SearchBar = () => {
-    const { onSearchProductHandler } = useStoreContext();
-    const [isShowInput, setShowInput] = useState(false);
-    const [searchVal, setSearchVal] = useState({
-        search: "",
-    });
+  const { onSearchProductHandler } = useStoreContext();
+  const [isShowInput, setShowInput] = useState(false);
+  const [searchVal, setSearchVal] = useState({
+    search: "",
+  });
 
-    const navigate = useNavigateSearch();
+  const navigate = useNavigateSearch();
 
-    const onSubmitValue = () => {
-        setShowInput(!isShowInput);
-        const { search } = searchVal;
-        if (!search) return;
-        onSearchProductHandler(search);
-        navigate(PRODUCTS_ENDPOINT, { title: search });
-        setSearchVal({ search: "" });
-    };
+  const onSubmitValue = () => {
+    setShowInput(!isShowInput);
+    const { search } = searchVal;
+    if (!search) return;
+    onSearchProductHandler(search);
+    navigate(PRODUCTS_ENDPOINT, { title: search });
+    setSearchVal({ search: "" });
+  };
 
-    const onHandleInputChange = (e) => {
-        const { name, value } = e.target;
-        // console.log({ name, value });
-        setSearchVal({ ...searchVal, [name]: value });
-    };
+  const onHandleInputChange = (e) => {
+    const { name, value } = e.target;
+    // console.log({ name, value });
+    setSearchVal({ ...searchVal, [name]: value });
+  };
 
-    // submit value when press enter
-    const handleKeyDown = (event) => {
-        if (event.key === "Enter") {
-            // console.log("Enter key pressed ✅");
-            onSubmitValue();
-        }
-    };
+  // submit value when press enter
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      // console.log("Enter key pressed ✅");
+      onSubmitValue();
+    }
+  };
 
-    const onSearchHandler = () => {
-        onSubmitValue();
-    };
+  const onSearchHandler = () => {
+    onSubmitValue();
+  };
 
-    return (
-        <div className="flex items-center lg:ml-6 p-2 text-white hover:text-gray-500">
-            <div className="searchBox flex items-center">
-                <input
-                    className="searchInput text-sm focus:text-white"
-                    type="text"
-                    name="search"
-                    value={searchVal.search}
-                    placeholder="Search"
-                    autoComplete="off"
-                    onChange={onHandleInputChange}
-                    onKeyDown={handleKeyDown}
-                />
-                {/* <input
-          className= {`searchInput text-sm focus:text-white ${isShowInput  ? "w-60" : "w-0" }`}
+  return (
+    <div className="flex items-center lg:ml-6 p-2 text-white hover:text-gray-500">
+      <div className="searchBox flex items-center">
+        <input
+          className="searchInput text-sm focus:text-white"
           type="text"
           name="search"
           value={searchVal.search}
           placeholder="Search"
+          autoComplete="off"
           onChange={onHandleInputChange}
-        /> */}
+          onKeyDown={handleKeyDown}
+        />
 
-                <span className="sr-only">Search</span>
-                <button
-                    className="h-6 w-6 searchButton"
-                    onClick={() => {
-                        onSearchHandler();
-                    }}
-                >
-                    <MagnifyingGlassIcon aria-hidden="true" />
-                </button>
-            </div>
-        </div>
-    );
+        <span className="sr-only">Search</span>
+        <button
+          className="h-6 w-6 searchButton"
+          onClick={() => {
+            onSearchHandler();
+          }}
+        >
+          <MagnifyingGlassIcon aria-hidden="true" />
+        </button>
+      </div>
+    </div>
+  );
 };
 
 export default SearchBar;

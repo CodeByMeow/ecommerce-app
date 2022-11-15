@@ -1,13 +1,15 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import PageContainer from "../../layouts/PageContainer/PageContainer";
 import Slider from "../../components/Slider/Slider";
 import ProductList from "../../components/ProductList/ProductList";
 import { useStoreContext } from "../../contexts/StoreContext";
-
+import Button from "../../components/Button.js";
 import "./HomePage.css";
 
 const HomePage = () => {
     const { products } = useStoreContext();
+    const navigate = useNavigate();
     const contentSlides = [
         "/assets/banner/apple_banner.jpeg",
         "/assets/banner/oppo_banner.jpeg",
@@ -36,6 +38,7 @@ const HomePage = () => {
                         unique history of outdoor recreation, sporting and
                         folklore.
                     </p>
+                    <Button type="button" customClass="btn-grad" text="Xem thêm" onHandledClick={() => navigate("/about-us")}/>
                 </div>
             </div>
         </PageContainer>

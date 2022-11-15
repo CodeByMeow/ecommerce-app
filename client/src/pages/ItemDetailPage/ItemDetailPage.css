@@ -34,6 +34,11 @@
   -o-transition: all 0.5s ease forwards;
 } */
 
+.system-info li {
+  max-width: calc(100%/6);
+  width: calc(100%/6);
+}
+
 @keyframes slideIn {
     0% {
         display: none;

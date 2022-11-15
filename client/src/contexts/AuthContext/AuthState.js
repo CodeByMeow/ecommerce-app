@@ -1,30 +1,28 @@
 import { useEffect, useState, useReducer } from "react";
 import authReducer from "./AuthReducer";
 import AuthContext from "./AuthContext";
-
-import {
-  SIGN_IN,
-  GET_USER_INFO,
-  LOG_OUT,
-  REFRESH_TOKEN,
-} from "../../contexts/types.js";
 import actionCreator from "../../utils/actionCreator.js";
 import AuthServices from "../../services/authService.js";
-import axiosInstance from "../../services/axiosInstance.js";
 
-const initialState = {
-  token: localStorage.getItem("token") || null,
-  refreshToken: localStorage.getItem("refreshToken") || null,
-  isAuthenticated: !!localStorage.getItem("refreshToken") || false,
-  authLoading: false,
-  user: null,
-  authError: null,
-};
+import {
+  GET_USER_INFO,
+  REFRESH_TOKEN,
+} from "../../contexts/types.js";
+
 
 const AuthState = (props) => {
-  const [state, dispatch] = useReducer(authReducer, initialState);
-  const { refreshToken, token } = state;
+  const { loading } = props;
+  const initialState = {
+    token: localStorage.getItem("token") || null,
+    refreshToken: localStorage.getItem("refreshToken") || null,
+    isAuthenticated: !!localStorage.getItem("refreshToken") || false,
+    authLoading: loading,
+    user: null,
+    authError: null,
+  };
 
+  const [state, dispatch] = useReducer(authReducer, initialState);
+  const { refreshToken } = state;
   
   const verifyRefreshToken = async () => {
     try {
@@ -43,7 +41,8 @@ const AuthState = (props) => {
       const authorizedUser = await AuthServices.verifyToken();
       console.log(authorizedUser);
       // if token does not expired or invalid => dispatch to global state
-      authorizedUser && dispatch(actionCreator(GET_USER_INFO, authorizedUser.data));
+      authorizedUser &&
+        dispatch(actionCreator(GET_USER_INFO, authorizedUser.data));
       // console.log(authorizedUser.data);
     } catch (err) {
       console.log(err.message);

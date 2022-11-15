@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Fragment, useState, useContext } from "react";
+import { Fragment, useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import authContext from "../../contexts/AuthContext/AuthContext.js";
 import { Dialog, Popover, Tab, Transition } from "@headlessui/react";
@@ -47,10 +47,10 @@ const navigation = {
           id: "mobile",
           name: "mobile",
           items: [
-            { name: "Apple", path: "/search" },
-            { name: "Samsung", path: "/search" },
-            { name: "Oppo", path: "/search" },
-            { name: "Pixel", path: "/search" },
+            { name: "Apple", path: "/category/apple" },
+            { name: "Samsung", path: "/category/samsung" },
+            { name: "Oppo", path: "/category" },
+            { name: "Pixel", path: "/category" },
           ],
         },
       ],
@@ -67,11 +67,28 @@ function classNames(...classes) {
 }
 
 const Header = () => {
-  const {state} = useContext(authContext);
-  const {user} = state; 
-  // user&& console.log(user);
-  // userInfo?. console.log(userInfo);
+  const { state } = useContext(authContext);
+  const { user } = state;
   const [open, setOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  const onResizeMobile = () => {
+    if (window.innerWidth <= 480) {
+      setIsMobile(true);
+    }
+    else if (window.innerWidth > 480) {
+      setIsMobile(false);
+    }
+  }
+ 
+
+  useEffect(() => {
+    window.addEventListener("resize", onResizeMobile);
+
+    return () => {
+      window.removeEventListener("resize", onResizeMobile);
+    }
+  }, []);
 
   return (
     <div className="bg-white">
@@ -214,12 +231,18 @@ const Header = () => {
 
                 <div className="space-y-6 border-t border-gray-200 py-6 px-4">
                   <div className="flow-root">
-                  {user ? (<h3 className="text-indigo-600 font-semibold capitalize">{user.username}</h3>) : (<Link
-                    to="/signin"
-                    className="text-sm font-medium text-gray-800 hover:text-indigo-700"
-                  >
-                    Sign in
-                  </Link>)}
+                    {user ? (
+                      <h3 className="text-indigo-600 font-semibold capitalize">
+                        {user.username}
+                      </h3>
+                    ) : (
+                      <Link
+                        to="/signin"
+                        className="text-sm font-medium text-gray-800 hover:text-indigo-700"
+                      >
+                        Sign in
+                      </Link>
+                    )}
                   </div>
                   <div className="flow-root">
                     <Link
@@ -395,20 +418,29 @@ const Header = () => {
 
               <div className="ml-auto flex items-center">
                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                  {user ? (<h3 className="text-indigo-600 font-semibold capitalize">{user.username}</h3>) : (<Link
-                    to="/signin"
-                    className="text-sm font-medium text-gray-800 hover:text-indigo-700"
-                  >
-                    Sign in
-                  </Link>)}
+                  {user ? (
+                    <h3 className="text-indigo-600 font-semibold capitalize">
+                      {user.username}
+                    </h3>
+                  ) : (
+                    <Link
+                      to="/signin"
+                      className="text-sm font-medium text-gray-800 hover:text-indigo-700"
+                    >
+                      Sign in
+                    </Link>
+                  )}
                   <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
-                  {user ? ("") : (<Link
-                    to="/signup"
-                    className="text-sm font-medium text-gray-800 hover:text-indigo-700"
-                  >
-                    Create account
-                  </Link>)}
-                  
+                  {user ? (
+                    ""
+                  ) : (
+                    <Link
+                      to="/signup"
+                      className="text-sm font-medium text-gray-800 hover:text-indigo-700"
+                    >
+                      Create account
+                    </Link>
+                  )}
                 </div>
 
                 <div className="hidden lg:ml-8 lg:flex">
@@ -426,8 +458,8 @@ const Header = () => {
                   </a>
                 </div>
 
-                {/* Search */}
-                <SearchBar />
+                {/* Desktop Search */}
+                {!isMobile && <SearchBar/>}
 
                 {/* Cart */}
                 <div className="ml-4 flow-root lg:ml-6">
@@ -444,6 +476,8 @@ const Header = () => {
                 </div>
               </div>
             </div>
+            {/* Search */}
+            {isMobile && <SearchBar/>}
           </div>
         </nav>
       </header>

@@ -14,6 +14,7 @@ import ProductListPage from "./pages/ProductListPage/ProductListPage";
 
 import PrivateRoute from "./components//PrivateRoute/PrivateRoute";
 import AuthState from "./contexts/AuthContext/AuthState";
+import CartState from "./contexts/CartContext/CartState";
 import { StoreContext } from "./contexts/StoreContext";
 import ProductService from "./services/productService";
 import CategoryService from "./services/categoryService";
@@ -24,66 +25,69 @@ import "./App.css";
 // import { products } from "./utils/data.js";
 
 const App = () => {
-    const [products, setProduct] = useState(null);
-    const [searchValue, setSearchValue] = useState("");
-    const [category, setCategory] = useState(null);
+  const [products, setProduct] = useState(null);
+  const [searchValue, setSearchValue] = useState("");
+  const [category, setCategory] = useState(null);
 
-    const onSearchProductHandler = (value) => {
-        setSearchValue(value);
-    };
+  const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
-        ProductService.getList({ perpage: 4 }).then((res) => {
-            setProduct(res.data.data.itemsList);
-        });
+  const onSearchProductHandler = (value) => {
+    setSearchValue(value);
+  };
 
-        CategoryService.getAll().then((res) => {
-            setCategory(res.data.data);
-        });
-    }, []);
-
-    /* useEffect(() => {
-      ProductService.getSearchList(searchValue).then((res) => {
-        setProduct(res.itemsList);
+  const loadPageData = () => {
+    setLoading(true);
+    Promise.all([ProductService.getList(), CategoryService.getAll()])
+      .then((res) => {
+        const [responseProduct, responseCategory] = res;
+        setProduct(responseProduct.data.data.itemsList);
+        setCategory(responseCategory.data.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      })
+      .finally(() => {
+        setLoading(false);
       });
-    }, [searchValue]); */
+  };
 
-    return (
-        <HelmetProvider>
-            <AuthState>
-                <StoreContext.Provider
-                    value={{
-                        products,
-                        onSearchProductHandler,
-                        category,
-                    }}
-                >
-                    <Router>
-                        <Routes>
-                            <Route path="/" element={<HomePage />} />
-                            <Route path="/signin" element={<SigninPage />} />
-                            <Route path="/signup" element={<SignupPage />} />
-                            {/* <Route path="/search" element={<SearchPage />} /> */}
-                            <Route
-                                path="/products"
-                                element={<ProductListPage />}
-                            />
-                            <Route
-                                path="/products/:slug"
-                                element={<ItemDetailPage />}
-                            />
-                            <Route path="/about-us" element={<AboutPage />} />
-                            <Route
-                                path="/cart"
-                                element={<PrivateRoute component={CartPage} />}
-                            />
-                            <Route path="*" element={<NotFoundPage />} />
-                        </Routes>
-                    </Router>
-                </StoreContext.Provider>
-            </AuthState>
-        </HelmetProvider>
-    );
+  useEffect(() => {
+    loadPageData();
+  }, []);
+
+  return (
+    <HelmetProvider>
+      <AuthState loading={loading}>
+        <StoreContext.Provider
+          value={{
+            loading,
+            products,
+            onSearchProductHandler,
+            category,
+          }}
+        >
+          <CartState>
+            <Router>
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/signin" element={<SigninPage />} />
+                <Route path="/signup" element={<SignupPage />} />
+                {/* <Route path="/search" element={<SearchPage />} /> */}
+                <Route path="/products" element={<ProductListPage />} />
+                <Route path="/products/:slug" element={<ItemDetailPage />} />
+                <Route path="/about-us" element={<AboutPage />} />
+                <Route
+                  path="/cart"
+                  element={<PrivateRoute component={CartPage} />}
+                />
+                <Route path="*" element={<NotFoundPage />} />
+              </Routes>
+            </Router>
+          </CartState>
+        </StoreContext.Provider>
+      </AuthState>
+    </HelmetProvider>
+  );
 };
 
 export default App;
