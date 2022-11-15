@@ -7,13 +7,14 @@ import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 import "./SearchBar.css";
 
-const SearchBar = () => {
+const SearchBar = (props) => {
   const { products, onSearchProductHandler } = useStoreContext();
   const [isShowInput, setShowInput] = useState(false);
   const [searchVal, setSearchVal] = useState({
     search: "",
   });
 
+  
   const navigate = useNavigate();
 
   const onSubmitValue = () => {
@@ -22,7 +23,7 @@ const SearchBar = () => {
     onSearchProductHandler(search);
     navigate(`/products?title=${search}`);
     setSearchVal({ search: "" });
-  }
+  };
 
   const onHandleInputChange = (e) => {
     const { name, value } = e.target;
@@ -43,8 +44,32 @@ const SearchBar = () => {
   };
 
   return (
-    <div className="flex items-center lg:ml-6 p-2 text-white hover:text-gray-500">
-      <div className="searchBox flex items-center">
+    <div className="flex flex-col md:flex-row items-center lg:ml-6 p-2 text-white hover:text-gray-500">
+      <div className="searchBox hidden md:flex items-center ">
+        <input
+          className="md:w-60 lg:w-0 searchInput text-sm focus:text-white"
+          type="text"
+          name="search"
+          value={searchVal.search}
+          placeholder="Search"
+          autoComplete="off"
+          onChange={onHandleInputChange}
+          onKeyDown={handleKeyDown}
+        />
+
+        <span className="sr-only">Search</span>
+        <button
+          className="h-6 w-6 searchButton"
+          onClick={() => {
+            onSearchHandler();
+          }}
+        >
+          <MagnifyingGlassIcon aria-hidden="true" />
+        </button>
+      </div>
+
+      {/* Mobile search */}
+      <div className="searchBox w-full flex justify-between items-center md:hidden">
         <input
           className="searchInput text-sm focus:text-white"
           type="text"
@@ -55,14 +80,6 @@ const SearchBar = () => {
           onChange={onHandleInputChange}
           onKeyDown={handleKeyDown}
         />
-        {/* <input
-          className= {`searchInput text-sm focus:text-white ${isShowInput  ? "w-60" : "w-0" }`}
-          type="text"
-          name="search"
-          value={searchVal.search}
-          placeholder="Search"
-          onChange={onHandleInputChange}
-        /> */}
 
         <span className="sr-only">Search</span>
         <button

@@ -14,6 +14,7 @@ import ProductListPage from "./pages/ProductListPage/ProductListPage";
 
 import PrivateRoute from "./components//PrivateRoute/PrivateRoute";
 import AuthState from "./contexts/AuthContext/AuthState";
+import CartState from "./contexts/CartContext/CartState";
 import { StoreContext } from "./contexts/StoreContext";
 import ProductService from "./services/productService";
 //styles
@@ -27,48 +28,51 @@ const App = () => {
   const [products, setProduct] = useState(null);
   const [searchValue, setSearchValue] = useState("");
 
+  const [loading, setLoading] = useState(false);
+
   const onSearchProductHandler = (value) => {
     setSearchValue(value);
   };
 
+  const fetchProduct = async () => {
+    setLoading(true);
+    const res = await ProductService.getList();
+    setProduct(res.data.data.itemsList);
+    setLoading(false);
+  };
 
   useEffect(() => {
-    ProductService.getList().then((res) => {
-      setProduct(res.data.data.itemsList);
-    });
+    fetchProduct();
   }, []);
-
-  /* useEffect(() => {
-    ProductService.getSearchList(searchValue).then((res) => {
-      setProduct(res.itemsList);
-    });
-  }, [searchValue]); */
 
   return (
     <HelmetProvider>
-      <AuthState>
+      <AuthState loading={loading}>
         <StoreContext.Provider
           value={{
+            loading,
             products,
             onSearchProductHandler,
           }}
         >
-          <Router>
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/signin" element={<SigninPage />} />
-              <Route path="/signup" element={<SignupPage />} />
-              {/* <Route path="/search" element={<SearchPage />} /> */}
-              <Route path="/products" element={<ProductListPage/>} />
-              <Route path="/products/:slug" element={<ItemDetailPage />} />
-              <Route path="/about-us" element={<AboutPage />} />
-              <Route
-                path="/cart"
-                element={<PrivateRoute component={CartPage} />}
-              />
-              <Route path="*" element={<NotFoundPage />} />
-            </Routes>
-          </Router>
+          <CartState>
+            <Router>
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/signin" element={<SigninPage />} />
+                <Route path="/signup" element={<SignupPage />} />
+                {/* <Route path="/search" element={<SearchPage />} /> */}
+                <Route path="/products" element={<ProductListPage />} />
+                <Route path="/products/:slug" element={<ItemDetailPage />} />
+                <Route path="/about-us" element={<AboutPage />} />
+                <Route
+                  path="/cart"
+                  element={<PrivateRoute component={CartPage} />}
+                />
+                <Route path="*" element={<NotFoundPage />} />
+              </Routes>
+            </Router>
+          </CartState>
         </StoreContext.Provider>
       </AuthState>
     </HelmetProvider>

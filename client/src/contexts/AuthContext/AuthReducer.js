@@ -1,6 +1,4 @@
 import { LOG_OUT, SIGN_IN, SIGN_UP, GET_USER_INFO, REFRESH_TOKEN } from "../types";
-import axiosInstance from "../../services/axiosInstance.js";
-// import AuthServices from "../../services/authService.js";
 
 const authReducer = (state, action) => {
   const { type, payload } = action;
@@ -9,7 +7,8 @@ const authReducer = (state, action) => {
       const { token, refreshToken, isAuthenticated, user } = payload;
       console.log(payload);
       localStorage.setItem("token", token);
-      localStorage.setItem("refreshToken", refreshToken);
+      localStorage.setItem("refreshToken", refreshToken);      
+      // localStorage.setItem("orders", JSON.stringify(user.orders));
       return { ...state, token, refreshToken, isAuthenticated, user };
     case SIGN_UP:
       return state;
@@ -24,16 +23,15 @@ const authReducer = (state, action) => {
       };
     case GET_USER_INFO: {
       const { user } = payload;
-      console.log(payload);
+      // console.log(payload);
       return {
         ...state,
-        // user: !state.user ? user : state.user,
         user: user,
       };
     }
     case REFRESH_TOKEN: {
       // console.log(payload);
-      const { token } = payload;      
+      const { token} = payload;      
       localStorage.setItem("token", token);
       return {
         ...state,

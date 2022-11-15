@@ -5,7 +5,7 @@ const productService = {
         return axiosInstance.get("/products", { params });
     },
     getDetail: (slug) => {
-        return axiosInstance.get(`${slug}`);
+        return axiosInstance.get(`/products/${slug}`);
     },
     getSearchList: (query) => {
         // console.log(query)

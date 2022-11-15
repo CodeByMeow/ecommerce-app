@@ -4,10 +4,10 @@ import PropagateLoader from "react-spinners/PropagateLoader";
 const SubmitLoading = () => {
   return (
     <div className="w-full flex flex-col justify-center items-center gap-3">
-      <p style={{ color: "#ffaf1a" }}>
+      <p style={{ color: "#4f46e6" }}>
         Thanks for your submitting... Please wait.
       </p>
-      <PropagateLoader color="#ffaf1a" size="12" />
+      <PropagateLoader color="#4f46e6" size="16" />
     </div>
   );
 };

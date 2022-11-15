@@ -28,6 +28,14 @@ textarea {
   outline: none;
 }
 
+main {
+  min-height: 66vh;
+}
+
+footer {
+  background-color: #4f46e5;
+}
+
 .btn-grad {
   background-image: linear-gradient(
     to right,
