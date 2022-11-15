@@ -10,7 +10,7 @@ import { PRODUCTS_ENDPOINT } from "../../config/domain";
 const ProductListPage = () => {
     const params = useSearch();
     const [products, setProducts] = useState();
-    const [currentPage, setCurrentPage] = useState();
+    const [currentPage, setCurrentPage] = useState(params?.page);
     const [error, setError] = useState(false);
     const navigate = useNavigateSearch();
 
