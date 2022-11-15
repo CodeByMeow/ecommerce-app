@@ -13,11 +13,11 @@ const getList = (userId, options = {}) => {
 
 const create = (userId, products = []) => {
     const usrId = Types.ObjectId(userId);
-    const productList = products.map((product) => Types.ObjectId(product));
     const order = new OrderModel({
         userId: usrId,
-        products: productList,
     });
+
+    order.products = products;
 
     return order.save();
 };

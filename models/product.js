@@ -141,7 +141,7 @@ const productSchema = new mongoose.Schema(
         ],
         slug: {
             type: String,
-            default: function() {
+            default: function () {
                 return slugify(this.title, { lower: true });
             },
         },
@@ -178,5 +178,5 @@ const productSchema = new mongoose.Schema(
 );
 
 productSchema.plugin(paginate);
-
-module.exports = mongoose.model("product", productSchema);
+ProductModel = mongoose.model("product", productSchema);
+module.exports = { ProductModel, productSchema };

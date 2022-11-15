@@ -1,5 +1,5 @@
 const { Types } = require("mongoose");
-const ProductModel = require("../models/product");
+const { ProductModel } = require("../models/product");
 const { generalSlug, addTailSlug } = require("../utils/url");
 const { paginateOptions } = require("../utils/pagination");
 

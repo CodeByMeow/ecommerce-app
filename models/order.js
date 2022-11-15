@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const paginate = require("mongoose-paginate-v2");
+const product = require("./product").productSchema;
 
 /**
  * @swagger
@@ -16,7 +17,7 @@ const paginate = require("mongoose-paginate-v2");
  *                   products:
  *                       type: array
  *                       items:
- *                           type: string
+ *                           $ref: '#/components/schemas/Product'
  *                   createdAt:
  *                       type: string
  *                       format: date-time
@@ -32,12 +33,7 @@ const ordersScheme = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: "users",
         },
-        products: [
-            {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "products",
-            },
-        ],
+        products: [product],
         status: {
             type: String,
             enum: ["Processing", "Completed", "Canceled", "Pendding"],

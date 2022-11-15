@@ -113,10 +113,7 @@ router.get("/", async (req, res) => {
  *                               products:
  *                                   type: array
  *                                   items:
- *                                       type: object
- *                                       properties:
- *                                           id:
- *                                               type: string
+ *                                       $ref: '#/components/schemas/Product'
  *           responses:
  *               201:
  *                   description: Created a new order.

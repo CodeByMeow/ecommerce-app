@@ -1,17 +1,15 @@
 {
     "type": "object",
-    "required": ["products"],
+    "required": ["userId", "products"],
     "properties": {
+        "userId": {
+            "type": "string"
+        },
         "products": {
             "type": "array",
             "items": [
                 {
-                    "type": "object",
-                    "properties": {
-                        "id": {
-                            "type": "string"
-                        }
-                    }
+                    "type": "object"
                 }
             ]
         }
