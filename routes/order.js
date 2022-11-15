@@ -32,8 +32,8 @@ router.use(verifyToken);
  *                   content:
  *                       application/json:
  *                           schema:
- *                           type: object
- *                           properties:
+ *                            type: object
+ *                            properties:
  *                               itemsList:
  *                                   type: array
  *                                   description: Array of documents.
