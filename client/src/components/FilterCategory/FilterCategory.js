@@ -11,9 +11,14 @@ const FilterCategory = () => {
     const navigate = useNavigateSearch();
 
     const onSelectHandler = (slug) => {
-        setSelected(slug);
-        const { page, ...rest } = params;
-        navigate(PRODUCTS_ENDPOINT, { ...rest, category: slug });
+        const { page, category, ...rest } = params;
+        const newSlug = selected !== slug;
+        setSelected(() => {
+            return newSlug ? slug : null;
+        });
+
+        const query = newSlug ? { ...rest, category: slug } : rest;
+        navigate(PRODUCTS_ENDPOINT, query);
     };
 
     useEffect(() => {

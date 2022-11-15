@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useLayoutEffect } from "react";
+import React, { useEffect, useState } from "react";
 import PageContainer from "../../layouts/PageContainer/PageContainer";
 import ProductList from "../../components/ProductList/ProductList";
 import useSearch from "../../hooks/useSearch";
@@ -12,13 +12,13 @@ const ProductListPage = () => {
     const params = useSearch();
     const { page, ...paramsNoPage } = params;
     const [products, setProducts] = useState();
-    const [currentPage, setCurrentPage] = useState(params?.page);
+    const [currentPage, setCurrentPage] = useState(page);
     const [error, setError] = useState(false);
     const navigate = useNavigateSearch();
 
-    useLayoutEffect(() => {
-        if (currentPage)
-            navigate(PRODUCTS_ENDPOINT, { ...params, page: currentPage });
+    useEffect(() => {
+        if (!currentPage) return;
+        navigate(PRODUCTS_ENDPOINT, { ...params, page: currentPage });
         productService
             .getList({ ...params, page: currentPage })
             .then((res) => setProducts(res.data.data))
@@ -27,7 +27,7 @@ const ProductListPage = () => {
 
     useEffect(() => {
         productService
-            .getList(params)
+            .getList(paramsNoPage)
             .then((res) => setProducts(res.data.data))
             .catch(() => setError(true));
     }, [JSON.stringify(paramsNoPage)]);
