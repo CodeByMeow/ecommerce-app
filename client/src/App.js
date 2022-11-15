@@ -15,9 +15,10 @@ import ProductListPage from "./pages/ProductListPage/ProductListPage";
 import PrivateRoute from "./components//PrivateRoute/PrivateRoute";
 import AuthState from "./contexts/AuthContext/AuthState";
 import { StoreContext } from "./contexts/StoreContext";
+import ProductService from "./services/productService";
+import CategoryService from "./services/categoryService";
 //styles
 import "./App.css";
-import ProductService from "./services/productService";
 
 // data
 // import { products } from "./utils/data.js";
@@ -25,6 +26,7 @@ import ProductService from "./services/productService";
 const App = () => {
     const [products, setProduct] = useState(null);
     const [searchValue, setSearchValue] = useState("");
+    const [category, setCategory] = useState(null);
 
     const onSearchProductHandler = (value) => {
         setSearchValue(value);
@@ -33,6 +35,10 @@ const App = () => {
     useEffect(() => {
         ProductService.getList({ perpage: 4 }).then((res) => {
             setProduct(res.data.data.itemsList);
+        });
+
+        CategoryService.getAll().then((res) => {
+            setCategory(res.data.data);
         });
     }, []);
 
@@ -49,6 +55,7 @@ const App = () => {
                     value={{
                         products,
                         onSearchProductHandler,
+                        category,
                     }}
                 >
                     <Router>

@@ -46,6 +46,9 @@ const { default: mongoose } = require("mongoose");
  *               type: array
  *               items:
  *                   type: object
+ *                       content:
+ *                           schema:
+ *                            $ref: '#/components/schemas/Order'
  *               description: The list user's orders.
  *               readOnly: true
  *           refreshToken:

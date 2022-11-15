@@ -24,7 +24,7 @@ const ProductItem = (props) => {
                     />
                 </Link>
             </div>
-            <h3 className="text-lg xl:text-2xl leading-6 font-medium mt-4 line-clamp-none md:line-clamp-2 item-title">
+            <h3 className="text-lg xl:text-2xl leading-6 font-medium mt-4 line-clamp-none md:line-clamp-2 item-title text-center">
                 <Link to={slug}>{title}</Link>
             </h3>
             <div className="mt-2 md:mt-0 gap-2">

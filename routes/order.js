@@ -38,7 +38,7 @@ router.use(verifyToken);
  *                                   type: array
  *                                   description: Array of documents.
  *                                   items:
- *                                       $ref: '#/components/schemas/Product'
+ *                                       $ref: '#/components/schemas/Order'
  *                               itemCount:
  *                                   type: number
  *                                   description: Total number of documents in collection that match the query.
@@ -108,6 +108,8 @@ router.get("/", async (req, res) => {
  *                       schema:
  *                           type: object
  *                           properties:
+ *                               userId:
+ *                                   type: string
  *                               products:
  *                                   type: array
  *                                   items:

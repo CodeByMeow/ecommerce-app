@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useLayoutEffect } from "react";
 import PageContainer from "../../layouts/PageContainer/PageContainer";
 import ProductList from "../../components/ProductList/ProductList";
 import useSearch from "../../hooks/useSearch";
@@ -6,16 +6,19 @@ import Pagination from "../../components/Pagination/Pagination";
 import productService from "../../services/productService";
 import useNavigateSearch from "../../hooks/useNagivateSearch";
 import { PRODUCTS_ENDPOINT } from "../../config/domain";
+import FilterCategory from "../../components/FilterCategory/FilterCategory";
 
 const ProductListPage = () => {
-    let params = useSearch();
+    const params = useSearch();
+    const { page, ...paramsNoPage } = params;
     const [products, setProducts] = useState();
     const [currentPage, setCurrentPage] = useState(params?.page);
     const [error, setError] = useState(false);
     const navigate = useNavigateSearch();
 
-    useEffect(() => {
-        if (currentPage) navigate(PRODUCTS_ENDPOINT, { page: currentPage });
+    useLayoutEffect(() => {
+        if (currentPage)
+            navigate(PRODUCTS_ENDPOINT, { ...params, page: currentPage });
         productService
             .getList({ ...params, page: currentPage })
             .then((res) => setProducts(res.data.data))
@@ -23,12 +26,11 @@ const ProductListPage = () => {
     }, [currentPage]);
 
     useEffect(() => {
-        console.log(params);
         productService
             .getList(params)
             .then((res) => setProducts(res.data.data))
             .catch(() => setError(true));
-    }, [params.title]);
+    }, [JSON.stringify(paramsNoPage)]);
 
     const handlePageClick = (event) => {
         setCurrentPage(event.selected + 1);
@@ -44,6 +46,7 @@ const ProductListPage = () => {
 
     return (
         <PageContainer title="Sản phẩm">
+            <FilterCategory />
             {(error || products?.itemsList.length === 0) && notFoundProduct}
             {products && <ProductList products={products?.itemsList} />}
             {products?.paginator.pageCount > 1 && (
