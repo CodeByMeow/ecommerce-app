@@ -1,6 +1,6 @@
 import ReactPaginate from "react-paginate";
 
-const Pagination = ({ handlePageClick, pageCount }) => {
+const Pagination = ({ handlePageClick, pageCount, currentPage }) => {
     return (
         <ReactPaginate
             breakLabel="..."
@@ -48,6 +48,7 @@ const Pagination = ({ handlePageClick, pageCount }) => {
             activeClassName="bg-blue-500 text-white border-none"
             nextClassName="text-sm w-7 h-7 flex items-center justify-center hover:text-blue-500"
             previousClassName="rounded-full text-sm w-7 h-7 flex items-center justify-center hover:text-blue-500"
+            initialPage={currentPage}
         />
     );
 };
