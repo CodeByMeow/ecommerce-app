@@ -40,7 +40,7 @@ const Pagination = ({ handlePageClick, pageCount, currentPage }) => {
                 </svg>
             }
             renderOnZeroPageCount={null}
-            containerClassName="flex gap-2 justify-center py-2"
+            containerClassName="flex gap-2 justify-center pb-10"
             breakClassName="w-7 h-7 flex items-center justify-center"
             breakLinkClassName="px-2 border rounded-full border-gray-500 border-solid"
             pageClassName="border rounded-full border-gray-500 border-solid text-sm flex items-center justify-center w-7 h-7"
