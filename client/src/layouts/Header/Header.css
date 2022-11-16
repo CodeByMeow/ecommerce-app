@@ -26,6 +26,10 @@
   opacity: 1;
 }
 
+.mobile-feature .group.relative:is(:last-child){
+  margin-bottom: 2rem;
+}
+
 @media screen and (min-width: 1441px) {
   .tooltip::before {
     top: 100%;

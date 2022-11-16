@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import AuthServices from "../../services/authService.js";
 import SignupForm from "../../components/Forms/SignupForm.js";
+import PageContainer from "../../layouts/PageContainer/PageContainer.js";
 
 const SignupPage = () => {
   const [signupInProgress, setSignupProgress] = useState(false);
@@ -34,12 +35,14 @@ const SignupPage = () => {
 
   return (
     <div>
-      <SignupForm
-        inProgress={signupInProgress}
-        onSignupHandler={onSignupHandler}
-        error={signupError}
-        success={successMess}
-      />
+      <PageContainer shouldShowFooter={false}>
+        <SignupForm
+          inProgress={signupInProgress}
+          onSignupHandler={onSignupHandler}
+          error={signupError}
+          success={successMess}
+        />
+      </PageContainer>
     </div>
   );
 };

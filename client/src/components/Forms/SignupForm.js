@@ -33,10 +33,10 @@ const SignupForm = (props) => {
   };
 
   return (
-    <div className="w-full flex min-h-full h-screen items-center justify-center py-10 px-6 md:px-6 lg:px-8 form-container">
-      <div className="w-full h-2/3 md:w-1/2 2xl:w-1/3 mx-auto space-y-8">
-        <div className="my-10">
-          <h2 className="mt-6 text-center md:text-2xl lg:text-3xl font-bold tracking-tight text-purple-400">
+    <div className="w-full flex justify-center py-10 px-6 md:px-6 lg:px-8 form-container">
+      <div className="w-11/12 h-full md:w-2/3 2xl:w-1/3 mx-auto space-y-8">
+        <div className="">
+          <h2 className="mb-4 text-center md:text-2xl lg:text-3xl font-bold tracking-tight text-purple-700">
             Sign up new account
           </h2>
         </div>

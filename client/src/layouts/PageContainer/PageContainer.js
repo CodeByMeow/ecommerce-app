@@ -20,9 +20,9 @@ const PageContainer = ({
         <meta name="description" content={description}></meta>
         <link rel="canonical" href="https://www.tacobell.com/" />
       </Helmet>
-      {shouldShowHeader && <Header />}
-      <main>{children}</main>
-      {shouldShowFooter && <Footer />}
+        {shouldShowHeader && <Header />}
+        <main>{children}</main>
+        {shouldShowFooter && <Footer />}
     </>
   );
 };

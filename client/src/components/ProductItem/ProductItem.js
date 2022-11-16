@@ -7,7 +7,7 @@ import OverlayModal from "../OverlayModal/OverlayModal";
 const ProductItem = (props) => {
     const [isShowModal, setShowModal] = useState(false);
 
-    const { _id, title, slug, price, sale_price, image_url } = props.product;
+    const { _id, title, slug, shortDesc, price, sale_price, image_url } = props.product;
     return (
         <div
             key={_id}
@@ -24,19 +24,22 @@ const ProductItem = (props) => {
                     />
                 </Link>
             </div>
-            <h3 className="text-lg xl:text-2xl leading-6 font-medium mt-4 line-clamp-none md:line-clamp-2 item-title text-center">
+            <h3 className="text-lg xl:text-2xl leading-6 font-semibold mt-4 line-clamp-none md:line-clamp-1 xl:line-clamp-2  item-title">
                 <Link to={slug}>{title}</Link>
             </h3>
-            <div className="mt-2 md:mt-0 gap-2">
+            <p className="text-sm md:text-base leading-6 font-light my-2 line-clamp-3">
+                {shortDesc}
+            </p>
+            <div className="mt-0 gap-2">
                 {price && (
-                    <p className="text-base xl:text-xl item-price text-indigo-500 text-center">
+                    <p className="text-base xl:text-xl item-price text-indigo-500">
                         {storeService.convertCurrency(price, "VND")}
                     </p>
                 )}
                 <p
                     className={`${
                         sale_price
-                            ? "text-base xl:text-xl line-through text-gray-700 font-extrabold item-price opacity-80 text-center"
+                            ? "text-base xl:text-xl line-through text-gray-700 font-extrabold item-price opacity-80"
                             : "hidden"
                     }`}
                 >

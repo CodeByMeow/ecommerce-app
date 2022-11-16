@@ -7,7 +7,12 @@
 #root {
     position: relative;
 }
-
+body {
+    margin:0;
+    padding:0;
+    height: 100%;
+    width: 100%;
+}
 html {
     font-size: 18px;
     font-family: "Roboto", "Raleway", "Segoe UI", "Helvetica Neue", Arial,
@@ -15,3 +20,5 @@ html {
         "Segoe UI Symbol", "Noto Color Emoji";
     font-weight: normal;
 }
+
+/* aspect-w-1 aspect-h-1 */

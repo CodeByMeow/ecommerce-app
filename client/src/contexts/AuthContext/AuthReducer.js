@@ -1,4 +1,4 @@
-import { LOG_OUT, SIGN_IN, SIGN_UP, GET_USER_INFO, REFRESH_TOKEN } from "../types";
+import { SIGN_OUT, SIGN_IN, SIGN_UP, GET_USER_INFO, REFRESH_TOKEN } from "../types";
 
 const authReducer = (state, action) => {
   const { type, payload } = action;
@@ -12,8 +12,9 @@ const authReducer = (state, action) => {
       return { ...state, token, refreshToken, isAuthenticated, user };
     case SIGN_UP:
       return state;
-    case LOG_OUT:
+    case SIGN_OUT:
       localStorage.removeItem("refreshToken");
+      localStorage.removeItem("token");
       return {
         ...state,
         token: null,

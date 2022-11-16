@@ -2,7 +2,15 @@ import * as React from "react";
 import { Fragment, useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import authContext from "../../contexts/AuthContext/AuthContext.js";
+import { useStoreContext } from "../../contexts/StoreContext.js";
+import actionCreator from "../../utils/actionCreator.js";
+
+import SearchBar from "../../components/SearchBar/SearchBar.js";
+
+import { SIGN_OUT } from "../../contexts/types";
+
 import { Dialog, Popover, Tab, Transition } from "@headlessui/react";
+import { MdLogout } from "react-icons/md";
 import {
   Bars3Icon,
   MagnifyingGlassIcon,
@@ -12,86 +20,74 @@ import {
 
 // style
 import "./Header.css";
-import SearchBar from "../../components/SearchBar/SearchBar.js";
-
-const navigation = {
-  categories: [
-    {
-      id: "shop",
-      name: "Shop",
-      featured: [
-        {
-          name: "iPhone 14 Series",
-          path: "/search",
-          imageSrc: "/assets/apple/iPhone-14-plus-midnight-650x650.png",
-          imageAlt:
-            "Models sitting back to back, wearing Basic Tee in black and bone.",
-        },
-        {
-          name: "iPhone 13 Series",
-          path: "/search",
-          imageSrc: "/assets/apple/iphone-14-pro-trang2-650x650.png",
-          imageAlt:
-            "Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.",
-        },
-        {
-          name: "Galaxy Z Flip4",
-          path: "/search",
-          imageSrc: "/assets/samsung/samsung-galaxy-z-flip-4.jpeg",
-          imageAlt:
-            "Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.",
-        },
-      ],
-      sections: [
-        {
-          id: "mobile",
-          name: "mobile",
-          items: [
-            { name: "Apple", path: "/category/apple" },
-            { name: "Samsung", path: "/category/samsung" },
-            { name: "Oppo", path: "/category" },
-            { name: "Pixel", path: "/category" },
-          ],
-        },
-      ],
-    },
-  ],
-  pages: [
-    { name: "About Us", path: "/about-us" },
-    { name: "Policy", path: "/policy" },
-  ],
-};
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 const Header = () => {
-  const { state } = useContext(authContext);
+  const { state, dispatch } = useContext(authContext);
   const { user } = state;
   const [open, setOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
+  // context
+  const { products } = useStoreContext();
+  const randomProducts = products
+    ? products.filter((item) => item.price > 25000000)
+    : [];
+  randomProducts.length = 3;
+  
+  const navigation = {
+    categories: [
+      {
+        id: "shop",
+        name: "Shop",
+        featured: randomProducts,
+        sections: [
+          {
+            id: "mobile",
+            name: "mobile",
+            items: [
+              { name: "Apple", path: "apple" },
+              { name: "Samsung", path: "samsung" },
+              { name: "Oppo", path: "oppo" },
+              { name: "Vivo", path: "vivo" },
+              { name: "Realme", path: "realme" },
+              { name: "Xiaomi", path: "xiaomi" },
+            ],
+          },
+        ],
+      },
+    ],
+    pages: [
+      { name: "About Us", path: "/about-us" },
+      { name: "Policy", path: "/policy" },
+    ],
+  };
+
+  const onHandleSignOut = () => {
+    dispatch(actionCreator(SIGN_OUT));
+  };
+
   const onResizeMobile = () => {
     if (window.innerWidth <= 480) {
       setIsMobile(true);
-    }
-    else if (window.innerWidth > 480) {
+    } else if (window.innerWidth > 480) {
       setIsMobile(false);
     }
-  }
- 
+  };
 
   useEffect(() => {
     window.addEventListener("resize", onResizeMobile);
 
     return () => {
       window.removeEventListener("resize", onResizeMobile);
-    }
+    };
   }, []);
 
   return (
-    <div className="bg-white">
+    <div className="bg-white h-44 md:h-28">
       {/* Mobile menu */}
       <Transition.Root show={open} as={Fragment}>
         <Dialog as="div" className="relative z-40 lg:hidden" onClose={setOpen}>
@@ -132,20 +128,21 @@ const Header = () => {
                 {/* Links */}
                 <Tab.Group as="div" className="mt-2">
                   <div className="border-b border-gray-200">
+                    {/* <div> */}
                     <Tab.List className="-mb-px flex space-x-8 px-4">
-                      {navigation.categories.map((category) => (
+                      {navigation.categories.map((item) => (
                         <Tab
-                          key={category.name}
+                          key={item.name}
                           className={({ selected }) =>
                             classNames(
                               selected
                                 ? "text-indigo-600 border-indigo-600"
-                                : "text-gray-900 border-transparent",
+                                : "text-gray-500 border-transparent",
                               "flex-1 whitespace-nowrap border-b-2 py-4 px-1 text-base font-medium"
                             )
                           }
                         >
-                          {category.name}
+                          {item.name}
                         </Tab>
                       ))}
                     </Tab.List>
@@ -154,30 +151,30 @@ const Header = () => {
                     {navigation.categories.map((category) => (
                       <Tab.Panel
                         key={category.name}
-                        className="space-y-0 lg:space-y-10 px-4 pt-10 pb-8"
+                        className="space-y-0 lg:space-y-10 px-4 pt-10 pb-8 divide-y-2"
                       >
-                        <div className="grid grid-cols-2 gap-y-6 lg:gap-x-4">
+                        <div className="mobile-feature grid grid-cols-1 lg:grid-cols-2 gap-y-6 gap-x-2 lg:gap-x-4">
                           {category.featured.map((item) => (
                             <div
-                              key={item.name}
+                              key={item.id}
                               className="group relative text-sm"
                             >
-                              <div className="aspect-w-1 aspect-h-1 overflow-hidden rounded-lg group-hover:scale-110 transition-all">
-                                <img
-                                  src={item.imageSrc}
-                                  alt={item.imageAlt}
-                                  className="object-cover object-center"
-                                />
-                              </div>
                               <Link
-                                to={`${item.path}`}
-                                className="mt-6 block font-medium text-gray-900"
+                                to={`/products/${item.slug}`}
+                                className="block text-base font-semibold text-indigo-600 line-clamp-2"
                               >
+                                <div className="mx-auto w-60 overflow-hidden rounded-lg group-hover:scale-110 transition-all py-2">
+                                  <img
+                                    src={item.image_url}
+                                    alt={item.title}
+                                    className="object-cover object-center"
+                                  />
+                                </div>
                                 <span
                                   className="absolute inset-0 z-10"
                                   aria-hidden="true"
                                 />
-                                {item.name}
+                                {item.title}
                               </Link>
                               <p aria-hidden="true" className="mt-1">
                                 Shop now
@@ -187,22 +184,17 @@ const Header = () => {
                         </div>
                         {category.sections.map((section) => (
                           <div key={section.name}>
-                            {/* <p
-                              id={`${category.id}-${section.id}-heading-mobile`}
-                              className="font-medium text-gray-900"
-                            >
-                              {section.name}
-                            </p> */}
                             <ul
                               role="list"
                               aria-labelledby={`${category.id}-${section.id}-heading-mobile`}
-                              className="mt-6 flex flex-col space-y-6"
+                              className="grid grid-cols-2 mt-6 lg:flex lg:flex-col"
                             >
                               {section.items.map((item) => (
                                 <li key={item.name} className="flow-root">
                                   <Link
-                                    to={`${item.path}`}
-                                    className="-m-2 block p-2 text-gray-500"
+                                    to={`/products?item=${item.path}`}
+                                    // to={`${item.path}`}
+                                    className="block p-2 text-gray-500"
                                   >
                                     {item.name}
                                   </Link>
@@ -221,7 +213,7 @@ const Header = () => {
                     <div key={page.name} className="flow-root">
                       <Link
                         to={page.path}
-                        className="-m-2 block p-2 font-medium text-gray-900"
+                        className="-m-2 block p-2 font-medium text-gray-500"
                       >
                         {page.name}
                       </Link>
@@ -238,19 +230,38 @@ const Header = () => {
                     ) : (
                       <Link
                         to="/signin"
-                        className="text-sm font-medium text-gray-800 hover:text-indigo-700"
+                        className="text-base font-medium text-gray-500 hover:text-indigo-700"
                       >
                         Sign in
                       </Link>
                     )}
                   </div>
                   <div className="flow-root">
-                    <Link
-                      to="/signup"
-                      className="-m-2 block p-2 font-medium text-gray-900"
-                    >
-                      Create account
-                    </Link>
+                    {user ? (
+                      <>
+                        <button
+                          className="md:hidden text-base md:text-xl cursor-pointer text-gray-400 hover:text-inherit transition-all"
+                          onClick={() => {
+                            onHandleSignOut();
+                          }}
+                        >
+                          Sign out
+                        </button>
+                        <MdLogout
+                          className="hidden md:block text-base md:text-xl cursor-pointer text-gray-400 hover:text-inherit transition-all"
+                          onClick={() => {
+                            onHandleSignOut();
+                          }}
+                        />
+                      </>
+                    ) : (
+                      <Link
+                        to="/signup"
+                        className="text-base font-medium text-gray-500 hover:text-indigo-700"
+                      >
+                        Create account
+                      </Link>
+                    )}
                   </div>
                 </div>
 
@@ -261,7 +272,7 @@ const Header = () => {
                       alt="VND currency"
                       className="block h-auto w-5 flex-shrink-0"
                     />
-                    <span className="ml-3 block text-base font-medium text-gray-900">
+                    <span className="ml-3 block text-base font-medium text-gray-500">
                       VND
                     </span>
                     <span className="sr-only">, change currency</span>
@@ -282,7 +293,8 @@ const Header = () => {
           aria-label="Top"
           className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
         >
-          <div className="border-b border-gray-200">
+          {/* <div className="border-b border-gray-200"> */}
+          <div>
             <div className="flex h-16 items-center">
               {/* toggle button to open menu on small devices */}
               <button
@@ -317,7 +329,7 @@ const Header = () => {
                               className={classNames(
                                 open
                                   ? "border-indigo-600 text-indigo-600"
-                                  : "border-transparent text-gray-800 hover:text-indigo-700",
+                                  : "border-transparent text-gray-500 hover:text-indigo-700",
                                 "relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out"
                               )}
                             >
@@ -343,9 +355,12 @@ const Header = () => {
 
                               <div className="relative bg-white">
                                 <div className="mx-auto max-w-7xl px-8">
-                                  <div className="flex flex-wrap gap-y-4 gap-x-8 py-4">
+                                  <div className="flex flex-wrap gap-y-4 py-4">
                                     {category.sections.map((section) => (
-                                      <div key={section.name} className="w-1/4">
+                                      <div
+                                        key={section.name}
+                                        className="basis-1/5"
+                                      >
                                         <ul
                                           role="list"
                                           aria-labelledby={`${section.name}-heading`}
@@ -357,7 +372,7 @@ const Header = () => {
                                               className="flex"
                                             >
                                               <Link
-                                                to={`${item.path}`}
+                                                to={`/products?item=${item.path}`}
                                                 className="hover:text-indigo-700"
                                               >
                                                 {item.name}
@@ -367,33 +382,39 @@ const Header = () => {
                                         </ul>
                                       </div>
                                     ))}
-                                    {category.featured.map((item) => (
-                                      <div
-                                        key={item.name}
-                                        className="group relative text-base sm:text-sm"
-                                      >
-                                        <div className="w-32 aspect-w-1 aspect-h-1 overflow-hidden rounded-lg group-hover:scale-110 transition-all">
-                                          <img
-                                            src={item.imageSrc}
-                                            alt={item.imageAlt}
-                                            className="object-cover object-center"
-                                          />
-                                        </div>
-                                        <Link
-                                          to={`${item.path}`}
-                                          className="mt-6 block font-medium text-gray-900"
+                                    <div className="basis-3/4 grid grid-cols-3">
+                                      {category.featured.map((item) => (
+                                        <div
+                                          key={item.title}
+                                          className="group relative text-base sm:text-sm px-6"
                                         >
-                                          <span
-                                            className="absolute inset-0 z-10"
+                                          <Link
+                                            to={`/products/${item.slug}`}
+                                            className="block text-base font-semibold text-indigo-600 line-clamp-1"
+                                          >
+                                            <div className="w-60 mx-auto overflow-hidden rounded-lg group-hover:scale-110 transition-all px-6 py-2">
+                                              <img
+                                                src={item.image_url}
+                                                alt={item.title}
+                                                className="object-cover object-center"
+                                              />
+                                            </div>
+
+                                            <span
+                                              className="absolute inset-0 z-10 "
+                                              aria-hidden="true"
+                                            />
+                                            {item.title}
+                                          </Link>
+                                          <p
                                             aria-hidden="true"
-                                          />
-                                          {item.name}
-                                        </Link>
-                                        <p aria-hidden="true" className="mt-1">
-                                          Shop now
-                                        </p>
-                                      </div>
-                                    ))}
+                                            className="mt-1"
+                                          >
+                                            Shop now
+                                          </p>
+                                        </div>
+                                      ))}
+                                    </div>
                                   </div>
                                 </div>
                               </div>
@@ -408,7 +429,7 @@ const Header = () => {
                     <Link
                       key={page.name}
                       to={page.path}
-                      className="flex items-center text-sm font-medium text-gray-800 hover:text-indigo-700"
+                      className="flex items-center text-sm font-medium text-gray-500 hover:text-indigo-700"
                     >
                       {page.name}
                     </Link>
@@ -425,18 +446,25 @@ const Header = () => {
                   ) : (
                     <Link
                       to="/signin"
-                      className="text-sm font-medium text-gray-800 hover:text-indigo-700"
+                      className="text-base font-medium text-gray-500 hover:text-indigo-700"
                     >
                       Sign in
                     </Link>
                   )}
                   <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
                   {user ? (
-                    ""
+                    <MdLogout
+                      className="text-base md:text-xl cursor-pointer text-gray-400 hover:text-inherit transition-all"
+                      onClick={() => {
+                        onHandleSignOut();
+                      }}
+                    >
+                      Sign out
+                    </MdLogout>
                   ) : (
                     <Link
                       to="/signup"
-                      className="text-sm font-medium text-gray-800 hover:text-indigo-700"
+                      className="text-base font-medium text-gray-500 hover:text-indigo-700"
                     >
                       Create account
                     </Link>
@@ -446,7 +474,7 @@ const Header = () => {
                 <div className="hidden lg:ml-8 lg:flex">
                   <a
                     href="#"
-                    className="flex items-center text-gray-800 hover:text-indigo-700"
+                    className="flex items-center text-gray-500 hover:text-indigo-700"
                   >
                     <img
                       src="/assets/vietnam-flag-icon.png"
@@ -459,7 +487,7 @@ const Header = () => {
                 </div>
 
                 {/* Desktop Search */}
-                {!isMobile && <SearchBar/>}
+                {!isMobile && <SearchBar />}
 
                 {/* Cart */}
                 <div className="ml-4 flow-root lg:ml-6">
@@ -468,7 +496,7 @@ const Header = () => {
                       className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
                       aria-hidden="true"
                     />
-                    <span className="ml-2 text-base font-medium text-gray-800 group-hover:text-indigo-700">
+                    <span className="ml-2 text-base font-medium text-gray-500 group-hover:text-indigo-700">
                       0
                     </span>
                     <span className="sr-only">items in cart, view bag</span>
@@ -477,7 +505,7 @@ const Header = () => {
               </div>
             </div>
             {/* Search */}
-            {isMobile && <SearchBar/>}
+            {isMobile && <SearchBar />}
           </div>
         </nav>
       </header>

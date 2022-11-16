@@ -26,15 +26,15 @@ const FilterCategory = () => {
     }, [params.category]);
 
     return (
-        <div className="py-10 text-center">
-            <ul>
+        <div className="py-5 md:py-10 text-center">
+            <ul className="text-sm md:text-base md:flex md:flex-wrap md:justify-center gap-2">
                 {category &&
                     category.map((item) => (
                         <li
                             key={item._id}
                             className={`px-2 py-1 border boder-solid border-gray-500 rounded-2xl inline-block mx-3 my-1 cursor-pointer ${
                                 selected === item.slug
-                                    ? "bg-blue-500 text-white border-none"
+                                    ? "bg-indigo-600 text-white border-none"
                                     : null
                             }`}
                             onClick={() => onSelectHandler(item.slug)}

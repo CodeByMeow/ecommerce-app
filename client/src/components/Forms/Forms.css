@@ -1,4 +1,5 @@
 .form-container {
+  min-height: calc(100vh - 7rem);
   background-image: url("../../../public/assets/background/login-bg.jpg");
   background-position: center;
   background-repeat: no-repeat;
@@ -6,7 +7,16 @@
 }
 
 @media screen and (max-width: 768px) {
-  .form-container {
+  /* .form-container {
     background-position-x: right;
+  } */
+}
+
+
+@media screen and (max-width: 526px) {
+  .form-container {
+    min-height: calc(100vh - 11rem);
+    /* height: auto; */
+    background-position-x: center;
   }
 }
