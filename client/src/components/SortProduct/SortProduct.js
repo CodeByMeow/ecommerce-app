@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import SORT_TYPE from "./SORT_TYPE";
 import { BiCaretDown, BiCheck } from "react-icons/bi";
 import useNavigateSearch from "../../hooks/useNagivateSearch";
@@ -10,6 +10,7 @@ const SortProduct = () => {
     const [dropdown, setDropdown] = useState(false);
     const navigate = useNavigateSearch();
     const params = useSearch();
+    const initialLoad = useRef(true);
 
     const toggleDropdown = () => setDropdown(!dropdown);
     const sortHandler = (item) => {
@@ -18,6 +19,10 @@ const SortProduct = () => {
     };
 
     useEffect(() => {
+        if (initialLoad.current) {
+            initialLoad.current = false;
+            return;
+        }
         const { page, ...rest } = params;
         navigate(PRODUCTS_ENDPOINT, {
             ...rest,
@@ -34,17 +39,22 @@ const SortProduct = () => {
                     onClick={toggleDropdown}
                 >
                     <span>Sắp xếp: {currentSort.title}</span>
-                    <BiCaretDown />
+                    <BiCaretDown
+                        className={`${
+                            dropdown ? "rotate-180" : null
+                        } transition-transform duration-700`}
+                    />
                 </p>
                 <ul
                     className={`w-200 ${
                         !dropdown && "hidden"
                     } absolute left-0 top-full text-left w-full z-10 bg-white mt-2`}
                 >
-                    {Object.values(SORT_TYPE).map((item) => (
+                    {Object.values(SORT_TYPE).map((item, idx) => (
                         <li
                             className="p-2 border border-b-gray-100 cursor-pointer flex items-center gap-1"
                             onClick={() => sortHandler(item)}
+                            key={item.title + idx}
                         >
                             {currentSort.sort === item.sort &&
                                 currentSort.sortBy === item.sortBy && (

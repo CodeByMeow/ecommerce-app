@@ -9,6 +9,7 @@ import { PRODUCTS_ENDPOINT } from "../../config/domain";
 import FilterCategory from "../../components/FilterCategory/FilterCategory";
 import RenderLoading from "../../components/Loading/RenderLoading";
 import SortProduct from "../../components/SortProduct/SortProduct";
+import RemoveFilter from "../../components/RemoveFilter/RemoveFilter";
 
 const ProductListPage = () => {
     const params = useSearch();
@@ -67,6 +68,7 @@ const ProductListPage = () => {
                 <FilterCategory />
                 <SortProduct />
             </div>
+            <RemoveFilter />
             {loading && <RenderLoading />}
             {(error || products?.itemsList.length === 0) && notFoundProduct}
             {products && <ProductList products={products?.itemsList} />}

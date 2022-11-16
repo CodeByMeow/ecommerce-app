@@ -32,9 +32,9 @@ const FilterCategory = () => {
                     category.map((item) => (
                         <li
                             key={item._id}
-                            className={`px-2 py-1 border boder-solid border-gray-500 rounded-2xl inline-block mx-2 my-1 cursor-pointer ${
+                            className={`px-2 py-1 border boder-solid border-gray-500 rounded-2xl inline-block mx-2 my-1 cursor-pointer hover:bg-indigo-600 hover:text-white transition-colors duration-300 ${
                                 selected === item.slug
-                                    ? "bg-blue-500 text-white border-none"
+                                    ? "bg-indigo-600 text-white border-none"
                                     : null
                             }`}
                             onClick={() => onSelectHandler(item.slug)}
