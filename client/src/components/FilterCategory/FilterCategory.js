@@ -26,13 +26,13 @@ const FilterCategory = () => {
     }, [params.category]);
 
     return (
-        <div className="py-6 text-center">
+        <div>
             <ul>
                 {category &&
                     category.map((item) => (
                         <li
                             key={item._id}
-                            className={`px-2 py-1 border boder-solid border-gray-500 rounded-2xl inline-block mx-3 my-1 cursor-pointer ${
+                            className={`px-2 py-1 border boder-solid border-gray-500 rounded-2xl inline-block mx-2 my-1 cursor-pointer ${
                                 selected === item.slug
                                     ? "bg-blue-500 text-white border-none"
                                     : null

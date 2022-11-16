@@ -63,7 +63,7 @@ const ProductListPage = () => {
 
     return (
         <PageContainer title="Sản phẩm">
-            <div className="flex justify-between items-center px-6">
+            <div className="sm:flex-row justify-between items-center px-6 pt-2 flex flex-col gap-2">
                 <FilterCategory />
                 <SortProduct />
             </div>

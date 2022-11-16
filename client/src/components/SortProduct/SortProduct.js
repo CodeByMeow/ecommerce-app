@@ -1,25 +1,39 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SORT_TYPE from "./SORT_TYPE";
 import { BiCaretDown, BiCheck } from "react-icons/bi";
+import useNavigateSearch from "../../hooks/useNagivateSearch";
+import useSearch from "../../hooks/useSearch";
+import { PRODUCTS_ENDPOINT } from "../../config/domain";
 
 const SortProduct = () => {
-    const [sort, setSort] = useState(SORT_TYPE.SORT_NEWEST);
+    const [currentSort, setCurrentSort] = useState(SORT_TYPE.SORT_NEWEST);
     const [dropdown, setDropdown] = useState(false);
+    const navigate = useNavigateSearch();
+    const params = useSearch();
 
     const toggleDropdown = () => setDropdown(!dropdown);
     const sortHandler = (item) => {
-        setSort(item);
+        setCurrentSort(item);
         toggleDropdown(false);
     };
+
+    useEffect(() => {
+        const { page, ...rest } = params;
+        navigate(PRODUCTS_ENDPOINT, {
+            ...rest,
+            sort: currentSort.sort,
+            sortBy: currentSort.sortBy,
+        });
+    }, [currentSort]);
 
     return (
         <div className="px-8 text-right text-sm">
             <div className="border border-solid border-gray-500 w-40 min-w-max px-2 inline-block rounded-md text-center relative">
                 <p
-                    className="cursor-pointer whitespace-nowrap flex justify-around items-center w-max gap-1"
+                    className="cursor-pointer whitespace-nowrap flex justify-around items-center gap-1"
                     onClick={toggleDropdown}
                 >
-                    <span>Sắp xếp: {sort.title}</span>
+                    <span>Sắp xếp: {currentSort.title}</span>
                     <BiCaretDown />
                 </p>
                 <ul
@@ -32,8 +46,10 @@ const SortProduct = () => {
                             className="p-2 border border-b-gray-100 cursor-pointer flex items-center gap-1"
                             onClick={() => sortHandler(item)}
                         >
-                            {sort.sort === item.sort &&
-                                sort.sortBy === item.sortBy && <BiCheck />}
+                            {currentSort.sort === item.sort &&
+                                currentSort.sortBy === item.sortBy && (
+                                    <BiCheck />
+                                )}
                             <span>{item.title}</span>
                         </li>
                     ))}
