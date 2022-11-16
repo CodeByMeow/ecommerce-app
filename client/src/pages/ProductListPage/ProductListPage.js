@@ -8,6 +8,7 @@ import useNavigateSearch from "../../hooks/useNagivateSearch";
 import { PRODUCTS_ENDPOINT } from "../../config/domain";
 import FilterCategory from "../../components/FilterCategory/FilterCategory";
 import RenderLoading from "../../components/Loading/RenderLoading";
+import SortProduct from "../../components/SortProduct/SortProduct";
 
 const ProductListPage = () => {
     const params = useSearch();
@@ -62,7 +63,10 @@ const ProductListPage = () => {
 
     return (
         <PageContainer title="Sản phẩm">
-            <FilterCategory />
+            <div className="flex justify-between items-center px-6">
+                <FilterCategory />
+                <SortProduct />
+            </div>
             {loading && <RenderLoading />}
             {(error || products?.itemsList.length === 0) && notFoundProduct}
             {products && <ProductList products={products?.itemsList} />}

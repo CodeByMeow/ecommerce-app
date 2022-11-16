@@ -26,7 +26,7 @@ const FilterCategory = () => {
     }, [params.category]);
 
     return (
-        <div className="py-10 text-center">
+        <div className="py-6 text-center">
             <ul>
                 {category &&
                     category.map((item) => (
