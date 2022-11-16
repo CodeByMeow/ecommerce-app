@@ -7,6 +7,7 @@ import productService from "../../services/productService";
 import useNavigateSearch from "../../hooks/useNagivateSearch";
 import { PRODUCTS_ENDPOINT } from "../../config/domain";
 import FilterCategory from "../../components/FilterCategory/FilterCategory";
+import RenderLoading from "../../components/Loading/RenderLoading";
 
 const ProductListPage = () => {
     const params = useSearch();
@@ -15,21 +16,36 @@ const ProductListPage = () => {
     const [currentPage, setCurrentPage] = useState(page);
     const [error, setError] = useState(false);
     const navigate = useNavigateSearch();
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         if (!currentPage) return;
         navigate(PRODUCTS_ENDPOINT, { ...params, page: currentPage });
-        productService
-            .getList({ ...params, page: currentPage })
-            .then((res) => setProducts(res.data.data))
-            .catch(() => setError(true));
+        try {
+            setLoading(true);
+            productService
+                .getList({ ...params, page: currentPage })
+                .then((res) => setProducts(res.data.data))
+                .catch(() => setError(true));
+        } catch (err) {
+            console.log(err);
+        } finally {
+            setLoading(false);
+        }
     }, [currentPage]);
 
     useEffect(() => {
-        productService
-            .getList(paramsNoPage)
-            .then((res) => setProducts(res.data.data))
-            .catch(() => setError(true));
+        try {
+            setLoading(true);
+            productService
+                .getList(paramsNoPage)
+                .then((res) => setProducts(res.data.data))
+                .catch(() => setError(true));
+        } catch (err) {
+            console.log(err);
+        } finally {
+            setLoading(false);
+        }
     }, [JSON.stringify(paramsNoPage)]);
 
     const handlePageClick = (event) => {
@@ -47,6 +63,7 @@ const ProductListPage = () => {
     return (
         <PageContainer title="Sản phẩm">
             <FilterCategory />
+            {loading && <RenderLoading />}
             {(error || products?.itemsList.length === 0) && notFoundProduct}
             {products && <ProductList products={products?.itemsList} />}
             {products?.paginator.pageCount > 1 && (
