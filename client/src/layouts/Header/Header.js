@@ -229,7 +229,7 @@ const Header = () => {
                                                                                 className="flow-root"
                                                                             >
                                                                                 <Link
-                                                                                    to={`/products?title=${item.path}`}
+                                                                                    to={`/products?category=${item.path}`}
                                                                                     // to={`${item.path}`}
                                                                                     className="block p-2 text-gray-500"
                                                                                 >
@@ -442,7 +442,7 @@ const Header = () => {
                                                                                                     className="flex"
                                                                                                 >
                                                                                                     <Link
-                                                                                                        to={`/products?title=${item.path}`}
+                                                                                                        to={`/products?category=${item.path}`}
                                                                                                         className="hover:text-indigo-700"
                                                                                                     >
                                                                                                         {
