@@ -23,6 +23,7 @@ const FilterCategory = () => {
 
     useEffect(() => {
         if (!params.category) setSelected(null);
+        setSelected(params.category);
     }, [params.category]);
 
     return (
