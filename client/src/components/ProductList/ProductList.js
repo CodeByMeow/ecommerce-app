@@ -15,8 +15,8 @@ const ProductList = (props) => {
 
   return (
     <div className="bg-white">
-      <div className="mx-auto max-w-2xl py-10 md:py-16 px-4 md:px-6 lg:max-w-7xl lg:px-8">
-        <div className="mt-6 grid grid-cols-1 gap-y-6 md:gap-y-10 gap-x-6 md:grid-cols-3 lg:grid-cols-4 xl:gap-x-8">
+      <div className="lg:container mx-auto pb-8 md:pb-10 px-4 md:px-8 lg:px-10">
+        <div className="mt-6 grid grid-cols-1 gap-y-6 md:gap-y-10 gap-x-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
           {products &&
             products.map((product) => {
               return <ProductItem key={product?._id} product={product} />;

@@ -1,9 +1,12 @@
-import { PRODUCTS_ENDPOINT } from "../config/domain";
+import { PRODUCTS_ENDPOINT, CATEGORY_ENDPOINT } from "../config/domain";
 import axiosInstance from "./axiosInstance";
 
 const productService = {
     getList: (params = {}) => {
         return axiosInstance.get(PRODUCTS_ENDPOINT, { params });
+    },
+    getProductByCategory: (category = {}) => {
+        return axiosInstance.get(CATEGORY_ENDPOINT, { category });
     },
     getDetail: (slug) => {
         return axiosInstance.get(`/products/${slug}`);

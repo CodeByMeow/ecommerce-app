@@ -45,7 +45,31 @@ const SearchBar = () => {
 
   return (
     <div className="flex items-center lg:ml-6 p-2 text-white hover:text-gray-500">
-      <div className="searchBox flex items-center">
+     <div className="searchBox hidden md:flex items-center ">
+        <input
+          className="md:w-60 lg:w-0 searchInput text-sm focus:text-white"
+          type="text"
+          name="search"
+          value={searchVal.search}
+          placeholder="Search"
+          autoComplete="off"
+          onChange={onHandleInputChange}
+          onKeyDown={handleKeyDown}
+        />
+
+        <span className="sr-only">Search</span>
+        <button
+          className="h-6 w-6 searchButton"
+          onClick={() => {
+            onSearchHandler();
+          }}
+        >
+          <MagnifyingGlassIcon aria-hidden="true" />
+        </button>
+      </div>
+
+       {/* Mobile search */}
+       <div className="searchBox w-full flex justify-between items-center md:hidden">
         <input
           className="searchInput text-sm focus:text-white"
           type="text"
@@ -67,6 +91,7 @@ const SearchBar = () => {
           <MagnifyingGlassIcon aria-hidden="true" />
         </button>
       </div>
+      
     </div>
   );
 };

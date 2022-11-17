@@ -1,0 +1,10 @@
+.search-page-container {
+  min-height: calc(100vh - 20rem);
+}
+
+@media screen and (max-width: 526px){
+  .search-page-container {
+    min-height: calc(100vh - 50rem);
+  }
+  
+}

@@ -11,6 +11,8 @@ import RenderLoading from "../../components/Loading/RenderLoading";
 import SortProduct from "../../components/SortProduct/SortProduct";
 import RemoveFilter from "../../components/RemoveFilter/RemoveFilter";
 
+import "./ProductListPage.css";
+
 const ProductListPage = () => {
     const params = useSearch();
     const { page, ...paramsNoPage } = params;

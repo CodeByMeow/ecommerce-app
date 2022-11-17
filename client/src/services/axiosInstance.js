@@ -33,7 +33,7 @@ axiosInstance.interceptors.request.use(
       // console.log(config.url);
       const token = await axiosInstance.getLocalAccessToken();
       config.headers["x-token"] = token;
-      console.log("Before request to server:::", config);
+      // console.log("Before request to server:::", config);
       return config;
     }
     // exclude some routes do not need to check access token
@@ -49,7 +49,7 @@ axiosInstance.interceptors.request.use(
 
 axiosInstance.interceptors.response.use(
   async (response) => {
-    console.log("After server response::::", response.data);
+    // console.log("After server response::::", response.data);
     const prevRequest = response.config;
     // console.log(config.url);
     if (prevRequest.url.indexOf("/account/profile") >= 0) {

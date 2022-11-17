@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import AuthServices from "../../services/authService.js";
 import SignupForm from "../../components/Forms/SignupForm.js";
+import PageContainer from "../../layouts/PageContainer/PageContainer.js";
 
 const SignupPage = () => {
     const [signupInProgress, setSignupProgress] = useState(false);
