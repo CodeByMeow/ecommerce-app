@@ -64,11 +64,13 @@ const ProductListPage = () => {
 
     return (
         <PageContainer title="Sản phẩm">
-            <div className="sm:flex-row justify-between items-center px-6 pt-2 flex flex-col gap-2">
-                <FilterCategory />
-                <SortProduct />
+            <div className="mx-auto max-w-2xl pt-3 md:px-6 lg:max-w-7xl lg:px-8 ">
+                <div className="flex items-center justify-between">
+                    <FilterCategory />
+                    <SortProduct />
+                </div>
+                <RemoveFilter />
             </div>
-            <RemoveFilter />
             {loading && <RenderLoading />}
             {(error || products?.itemsList.length === 0) && notFoundProduct}
             {products && <ProductList products={products?.itemsList} />}
