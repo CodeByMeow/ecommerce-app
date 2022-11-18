@@ -30,7 +30,7 @@ const AuthServices = {
         return result;
     },
     updateProfile: async (user) => {
-        const updated = await axiosInstance.patch("/account/profile");
+        const updated = await axiosInstance.patch("/account/profile", user);
 
         return updated;
     },
