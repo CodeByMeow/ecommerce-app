@@ -269,9 +269,12 @@ const Header = () => {
                                 <div className="space-y-6 border-t border-gray-200 py-6 px-4">
                                     <div className="flow-root">
                                         {user ? (
-                                            <h3 className="text-indigo-600 font-semibold capitalize">
+                                            <Link
+                                                to="profile"
+                                                className="text-indigo-600 font-semibold capitalize"
+                                            >
                                                 {user.username}
-                                            </h3>
+                                            </Link>
                                         ) : (
                                             <Link
                                                 to="/signin"
@@ -527,9 +530,12 @@ const Header = () => {
                             <div className="ml-auto flex items-center">
                                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
                                     {user ? (
-                                        <h3 className="text-indigo-600 font-semibold capitalize">
+                                        <Link
+                                            to="/profile"
+                                            className="text-indigo-600 font-semibold capitalize"
+                                        >
                                             {user.username}
-                                        </h3>
+                                        </Link>
                                     ) : (
                                         <Link
                                             to="/signin"
