@@ -7,14 +7,14 @@ import RenderLoading from "../../components/Loading/RenderLoading";
 const ProfilePage = () => {
     const { state } = useContext(authContext);
     const { user } = state;
-    const [input, setInput] = useState(null);
+    const [input, setInput] = useState();
 
     useEffect(() => {
         setInput({
-            username: user?.username,
-            fullname: user?.fullname,
-            email: user?.email,
-            address: user?.address,
+            username: user?.username || "",
+            fullname: user?.fullname || "",
+            email: user?.email || "",
+            address: user?.address || "",
         });
     }, [user]);
 
@@ -36,10 +36,12 @@ const ProfilePage = () => {
             <div className="p-10 flex bg-blue-100">
                 <div className="border border-solid w-1/3 p-20 text-center rounded-tl-3xl rounded-bl-3xl text-gray-800">
                     <UserAvatart size={150} src={user?.avatar} />
-                    <p className="block py-4 font-semibold">{input.username}</p>
-                    <p>{input.fullname}</p>
-                    <p>{input.email}</p>
-                    <p>{input.address}</p>
+                    <p className="block py-4 font-semibold">
+                        {input?.username}
+                    </p>
+                    <p>{input?.fullname}</p>
+                    <p>{input?.email}</p>
+                    <p>{input?.address}</p>
                 </div>
                 <div className="border border-solid w-2/3 p-20 rounded-tr-3xl rounded-br-3xl">
                     <form onSubmit={onSubmitHandler}>
@@ -49,7 +51,7 @@ const ProfilePage = () => {
                         <input
                             type="text"
                             name="username"
-                            value={input.username}
+                            value={input?.username}
                             readOnly
                             className="p-2 outline-none text-gray-400 rounded-md w-full my-2"
                             id="username"
@@ -59,7 +61,7 @@ const ProfilePage = () => {
                             Họ tên
                         </label>
                         <input
-                            value={input.fullname}
+                            value={input?.fullname}
                             name="fullname"
                             className="p-2 outline-none text-gray-700 rounded-md w-full my-2"
                             id="fullname"
@@ -70,7 +72,7 @@ const ProfilePage = () => {
                             Email
                         </label>
                         <input
-                            value={input.email}
+                            value={input?.email}
                             name="email"
                             className="p-2 outline-none text-gray-700 rounded-md w-full my-2"
                             id="email"
@@ -81,7 +83,7 @@ const ProfilePage = () => {
                             Địa chỉ
                         </label>
                         <input
-                            value={input.address}
+                            value={input?.address}
                             name="address"
                             className="p-2 outline-none text-gray-700 rounded-md w-full my-2"
                             id="address"
