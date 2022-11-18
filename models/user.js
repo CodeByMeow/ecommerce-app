@@ -52,6 +52,9 @@ const { default: mongoose } = require("mongoose");
  *               type: string
  *               descruption: The refresh token.
  *               readOnly: true
+ *           avatar:
+ *               type: string
+ *               description: User's avatar.
  *           createdAt:
  *               type: string
  *               format: date-time
@@ -109,6 +112,9 @@ const userSchema = new mongoose.Schema(
             default: true,
         },
         refreshToken: {
+            type: String,
+        },
+        avatar: {
             type: String,
         },
     },

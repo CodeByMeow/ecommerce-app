@@ -61,6 +61,8 @@ const REFRESH_TIME = process.env.JWT_REFRESH_TIME;
  *              isActive:
  *                  type: boolean
  *                  default: true
+ *              avatar:
+ *                  type: string
  */
 /**
  * @swagger
