@@ -29,6 +29,11 @@ const AuthServices = {
         }); */
         return result;
     },
+    updateProfile: async (user) => {
+        const updated = await axiosInstance.patch("/account/profile");
+
+        return updated;
+    },
 };
 
 export default AuthServices;
