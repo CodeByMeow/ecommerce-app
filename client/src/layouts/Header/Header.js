@@ -271,7 +271,7 @@ const Header = () => {
                                     <div className="flow-root">
                                         {user ? (
                                             <Link
-                                                to="profile"
+                                                to="/profile"
                                                 className="text-indigo-600 font-semibold capitalize"
                                             >
                                                 <Avatar
