@@ -28,6 +28,7 @@ const ProfilePage = () => {
     const image = useRef();
 
     useEffect(() => {
+        if (!user) return;
         setInput({
             username: user?.username,
             fullname: user?.fullname,
