@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import cartContext from "../../contexts/CartContext/CartContext";
 import { DECREASE, INCREASE, DELETE_CART_ITEM } from "../../contexts/types";
 import storeService from "../../services/storeService";
@@ -56,7 +57,12 @@ const CartItem = (props) => {
                         alt={item.title}
                     />
                     <div className="flex flex-col justify-between ml-4 gap-1 md:gap-0 flex-grow">
-                        <span className="textxs md:text-sm">{item.title}</span>
+                        <Link
+                            to={`../products/${item.slug}`}
+                            className="textxs md:text-sm"
+                        >
+                            {item.title}
+                        </Link>
                         {/* Mobile */}
                         <div className="w-full md:hidden">
                             <span className="text-center w-1/2 md:w-1/5 font-semibold text-sm text-indigo-600">
