@@ -27,7 +27,7 @@ const FilterCategory = () => {
     }, [params.category]);
 
     return (
-        <div>
+        <div className="px-6">
             <ul>
                 {category &&
                     category.map((item) => (

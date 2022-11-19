@@ -4,6 +4,7 @@ import authContext from "../../contexts/AuthContext/AuthContext";
 import PageContainer from "../../layouts/PageContainer/PageContainer";
 import RenderLoading from "../../components/Loading/RenderLoading";
 import AuthServices from "../../services/authService";
+import useViewport from "../../hooks/useViewport";
 
 const ProfilePage = () => {
     const { state } = useContext(authContext);
@@ -11,6 +12,8 @@ const ProfilePage = () => {
     const [input, setInput] = useState();
     const [message, setMessage] = useState("");
     const [loading, setLoading] = useState(false);
+    const viewPort = useViewport();
+    const isMobile = viewPort.width < 1024;
 
     useEffect(() => {
         setInput({
@@ -50,21 +53,21 @@ const ProfilePage = () => {
 
     return (
         <PageContainer title="Hồ sơ cá nhân">
-            <div className="p-10 flex bg-blue-100">
-                <div className="border border-solid w-1/3 p-20 text-center rounded-tl-3xl rounded-bl-3xl text-gray-800">
+            <div className="flex lg:flex-row flex-col mb-10 justify-center px-6 min-w-min">
+                <div className="border border-solid lg:w-80 w-full min-w-fit lg:p-20 p-5 rounded-3xl lg:rounded-r-none text-gray-800 flex-shrink-0 flex-grow-0 bg-indigo-300 flex items-center flex-col">
                     <UserAvatart
-                        size={150}
+                        size={isMobile ? 100 : 140}
                         src={user?.avatar}
                         fullname={input?.fullname}
                     />
-                    <p className="block py-4 font-semibold">
+                    <p className="block py-4 font-semibold whitespace-nowrap">
                         {input?.username}
                     </p>
-                    <p>{input?.fullname}</p>
-                    <p>{input?.email}</p>
-                    <p>{input?.address}</p>
+                    <p className="whitespace-nowrap">{input?.fullname}</p>
+                    <p className="whitespace-nowrap">{input?.email}</p>
+                    <p className="whitespace-nowrap">{input?.address}</p>
                 </div>
-                <div className="border border-solid w-2/3 p-20 rounded-tr-3xl rounded-br-3xl">
+                <div className="border border-solid lg:w-2/3 w-full lg:p-20 p-5 lg:rounded-l-none my-3 lg:my-0 rounded-3xl bg-indigo-100">
                     <form onSubmit={onSubmitHandler}>
                         <label htmlFor="username" className="text-gray-700">
                             Tên đăng nhập
@@ -113,7 +116,7 @@ const ProfilePage = () => {
                         <div className="flex items-center gap-1 justify-center">
                             <input
                                 type="submit"
-                                className="inline-block sm:px-4 lg:px-8 xl:px-14 py-2 md:py-3 rounded-lg transition:all duration-300 bg-indigo-500 my-3 text-white hover:cursor-pointer"
+                                className="px-6 inline-block sm:px-4 lg:px-8 xl:px-14 py-2 md:py-3 rounded-lg transition:all duration-300 bg-indigo-500 my-3 text-white cursor-pointer"
                                 value="Cập nhật"
                             />
                             {loading && (
