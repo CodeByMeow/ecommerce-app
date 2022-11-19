@@ -61,7 +61,7 @@ const CartPage = () => {
                         {cartItem}
 
                         <Link
-                            to="/"
+                            to="/products"
                             className="flex font-semibold text-indigo-600 text-sm mt-5 mb-5 md:mt-10 md:mb-0"
                         >
                             <svg
