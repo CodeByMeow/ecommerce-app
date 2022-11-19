@@ -52,7 +52,11 @@ const ProfilePage = () => {
         <PageContainer title="Hồ sơ cá nhân">
             <div className="p-10 flex bg-blue-100">
                 <div className="border border-solid w-1/3 p-20 text-center rounded-tl-3xl rounded-bl-3xl text-gray-800">
-                    <UserAvatart size={150} src={user?.avatar} />
+                    <UserAvatart
+                        size={150}
+                        src={user?.avatar}
+                        fullname={input?.fullname}
+                    />
                     <p className="block py-4 font-semibold">
                         {input?.username}
                     </p>
@@ -109,12 +113,12 @@ const ProfilePage = () => {
                         <div className="flex items-center gap-1 justify-center">
                             <input
                                 type="submit"
-                                className="inline-block sm:px-4 lg:px-8 xl:px-14 py-2 md:py-3 rounded-lg transition:all duration-300 bg-indigo-500 block my-3 text-white hover:cursor-pointer"
+                                className="inline-block sm:px-4 lg:px-8 xl:px-14 py-2 md:py-3 rounded-lg transition:all duration-300 bg-indigo-500 my-3 text-white hover:cursor-pointer"
                                 value="Cập nhật"
                             />
                             {loading && (
                                 <svg
-                                    class="inline mr-2 w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-purple-600"
+                                    className="inline mr-2 w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-purple-600"
                                     viewBox="0 0 100 101"
                                     fill="none"
                                     xmlns="http://www.w3.org/2000/svg"

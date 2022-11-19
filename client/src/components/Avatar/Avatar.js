@@ -8,7 +8,6 @@ const UserAvatart = ({
 }) => {
     return (
         <Avatar
-            initials={"Unknown"}
             name={fullname}
             title={fullname}
             round={true}
