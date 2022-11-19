@@ -29,12 +29,14 @@ const App = () => {
     const [products, setProduct] = useState(null);
     const [searchValue, setSearchValue] = useState("");
     const [category, setCategory] = useState(null);
+    
 
     const [loading, setLoading] = useState(false);
 
     const onSearchProductHandler = (value) => {
         setSearchValue(value);
     };
+
 
     const loadPageData = () => {
         setLoading(true);
@@ -65,6 +67,7 @@ const App = () => {
                         products,
                         onSearchProductHandler,
                         category,
+                        searchValue, 
                     }}
                 >
                     <CartState>

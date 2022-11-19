@@ -1,8 +1,11 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { useStoreContext } from "../../contexts/StoreContext";
 import storeService from "../../services/storeService.js";
 import productService from "../../services/productService";
+import authContext from "../../contexts/AuthContext/AuthContext";
+import cartContext from "../../contexts/CartContext/CartContext";
+import actionCreator from "../../utils/actionCreator";
 
 import PageContainer from "../../layouts/PageContainer/PageContainer.js";
 import RenderLoading from "../../components/Loading/RenderLoading";
@@ -18,16 +21,22 @@ import {
 import { FaMemory, FaMicrochip } from "react-icons/fa";
 import "./ItemDetailPage.css";
 import "animate.css";
+import { ADD_TO_CART, DECREASE } from "../../contexts/types";
+
+
 
 const ItemDetailPage = (props) => {
   const { slug } = useParams();
   const { loading } = useStoreContext();
+  const {user} = useContext(authContext).state;
+  const userId = user && user._id;
+  const {dispatch} = useContext(cartContext);
 
   // state
   const [selectedItem, setSelectedItem] = useState({});
   const [quantity, setQuantity] = useState(0);
 
-  selectedItem && console.log("SelectedItem:", selectedItem);
+  // selectedItem && console.log("SelectedItem:", selectedItem);
 
   const {
     id,
@@ -56,20 +65,15 @@ const ItemDetailPage = (props) => {
     ? details
     : "";
 
-  /* const [userCart, setUserCart] = useState({
-    userId: "",
-    products:[],    
-  });  */
-
   const onHandleAddToCart = (e) => {
-    setSelectedItem({...selectedItem, quantity});
+    dispatch(actionCreator(ADD_TO_CART, {"item":selectedItem, "orderQuantity" :quantity}));
     e.preventDefault();
     setQuantity(0);
   };
 
   const onHandleInputQuantity = (e) => {
     const { value } = e.target;
-    setQuantity(value);
+    setQuantity(Number(value));
   };
 
   const onDecrease = () => {
@@ -148,6 +152,7 @@ const ItemDetailPage = (props) => {
               <Button
                 type="button"
                 text="Thêm vào giỏ"
+                disabled = {quantity === 0 ? true : false}
                 customClass="w-full sm:w-1/3 md:w-1/2 text-sm md:text-base btn-grad"
                 onHandleClick={onHandleAddToCart}
               />

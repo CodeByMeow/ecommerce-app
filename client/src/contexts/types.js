@@ -4,6 +4,6 @@ export const SIGN_UP = "signup";
 export const GET_USER_INFO = "GET_USER_INFO";
 export const REFRESH_TOKEN = "REFRESH_TOKEN";
 export const ADD_TO_CART = "ADD_TO_CART";
-export const DELETE_PRODUCT = "DELETE_PRODUCT";
+export const DELETE_CART_ITEM = "DELETE_CART_ITEM";
 export const INCREASE = "INCREASE";
 export const DECREASE = "DECREASE";

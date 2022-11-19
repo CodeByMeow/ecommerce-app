@@ -37,6 +37,11 @@ footer {
   background-color: #4f46e5;
 }
 
+.btn-grad:disabled {
+  background-image: unset !important;
+  background-color: #17171570;
+}
+
 .btn-grad {
   background-image: linear-gradient(
     to right,

@@ -1,11 +1,11 @@
 import * as React from "react";
 import { Fragment, useState, useContext, useEffect } from "react";
-import { Link } from "react-router-dom";
-import Avatar from "react-avatar";
+import { Link, useNavigate } from "react-router-dom";
 import authContext from "../../contexts/AuthContext/AuthContext.js";
 import { useStoreContext } from "../../contexts/StoreContext.js";
 import actionCreator from "../../utils/actionCreator.js";
-
+import cartContext from "../../contexts/CartContext/CartContext.js";
+import Avatar from "react-avatar";
 import SearchBar from "../../components/SearchBar/SearchBar.js";
 
 import { SIGN_OUT } from "../../contexts/types";
@@ -26,16 +26,15 @@ function classNames(...classes) {
 }
 
 const Header = () => {
-    const { state, dispatch } = useContext(authContext);
-    const { user } = state;
-    const [open, setOpen] = useState(false);
-    const [isMobile, setIsMobile] = useState(false);
-
     // context
+    const { state, dispatch } = useContext(authContext);
     const { products, category } = useStoreContext();
+    const { cart } = useContext(cartContext).cartState;
+
     const randomProducts = products
         ? products.filter((item) => item.price > 25000000)
         : [];
+
     randomProducts.length = 3;
     const categoryItems = category
         ? category.map((cate) => ({
@@ -43,6 +42,14 @@ const Header = () => {
               path: cate.slug,
           }))
         : [];
+
+    const { user } = state;
+    const [open, setOpen] = useState(false);
+    // const [openSubMenu, setOpenSubMenu] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
+
+    const navigate = useNavigate();
+
     const navigation = {
         categories: [
             {
@@ -51,8 +58,8 @@ const Header = () => {
                 featured: randomProducts,
                 sections: [
                     {
-                        id: "mobile",
-                        name: "mobile",
+                        id: "brands",
+                        name: "brands",
                         items: categoryItems,
                     },
                 ],
@@ -176,6 +183,11 @@ const Header = () => {
                                                                 >
                                                                     <Link
                                                                         to={`/products/${item.slug}`}
+                                                                        onClick={() =>
+                                                                            setOpen(
+                                                                                false
+                                                                            )
+                                                                        }
                                                                         className="block text-base font-semibold text-indigo-600 line-clamp-2"
                                                                     >
                                                                         <div className="mx-auto w-60 overflow-hidden rounded-lg group-hover:scale-110 transition-all py-2">
@@ -231,7 +243,11 @@ const Header = () => {
                                                                             >
                                                                                 <Link
                                                                                     to={`/products?category=${item.path}`}
-                                                                                    // to={`${item.path}`}
+                                                                                    onClick={() =>
+                                                                                        setOpen(
+                                                                                            false
+                                                                                        )
+                                                                                    }
                                                                                     className="block p-2 text-gray-500"
                                                                                 >
                                                                                     {
@@ -346,7 +362,7 @@ const Header = () => {
                 </Dialog>
             </Transition.Root>
 
-            <header className="fixed bg-white w-full z-10">
+            <header className="relative bg-white">
                 <p className="flex h-10 text-center items-center justify-center bg-indigo-600 px-4 text-xs md:text-base font-bold text-white sm:px-6 lg:px-8">
                     Get free delivery on orders over $100
                 </p>
@@ -394,12 +410,12 @@ const Header = () => {
                                             key={category.name}
                                             className="flex"
                                         >
-                                            {({ open }) => (
+                                            {({ openSubMenu }) => (
                                                 <>
                                                     <div className="relative flex">
                                                         <Popover.Button
                                                             className={classNames(
-                                                                open
+                                                                openSubMenu
                                                                     ? "border-indigo-600 text-indigo-600"
                                                                     : "border-transparent text-gray-500 hover:text-indigo-700",
                                                                 "relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out"
@@ -410,6 +426,7 @@ const Header = () => {
                                                     </div>
 
                                                     <Transition
+                                                        show={openSubMenu}
                                                         as={Fragment}
                                                         enter="transition ease-out duration-200"
                                                         enterFrom="opacity-0"
@@ -453,14 +470,24 @@ const Header = () => {
                                                                                                     }
                                                                                                     className="flex"
                                                                                                 >
-                                                                                                    <Link
-                                                                                                        to={`/products?category=${item.path}`}
-                                                                                                        className="hover:text-indigo-700"
+                                                                                                    <Popover.Button
+                                                                                                        onClick={() => {
+                                                                                                            openSubMenu = false;
+                                                                                                            navigate(
+                                                                                                                `/products?category=${item.path}`
+                                                                                                            );
+                                                                                                        }}
+                                                                                                        className={classNames(
+                                                                                                            openSubMenu
+                                                                                                                ? "border-indigo-600 text-indigo-600"
+                                                                                                                : "border-transparent text-gray-500 hover:text-indigo-700",
+                                                                                                            "relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out"
+                                                                                                        )}
                                                                                                     >
                                                                                                         {
                                                                                                             item.name
                                                                                                         }
-                                                                                                    </Link>
+                                                                                                    </Popover.Button>
                                                                                                 </li>
                                                                                             )
                                                                                         )}
@@ -468,7 +495,7 @@ const Header = () => {
                                                                                 </div>
                                                                             )
                                                                         )}
-                                                                        <div className="basis-3/4 grid grid-cols-3">
+                                                                        <div className="basis-3/4 grid grid-cols-3 gap-4">
                                                                             {category.featured.map(
                                                                                 (
                                                                                     item
@@ -477,13 +504,17 @@ const Header = () => {
                                                                                         key={
                                                                                             item.title
                                                                                         }
-                                                                                        className="group relative text-base sm:text-sm px-6"
+                                                                                        className="group relative text-base sm:text-sm px-4"
                                                                                     >
-                                                                                        <Link
-                                                                                            to={`/products/${item.slug}`}
-                                                                                            className="block text-base font-semibold text-indigo-600 line-clamp-1"
+                                                                                        <Popover.Button
+                                                                                            onClick={() => {
+                                                                                                openSubMenu = false;
+                                                                                                navigate(
+                                                                                                    `/products/${item.slug}`
+                                                                                                );
+                                                                                            }}
                                                                                         >
-                                                                                            <div className="w-60 mx-auto overflow-hidden rounded-lg group-hover:scale-110 transition-all px-6 py-2">
+                                                                                            <div className="w-48 mx-auto overflow-hidden rounded-lg group-hover:scale-110 transition-all py-4">
                                                                                                 <img
                                                                                                     src={
                                                                                                         item.image_url
@@ -495,21 +526,41 @@ const Header = () => {
                                                                                                 />
                                                                                             </div>
 
-                                                                                            <span
-                                                                                                className="absolute inset-0 z-10 "
+                                                                                            <p
+                                                                                                className="text-base font-semibold text-indigo-600 line-clamp-1"
                                                                                                 aria-hidden="true"
-                                                                                            />
-                                                                                            {
-                                                                                                item.title
-                                                                                            }
-                                                                                        </Link>
-                                                                                        <p
-                                                                                            aria-hidden="true"
-                                                                                            className="mt-1"
-                                                                                        >
-                                                                                            Shop
-                                                                                            now
-                                                                                        </p>
+                                                                                            >
+                                                                                                {
+                                                                                                    item.title
+                                                                                                }
+                                                                                            </p>
+
+                                                                                            <p
+                                                                                                aria-hidden="true"
+                                                                                                className="mt-1"
+                                                                                            >
+                                                                                                Shop
+                                                                                                now
+                                                                                            </p>
+                                                                                        </Popover.Button>
+                                                                                        {/*  <Link
+                                            to={`/products/${item.slug}`}
+                                            className="block text-base font-semibold text-indigo-600 line-clamp-1"
+                                          >
+                                            <div className="w-60 mx-auto overflow-hidden rounded-lg group-hover:scale-110 transition-all px-6 py-2">
+                                              <img
+                                                src={item.image_url}
+                                                alt={item.title}
+                                                className="object-cover object-center"
+                                              />
+                                            </div>
+
+                                            <span
+                                              className="absolute inset-0 z-10 "
+                                              aria-hidden="true"
+                                            />
+                                            {item.title}
+                                          </Link> */}
                                                                                     </div>
                                                                                 )
                                                                             )}
@@ -613,11 +664,11 @@ const Header = () => {
                                         className="group -m-2 flex items-center p-2"
                                     >
                                         <ShoppingBagIcon
-                                            className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+                                            className="h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
                                             aria-hidden="true"
                                         />
-                                        <span className="ml-2 text-base font-medium text-gray-500 group-hover:text-indigo-700">
-                                            0
+                                        <span className="ml-2 text-xl leading-4 font-medium text-gray-500 group-hover:text-indigo-700">
+                                            {cart.length}
                                         </span>
                                         <span className="sr-only">
                                             items in cart, view bag
