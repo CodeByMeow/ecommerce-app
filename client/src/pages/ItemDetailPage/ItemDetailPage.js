@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useStoreContext } from "../../contexts/StoreContext";
 import storeService from "../../services/storeService.js";
 import productService from "../../services/productService";
@@ -62,16 +62,18 @@ const ItemDetailPage = (props) => {
     const { backCamera, frontCamera, chip, ram, rom, screenSize } = details
         ? details
         : "";
+    const navigate = useNavigate();
 
     const onHandleAddToCart = (e) => {
+        e.preventDefault();
         dispatch(
             actionCreator(ADD_TO_CART, {
                 item: selectedItem,
                 orderQuantity: quantity,
             })
         );
-        e.preventDefault();
-        setQuantity(0);
+
+        navigate("/cart");
     };
 
     const onHandleInputQuantity = (e) => {
