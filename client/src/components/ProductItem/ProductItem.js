@@ -6,8 +6,9 @@ import OverlayModal from "../OverlayModal/OverlayModal";
 
 const ProductItem = (props) => {
     const [isShowModal, setShowModal] = useState(false);
+    const {product} = props;
 
-    const { _id, title, slug, shortDesc, price, sale_price, image_url } = props.product;
+    const { _id, title, slug, shortDesc, price, sale_price, image_url } = product;
     return (
         <div
             key={_id}
@@ -46,7 +47,7 @@ const ProductItem = (props) => {
                     {storeService.convertCurrency(sale_price, "VND")}
                 </p>
             </div>
-            <OverlayModal isShowModal={isShowModal} slug={slug} />
+            <OverlayModal isShowModal={isShowModal} slug={slug} product={product}/>
         </div>
     );
 };

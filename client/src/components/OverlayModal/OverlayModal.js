@@ -1,13 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import cartContext from "../../contexts/CartContext/CartContext";
+import { ADD_TO_CART } from "../../contexts/types";
 
 import { HiShoppingCart, HiHeart } from "react-icons/hi";
 
 // animation style
 import "animate.css";
+import actionCreator from "../../utils/actionCreator";
 
 const OverlayModal = (props) => {
-    const { slug, isShowModal } = props;
+    const { slug, isShowModal, product } = props;
+    const {dispatch } = useContext(cartContext);
     const navigate = useNavigate();
 
     const onHandleViewDetail = () => {
@@ -32,8 +36,8 @@ const OverlayModal = (props) => {
                     View detail
                 </button>
                 <div className="text-white text-2xl flex flex-row gap-4">
-                    <HiHeart />
-                    <HiShoppingCart />
+                    <HiHeart className="cursor-pointer" />
+                    <HiShoppingCart className="cursor-pointer" onClick={() => {dispatch(actionCreator(ADD_TO_CART,{"item":product, "orderQuantity":1}))}}/>
                 </div>
             </div>
         </div>

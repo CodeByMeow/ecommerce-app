@@ -28,6 +28,12 @@ const storeService = {
   textToLowerCase: (str) => {
     return str.toLowerCase().replace(/ /g, "_");
   },
+  findItemIndex: (arr, id) => {
+    const indx = arr.findIndex(
+      (item) => item._id === id
+    );
+    return indx;
+  }
 };
 
 export default storeService;
