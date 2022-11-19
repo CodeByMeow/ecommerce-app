@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 
 import CartItem from "../../components/CartItem/CartItem";
+import cartContext from "../../contexts/CartContext/CartContext";
 import PageContainer from "../../layouts/PageContainer/PageContainer";
 import storeService from "../../services/storeService";
 
 const CartPage = () => {
-    const cart = localStorage.getItem("cart")
-        ? JSON.parse(localStorage.getItem("cart"))
-        : null;
+    const { cartState } = useContext(cartContext);
+    const { cart } = cartState;
     const cartItem =
         cart.length === 0 ? (
             <p>Bạn chưa chọn sản phẩm nào</p>

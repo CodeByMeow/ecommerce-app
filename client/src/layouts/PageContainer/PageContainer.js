@@ -11,7 +11,6 @@ const PageContainer = ({
     shouldShowFooter = true,
     title = "Page Title",
     description = "Page Description",
-    ...props
 }) => {
     return (
         <>
