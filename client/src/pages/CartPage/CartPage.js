@@ -126,7 +126,7 @@ const CartPage = () => {
                         <button className="bg-red-500 hover:bg-red-600 px-5 py-2 text-sm text-white uppercase">
                             Áp dụng
                         </button>
-                        <div className="border-t mt-8">
+                        <div className="border-t mt-8 w-full">
                             <div className="flex font-semibold justify-between py-6 text-sm uppercase">
                                 <span>Tổng tiền</span>
                                 <span>
@@ -136,9 +136,12 @@ const CartPage = () => {
                                     )}
                                 </span>
                             </div>
-                            <button className="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">
-                                Checkout
-                            </button>
+                            <Link
+                                to={"../checkout"}
+                                className="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full px-5"
+                            >
+                                Thanh toán
+                            </Link>
                         </div>
                     </div>
                 </div>

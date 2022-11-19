@@ -21,6 +21,7 @@ import CategoryService from "./services/categoryService";
 //styles
 import "./App.css";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
+import CheckoutPage from "./pages/CheckoutPage/CheckoutPage";
 
 // data
 // import { products } from "./utils/data.js";
@@ -29,14 +30,12 @@ const App = () => {
     const [products, setProduct] = useState(null);
     const [searchValue, setSearchValue] = useState("");
     const [category, setCategory] = useState(null);
-    
 
     const [loading, setLoading] = useState(false);
 
     const onSearchProductHandler = (value) => {
         setSearchValue(value);
     };
-
 
     const loadPageData = () => {
         setLoading(true);
@@ -67,7 +66,7 @@ const App = () => {
                         products,
                         onSearchProductHandler,
                         category,
-                        searchValue, 
+                        searchValue,
                     }}
                 >
                     <CartState>
@@ -105,6 +104,14 @@ const App = () => {
                                     path="/profile"
                                     element={
                                         <PrivateRoute component={ProfilePage} />
+                                    }
+                                />
+                                <Route
+                                    path="/checkout"
+                                    element={
+                                        <PrivateRoute
+                                            component={CheckoutPage}
+                                        />
                                     }
                                 />
                                 <Route path="*" element={<NotFoundPage />} />
