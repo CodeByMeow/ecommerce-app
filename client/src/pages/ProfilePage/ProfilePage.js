@@ -21,6 +21,7 @@ const ProfilePage = () => {
             fullname: user?.fullname || "",
             email: user?.email || "",
             address: user?.address || "",
+            avatar: user?.avatar || "",
         });
     }, [user]);
 
@@ -57,7 +58,7 @@ const ProfilePage = () => {
                 <div className="border border-solid lg:w-80 w-full min-w-fit lg:p-20 p-5 rounded-3xl lg:rounded-r-none text-gray-800 flex-shrink-0 flex-grow-0 bg-indigo-300 flex items-center flex-col">
                     <UserAvatart
                         size={isMobile ? 100 : 140}
-                        src={user?.avatar}
+                        src={input?.avatar}
                         fullname={input?.fullname}
                     />
                     <p className="block py-4 font-semibold whitespace-nowrap">
