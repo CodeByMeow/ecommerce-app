@@ -32,9 +32,9 @@ const CheckoutPage = () => {
 
     return (
         <PageContainer>
-            <div className="p-6 w-9/12 mx-auto">
-                <form className="border border-solid border-gray-400 rounded-xl p-10">
-                    <h2 className="text-center text-3xl uppercase">
+            <div className="md:p-6 md:w-9/12 w-full p-4 mx-auto">
+                <form className="border border-solid border-gray-400 rounded-xl md:p-10 px-4 py-3">
+                    <h2 className="text-center md:text-3xl text-2xl uppercase">
                         Thông tin đơn hàng
                     </h2>
                     <div className="py-4">
@@ -46,7 +46,7 @@ const CheckoutPage = () => {
                                 cart.map((item) => (
                                     <div
                                         key={item._id}
-                                        className="py-4 grid grid-cols-4 items-center"
+                                        className="py-4 grid md:grid-cols-4 grid-cols-2 md:place-items-stretch place-items-center"
                                     >
                                         <img
                                             src={item.image_url}
@@ -61,7 +61,7 @@ const CheckoutPage = () => {
                                         <p className="text-center">
                                             x<span>{item.orderQuantity}</span>
                                         </p>
-                                        <p className="text-right">
+                                        <p className="text-right ml-auto">
                                             {storeService.convertCurrency(
                                                 item.price * item.orderQuantity,
                                                 "VND"
@@ -70,7 +70,7 @@ const CheckoutPage = () => {
                                     </div>
                                 ))}
                         </div>
-                        <div className="grid grid-cols-4 border-t border-solid border-black/30 py-2">
+                        <div className="grid md:grid-cols-4 grid-cols-2 border-t border-solid border-black/30 py-2">
                             <h4 className="font-semibold col-span-1">
                                 Tổng cộng
                             </h4>
