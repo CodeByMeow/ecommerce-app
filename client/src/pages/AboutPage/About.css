@@ -1,3 +1,6 @@
+.About{
+    margin: 30px;
+}
 .About li{
     margin: 40px;
     width: 220px;
@@ -15,18 +18,18 @@
     text-align: center;
 }
 .introduce{
-    background-color: aqua;
+    background-color: rgb(125, 3, 232);
 }
 .introduce li{
     box-shadow: unset;
-    background-color: aqua;  
+    background-color: rgb(125, 3, 232);  
     width: 280px;
     height: 200px;
 }
 .history h1{
     font-size: 30px;
     padding-bottom: 24px;
-    border-bottom: 1px solid rgb(16 185 129);
+    border-bottom: 1px solid rgb(125, 3, 232);
 }
 .history h3{
     font-size: 20px;
