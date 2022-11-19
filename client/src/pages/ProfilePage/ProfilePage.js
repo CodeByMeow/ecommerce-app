@@ -7,11 +7,19 @@ import SmallLoading from "../../components/SmallLoading/SmallLoading";
 import AuthServices from "../../services/authService";
 import useViewport from "../../hooks/useViewport";
 import uploadImage from "../../services/uploadImage";
+import { GET_USER_INFO } from "../../contexts/types";
+import actionCreator from "../../utils/actionCreator";
 
 const ProfilePage = () => {
-    const { state } = useContext(authContext);
+    const { state, dispatch } = useContext(authContext);
     const { user } = state;
-    const [input, setInput] = useState();
+    const [input, setInput] = useState({
+        username: user?.username || "",
+        fullname: user?.fullname || "",
+        email: user?.email || "",
+        address: user?.address || "",
+        avatar: user?.avatar || "",
+    });
     const [message, setMessage] = useState("");
     const [loading, setLoading] = useState(false);
     const [loadingUpload, setLoadingUpload] = useState(false);
@@ -21,11 +29,11 @@ const ProfilePage = () => {
 
     useEffect(() => {
         setInput({
-            username: user?.username || "",
-            fullname: user?.fullname || "",
-            email: user?.email || "",
-            address: user?.address || "",
-            avatar: user?.avatar || "",
+            username: user?.username,
+            fullname: user?.fullname,
+            email: user?.email,
+            address: user?.address,
+            avatar: user?.avatar,
         });
     }, [user]);
 
@@ -43,6 +51,8 @@ const ProfilePage = () => {
         try {
             setLoading(true);
             const update = await AuthServices.updateProfile(updateData);
+            const authorizedUser = await AuthServices.verifyToken();
+            dispatch(actionCreator(GET_USER_INFO, authorizedUser.data));
             setMessage(update.data?.msg);
         } catch (e) {
             setMessage(e.message);
