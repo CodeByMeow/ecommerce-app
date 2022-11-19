@@ -67,7 +67,7 @@ const ProductListPage = () => {
     return (
         <PageContainer title="Sản phẩm">
             <div className="mx-auto max-w-2xl pt-3 md:px-6 lg:max-w-7xl lg:px-8 ">
-                <div className="flex flex-col md:flex-row items-center justify-between">
+                <div className="flex items-center lg:flex-row lg:justify-between flex-col gap-2">
                     <FilterCategory />
                     <SortProduct />
                 </div>

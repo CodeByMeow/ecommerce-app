@@ -41,36 +41,30 @@ const { verifyUserRole } = require("../middlewares/verifyUserRole");
  *                                           url:
  *                                               type: string
  */
-router.post(
-    "/upload",
-    verifyToken,
-    verifyUserRole,
-    uploadImageToLocal,
-    async (req, res) => {
-        const { path } = req.file;
+router.post("/upload", verifyToken, uploadImageToLocal, async (req, res) => {
+    const { path } = req.file;
 
-        try {
-            const uploadRespose = await cloudUploadService(
-                path,
-                process.env.CLOUDINARY_UPLOAD_FOLDER
-            );
+    try {
+        const uploadRespose = await cloudUploadService(
+            path,
+            process.env.CLOUDINARY_UPLOAD_FOLDER
+        );
 
-            const { secure_url } = uploadRespose;
-            fs.unlink(path, (err) => {
-                if (err) throw err;
-                console.log(`info: ${path} was deleted`);
-            });
+        const { secure_url } = uploadRespose;
+        fs.unlink(path, (err) => {
+            if (err) throw err;
+            console.log(`info: ${path} was deleted`);
+        });
 
-            res.json({
-                msg: "Upload image successfully.",
-                data: {
-                    url: secure_url,
-                },
-            });
-        } catch (err) {
-            throw new Error(err);
-        }
+        res.json({
+            msg: "Upload image successfully.",
+            data: {
+                url: secure_url,
+            },
+        });
+    } catch (err) {
+        throw new Error(err);
     }
-);
+});
 
 module.exports = router;

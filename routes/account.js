@@ -368,7 +368,7 @@ router.patch("/profile", verifyTokenMdw, async (req, res) => {
             fieldNeedUpdate
         );
         return res.json({
-            msg: "User updated successfully",
+            msg: "Profile updated successfully",
             data: updated,
         });
     } catch (error) {

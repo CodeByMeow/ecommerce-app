@@ -14,7 +14,7 @@ const RemoveFilter = () => {
     };
 
     return (
-        <div className="md:text-left text-center my-2">
+        <div className="md:text-left my-2 text-right px-6">
             <p
                 className="inline-flex justify-between items-center w-max mx-2 gap-2 border border-gray-500 border-solid rounded-md p-1 my-1 cursor-pointer font-thin text-sm hover:bg-indigo-600 hover:text-white transition-colors duration-300"
                 onClick={resetQuery}

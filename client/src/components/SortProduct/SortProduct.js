@@ -32,7 +32,7 @@ const SortProduct = () => {
     }, [currentSort]);
 
     return (
-        <div className="px-8 py-3 md:py-0 text-right text-sm">
+        <div className="px-8 text-right text-sm self-end">
             <div className="border border-solid border-gray-500 w-40 min-w-max px-2 inline-block rounded-md text-center relative">
                 <p
                     className="cursor-pointer whitespace-nowrap flex justify-around items-center gap-1"
