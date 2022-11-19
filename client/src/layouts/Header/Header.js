@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Fragment, useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
+import Avatar from "react-avatar";
 import authContext from "../../contexts/AuthContext/AuthContext.js";
 import { useStoreContext } from "../../contexts/StoreContext.js";
 import actionCreator from "../../utils/actionCreator.js";
@@ -273,7 +274,15 @@ const Header = () => {
                                                 to="profile"
                                                 className="text-indigo-600 font-semibold capitalize"
                                             >
-                                                {user.username}
+                                                <Avatar
+                                                    src={user.avatar}
+                                                    name={user.fullname}
+                                                    size={50}
+                                                    round={true}
+                                                />
+                                                <span className="px-2">
+                                                    {user.fullname}
+                                                </span>
                                             </Link>
                                         ) : (
                                             <Link
@@ -534,7 +543,15 @@ const Header = () => {
                                             to="/profile"
                                             className="text-indigo-600 font-semibold capitalize"
                                         >
-                                            {user.username}
+                                            <Avatar
+                                                src={user.avatar}
+                                                name={user.fullname}
+                                                size={50}
+                                                round={true}
+                                            />
+                                            <span className="px-2">
+                                                {user.fullname}
+                                            </span>
                                         </Link>
                                     ) : (
                                         <Link
