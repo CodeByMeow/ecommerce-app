@@ -108,8 +108,6 @@ router.get("/", async (req, res) => {
  *                       schema:
  *                           type: object
  *                           properties:
- *                               userId:
- *                                   type: string
  *                               products:
  *                                   type: array
  *                                   items:
