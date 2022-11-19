@@ -346,7 +346,7 @@ const Header = () => {
                 </Dialog>
             </Transition.Root>
 
-            <header className="relative bg-white">
+            <header className="fixed bg-white w-full z-10">
                 <p className="flex h-10 text-center items-center justify-center bg-indigo-600 px-4 text-xs md:text-base font-bold text-white sm:px-6 lg:px-8">
                     Get free delivery on orders over $100
                 </p>
