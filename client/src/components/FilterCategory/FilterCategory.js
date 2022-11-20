@@ -5,7 +5,7 @@ import useNavigateSearch from "../../hooks/useNagivateSearch";
 import useSearch from "../../hooks/useSearch";
 
 const FilterCategory = () => {
-    const { category, onHandleHeaderMenu } = useStoreContext();
+    const { category } = useStoreContext();
     const params = useSearch();
     const [selected, setSelected] = useState(params?.category);
     const navigate = useNavigateSearch();
@@ -19,7 +19,6 @@ const FilterCategory = () => {
 
         const query = newSlug ? { ...rest, category: slug } : rest;
         navigate(PRODUCTS_ENDPOINT, query);
-        onHandleHeaderMenu(false);
     };
 
     useEffect(() => {

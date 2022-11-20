@@ -82,6 +82,7 @@ const ItemDetailPage = (props) => {
     };
 
     const onDecrease = () => {
+        if (quantity < 2) return;
         let newQuantity = quantity;
         setQuantity(newQuantity > 0 ? newQuantity - 1 : 0);
     };
@@ -156,7 +157,14 @@ const ItemDetailPage = (props) => {
 
                         <div className="w-full flex flex-col sm:flex-row gap-6">
                             <div className="w-full md:w-1/3 lg:w-1/4 flex flex-wrap border-b border-indigo-600 justify-between items-end text-lg lg:text-2xl">
-                                <button onClick={() => onDecrease()}>-</button>
+                                <button
+                                    onClick={() => onDecrease()}
+                                    className={
+                                        quantity < 2 ? "opacity-30" : null
+                                    }
+                                >
+                                    -
+                                </button>
                                 <input
                                     type="text"
                                     min="0"
