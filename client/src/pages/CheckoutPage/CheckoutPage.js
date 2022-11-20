@@ -25,6 +25,10 @@ const CheckoutPage = () => {
         setInput(user);
     }, [user]);
 
+    const onCheckoutSubmit = (e) => {
+        e.preventDefault();
+    };
+
     const onInputChange = (e) => {
         const { name, value } = e.target;
         setInput({ ...input, [name]: value });
@@ -33,7 +37,10 @@ const CheckoutPage = () => {
     return (
         <PageContainer>
             <div className="md:p-6 md:w-9/12 w-full p-4 mx-auto">
-                <form className="border border-solid border-gray-400 rounded-xl md:p-10 px-4 py-3">
+                <form
+                    className="border border-solid border-gray-400 rounded-xl md:p-10 px-4 py-3"
+                    onSubmit={onCheckoutSubmit}
+                >
                     <h2 className="text-center md:text-3xl text-2xl uppercase">
                         Thông tin đơn hàng
                     </h2>
@@ -124,7 +131,7 @@ const CheckoutPage = () => {
                             <input
                                 type="submit"
                                 value="Thanh toán"
-                                className="py-5 w-9/12 bg-indigo-800 text-white uppercase rounded-md"
+                                className="py-5 w-9/12 bg-indigo-800 text-white uppercase rounded-md cursor-pointer"
                             />
                         </div>
                     </div>
