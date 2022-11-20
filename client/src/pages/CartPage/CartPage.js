@@ -1,4 +1,5 @@
-import React, { useContext, useState } from "react";
+import { CheckIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import CartItem from "../../components/CartItem/CartItem";
@@ -9,15 +10,39 @@ import storeService from "../../services/storeService";
 const CartPage = () => {
     const { cartState } = useContext(cartContext);
     const { cart } = cartState;
+    const [confirmRemove, setConfirmRemove] = useState({
+        itemId: null,
+        confirm: false,
+    });
+    const [showConfirm, setShowConfirm] = useState(false);
+    const [focus, setFocus] = useState(null);
     const cartItem =
         cart.length === 0 ? (
             <p>Bạn chưa chọn sản phẩm nào</p>
         ) : (
             cart.map((item, index) => {
-                return <CartItem key={index} item={item} />;
+                return (
+                    <CartItem
+                        key={index}
+                        item={item}
+                        setShowConfirm={setShowConfirm}
+                        setFocus={setFocus}
+                        focus={focus}
+                        confirmRemove={confirmRemove}
+                    />
+                );
             })
         );
 
+    const onConfirmRemove = () => {
+        setConfirmRemove({ itemId: focus, confirm: true });
+        setShowConfirm(false);
+    };
+
+    const onAbortRemove = () => {
+        setConfirmRemove({ itemId: focus, confirm: false });
+        setShowConfirm(false);
+    };
     const [shipping, setShipping] = useState(20000);
 
     const onHandleSelectionChange = (e) => {
@@ -31,7 +56,7 @@ const CartPage = () => {
 
     return (
         <PageContainer title="Cart page">
-            <div className="px-6 md:px-0 md:container mx-auto mt-0 md:mt-10">
+            <div className="px-6 md:px-0 md:container mx-auto mt-0 md:mt-10 py-4">
                 <div className="flex flex-col xl:flex-row md:shadow-md mt-10 mb-0">
                     <div className="w-full xl:w-3/4 bg-white px-4 md:px-6 xl:px-10 py-0 md:py-10 lg:my-10">
                         <div className="flex justify-between border-b pb-4 md:pb-8 border-indigo-600">
@@ -147,6 +172,23 @@ const CartPage = () => {
                     </div>
                 </div>
             </div>
+            {showConfirm && (
+                <div className="flex items-center justify-center flex-col p-2 gap-3 w-3/4 md:w-1/3 h-1/5 bg-white/50 fixed left-1/2 top-1/3 -translate-x-1/2 border-2 border-solid rounded-xl backdrop-blur-sm">
+                    <p>Bạn muốn xóa sản phẩm này khỏi giỏ hàng?</p>
+                    <button
+                        className="w-6 text-green-400"
+                        onClick={onConfirmRemove}
+                    >
+                        <CheckIcon />
+                    </button>
+                    <button
+                        className="w-8 text-gray-500 p-1"
+                        onClick={onAbortRemove}
+                    >
+                        <XMarkIcon />
+                    </button>
+                </div>
+            )}
         </PageContainer>
     );
 };

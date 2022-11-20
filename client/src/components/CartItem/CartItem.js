@@ -6,7 +6,7 @@ import storeService from "../../services/storeService";
 import actionCreator from "../../utils/actionCreator";
 
 const CartItem = (props) => {
-    const { item } = props;
+    const { item, setShowConfirm, confirmRemove, setFocus, focus } = props;
     const { dispatch } = useContext(cartContext);
     const [quantity, setQuantity] = useState(item.orderQuantity);
     const onHandleQuantityChange = (e) => {
@@ -20,9 +20,15 @@ const CartItem = (props) => {
             setQuantity(newQuantity);
             dispatch(actionCreator(DECREASE, item));
         } else {
-            dispatch(actionCreator(DELETE_CART_ITEM, item));
+            setFocus(item._id);
+            setShowConfirm(true);
         }
     };
+
+    useEffect(() => {
+        if (confirmRemove.confirm && focus === item._id)
+            dispatch(actionCreator(DELETE_CART_ITEM, item));
+    }, [JSON.stringify(confirmRemove)]);
 
     const onIncrease = () => {
         let newQuantity = quantity;
@@ -35,7 +41,8 @@ const CartItem = (props) => {
     };
 
     const onRemoveItem = () => {
-        dispatch(actionCreator(DELETE_CART_ITEM, item));
+        setFocus(item._id);
+        setShowConfirm(true);
     };
 
     return (
