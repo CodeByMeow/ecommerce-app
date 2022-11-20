@@ -14,12 +14,6 @@ const CartItem = (props) => {
         setQuantity(value);
     };
 
-    useEffect(() => {
-        if (!quantity) return;
-        if (quantity > 0) dispatch(actionCreator(INCREASE, item));
-        if (quantity < 1) dispatch(actionCreator(DELETE_CART_ITEM, item));
-    }, [quantity]);
-
     const onDecrease = () => {
         const newQuantity = quantity - 1;
         if (newQuantity > 0) {

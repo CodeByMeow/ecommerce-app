@@ -23,6 +23,7 @@ const CartPage = () => {
     const onHandleSelectionChange = (e) => {
         setShipping(e.target.value);
     };
+
     const total = cart.reduce(
         (sum, item) => sum + item.price * item.orderQuantity,
         0
