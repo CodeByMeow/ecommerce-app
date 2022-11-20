@@ -93,7 +93,7 @@ const CheckoutPage = () => {
                         </h3>
                         <div className="py-4">
                             <div className="py-2">
-                                <label className="px-2" htmlfor="fullname">
+                                <label className="px-2" htmlFor="fullname">
                                     Họ tên khách hàng
                                 </label>
                                 <input
@@ -106,7 +106,7 @@ const CheckoutPage = () => {
                                 />
                             </div>
                             <div className="py-2">
-                                <label className="px-2" htmlfor="address">
+                                <label className="px-2" htmlFor="address">
                                     Địa chỉ giao hàng
                                 </label>
                                 <input
